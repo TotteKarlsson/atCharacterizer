@@ -69,34 +69,17 @@ class TMainForm : public TRegistryForm
 __published:	// IDE-managed Components
 	TImage *Image1;
 	TMemo *infoMemo;
-	TIdHTTP *IdHTTP1;
 	TTimer *mShutDownTimer;
 	TPageControl *PageControl1;
 	TTabSheet *TabSheet1;
-	TGroupBox *Zs_GB;
-	TFloatLabeledEdit *mScaleE;
 	TSplitter *Splitter1;
 	TPanel *mBottomPanel;
-	TGroupBox *imageParasGB;
-	TButton *mResetButton;
-	TButton *mHistoryBackBtn;
-	TButton *mHistoryFFW;
-	TPanel *mLeftPanel;
 	TPaintBox *PaintBox1;
 	TIniFileC *mIniFileC;
 	TPanel *Panel2;
 	TButton *mCLearMemo;
 	TSplitter *Splitter2;
-	TPopupMenu *ZsPopUpMenu;
-	TMenuItem *CopyValidZs1;
-	TButton *mZoomOutBtn;
-	TButton *mZoomInBtn;
-	TIntegerLabeledEdit *Width;
-	TIntegerLabeledEdit *Height;
-	TIntegerLabeledEdit *XCoord;
-	TIntegerLabeledEdit *YCoord;
 	TButton *mCloseBottomPanelBtn;
-	TIntegerEdit *mZoomFactor;
 	TButton *mShowBottomPanelBtn;
 	TTabSheet *TabSheet3;
 	TButton *mBrowseForCacheFolder;
@@ -109,73 +92,20 @@ __published:	// IDE-managed Components
 	TIntLabel *mX;
 	TIntLabel *mY;
 	TGroupBox *GroupBox8;
-	TGroupBox *GroupBox9;
-	TButton *mFetchSelectedZsBtn;
-	TSSHFrame *TSSHFrame1;
-	TTabSheet *TabSheet4;
-	TGroupBox *StackGenerationGB;
-	TButton *Run;
 	TMainMenu *MainMenu1;
 	TMenuItem *File1;
 	TMenuItem *Help1;
 	TMenuItem *About1;
-	TGroupBox *GroupBox4;
-	TSTDStringLabeledEdit *mBaseUrlE;
-	TMemo *BashScriptMemo;
-	TGroupBox *GroupBox1;
-	TLabel *Label1;
-	TLabel *Label2;
-	TLabel *Label3;
-	TComboBox *OwnerCB;
-	TComboBox *ProjectCB;
-	TComboBox *StackCB;
-	TGroupBox *TestSSHGB;
-	TButton *CMDButton;
-	TEdit *mCMD;
-	TTimer *CreateCacheTimer;
-	TIntegerLabeledEdit *MaxIntensity;
-	TIntegerLabeledEdit *MinIntensity;
-	TScrollBox *ScrollBox1;
-	TGroupBox *CacheGB;
-	TGroupBox *PostProcessingGB;
-	TCheckBox *IMContrastControl;
-	TCheckListBox *StacksForProjectCB;
-	TGroupBox *MultiStackCreationGB;
-	TPropertyCheckBox *BoundsCB;
-	TFloatLabeledEdit *VolumesScaleE;
-	TSTDStringLabeledEdit *VolumesFolder;
-	TSTDStringLabeledEdit *SubFolder1;
-	TGroupBox *GroupBox2;
-	TButton *OpenInNDVIZBtn;
 	TPopupMenu *ImagePopup;
 	TMenuItem *ParseNDVIZURL1;
-	TButton *OpenFromNDVIZBtn;
-	TCheckListBox *mZs;
-	TMenuItem *CheckAll1;
-	TMenuItem *UncheckAll1;
-	TMenuItem *Checkrange1;
 	TMenuItem *Exit1;
-	TGroupBox *GroupBox3;
 	TMenuItem *Options1;
 	TMenuItem *ThemesMenu;
-	TCheckBox *FlipImageRightCB;
-	TRadioGroup *ColorRG;
 	TStatusBar *StatusBar1;
-	TPropertyCheckBox *CustomFilterCB;
-	TEdit *CustomFilterE;
 	TMenuItem *OpenaClone1;
-	TCheckBox *FlipImageLeftCB;
 	THeaderControl *HeaderControl1;
 	TPanel *Panel1;
 	TMenuItem *AddOverlayedImage1;
-	TPropertyCheckBox *CreateTIFFStackCB;
-	TPropertyCheckBox *DeleteTempTiffsCB;
-	TIntegerLabeledEdit *ZBatchSizeE;
-	TIntegerLabeledEdit *MaxNumberOfRemoteJobsE;
-	TIntegerLabeledEdit *NicenessE;
-	TTabSheet *TabSheet2;
-	TParaConverterFrame *TParaConverterFrame1;
-	TGroupBox *JobCreationGB;
 	TMenuItem *Open1;
 	TActionList *MenuActions;
 	TFileOpen *FileOpen1;
@@ -207,63 +137,41 @@ __published:	// IDE-managed Components
 	TMenuItem *Close2;
 	TPanel *MainPanel;
 	TAction *EditViewNode;
-	TPropertyCheckBox *PadFileNamesWithZeroesCB;
-	TComboBox *ImageTypeCB;
-	TLabel *Label4;
-	TFloatLabeledEdit *ScaleConstantE;
-	TFloatLabeledEdit *CustomRotationE;
-	TButton *TestRenderServiceBtn;
-	void __fastcall ClickZ(TObject *Sender);
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall mShutDownTimerTimer(TObject *Sender);
 	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
 	void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
-	void __fastcall mScaleEKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
+
 	void __fastcall Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
 	void __fastcall FormMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
 	void __fastcall FormMouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
 	void __fastcall FormMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
-	void __fastcall resetButtonClick(TObject *Sender);
-	void __fastcall historyBtnClick(TObject *Sender);
-	void __fastcall TraverseZClick(TObject *Sender);
-	void __fastcall mFetchSelectedZsBtnClick(TObject *Sender);
-	void __fastcall mGetValidZsBtnClick(TObject *Sender);
-	void __fastcall mBrowseForCacheFolderClick(TObject *Sender);
+
+
+
+
+
+
 	void __fastcall mCLearMemoClick(TObject *Sender);
-	void __fastcall mUpdateZsBtnClick(TObject *Sender);
-	void __fastcall CopyValidZs1Click(TObject *Sender);
-	void __fastcall GetOptimalBoundsBtnClick(TObject *Sender);
-	void __fastcall mZoomBtnClick(TObject *Sender);
-	void __fastcall OwnerCBChange(TObject *Sender);
-	void __fastcall ProjectCBChange(TObject *Sender);
+
+
+
+
+
+
 	void __fastcall mCloseBottomPanelBtnClick(TObject *Sender);
 	void __fastcall mShowBottomPanelBtnClick(TObject *Sender);
-	void __fastcall StackCBChange(TObject *Sender);
-	void __fastcall TSSHFrame1ScSSHShell1AsyncReceive(TObject *Sender);
-	void __fastcall CMDButtonClick(TObject *Sender);
-	void __fastcall RunClick(TObject *Sender);
 	void __fastcall About1Click(TObject *Sender);
-	void __fastcall TSSHFrame1ScSSHClientAfterConnect(TObject *Sender);
-	void __fastcall TSSHFrame1ScSSHClientAfterDisconnect(TObject *Sender);
+
 	void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
-	void __fastcall CreateCacheTimerTimer(TObject *Sender);
-	void __fastcall OpenInNDVIZBtnClick(TObject *Sender);
-	void __fastcall IntensityKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
-	void __fastcall ParseNDVIZURL1Click(TObject *Sender);
-	void __fastcall CreateNDVIZURL1Click(TObject *Sender);
-	void __fastcall CheckAll1Click(TObject *Sender);
-	void __fastcall UncheckAll1Click(TObject *Sender);
-	void __fastcall Checkrange1Click(TObject *Sender);
+
+
 	void __fastcall Exit1Click(TObject *Sender);
-	void __fastcall StackFilterCBClick(TObject *Sender);
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall ThemesMenuClick(TObject *Sender);
-	void __fastcall ClickImageProcCB(TObject *Sender);
-	void __fastcall ColorRGClick(TObject *Sender);
-	void __fastcall CustomFilterEKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
+
 	void __fastcall OpenaClone1Click(TObject *Sender);
 	void __fastcall AddOverlayedImage1Click(TObject *Sender);
-	void __fastcall CreateTIFFStackCBClick(TObject *Sender);
 	void __fastcall NewProjectAExecute(TObject *Sender);
 	void __fastcall ProjectStatusTimerTimer(TObject *Sender);
 	void __fastcall FileOpen1Accept(TObject *Sender);
@@ -273,23 +181,17 @@ __published:	// IDE-managed Components
 	void __fastcall SaveProjectAUpdate(TObject *Sender);
 	void __fastcall SaveProjectAExecute(TObject *Sender);
 	void __fastcall SaveProjectAsAExecute(TObject *Sender);
-	void __fastcall AddRenderProjectExecute(TObject *Sender);
+
 	void __fastcall ProjectTViewContextPopup(TObject *Sender, TPoint &MousePos,
           bool &Handled);
 	void __fastcall ProjectTViewEditing(TObject *Sender, TTreeNode *Node, bool &AllowEdit);
 	void __fastcall ProjectTViewEdited(TObject *Sender, TTreeNode *Node, UnicodeString &S);
 	void __fastcall EditViewNodeExecute(TObject *Sender);
 	void __fastcall ProjectTViewClick(TObject *Sender);
-	void __fastcall CustomRotationEKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
-	void __fastcall TestRenderServiceBtnClick(TObject *Sender);
 
 
 	private:	// User declarations
        	void __fastcall 								DrawShape(TPoint TopLeft, TPoint BottomRight, TPenMode AMode);
-        RenderClient									mRC;
-        int												getCurrentZ();
-		bool        									mRenderEnabled;
-
         void __fastcall                                 logMsg();
 		LogFileReader                                   mLogFileReader;
 		bool          									mIsStyleMenuPopulated;
@@ -297,16 +199,9 @@ __published:	// IDE-managed Components
         IniFileProperties	      	                    mGeneralProperties;
         dsl::Property<int>	                            mBottomPanelHeight;
 		dsl::Property<dsl::LogLevel>	                mLogLevel;
-		dsl::Property<string>	 		                mCurrentProject;
-		dsl::Property<string>	 		                mCurrentOwner;
-		dsl::Property<string>	 		                mCurrentStack;
 
-        IniFileProperties	      	                    mServer1Properties;
-        IniFileProperties	      	                    mServer2Properties;
         bool                                            setupAndReadIniParameters();
         void                                            setupIniFile();
-		double 											getImageStretchFactor();
-        void											updateScale();
 
         //Drawing stuff
         TBrushStyle 									BrushStyle;
@@ -320,23 +215,9 @@ __published:	// IDE-managed Components
 		void								            render(RenderBox* box = NULL);
 
         //Render areas history
-	    ROIHistory										mROIHistory;
-		RenderBox										mCurrentRB;
       	TCanvas*										getCanvas();
 
-		FetchImagesThread								mCreateCacheThread;
-        string											createNDVIZURL();
-		void __fastcall 								onImage();
-
         //Remote jobs
-		string 											createRemoteCommand(const string& remoteScript, const string& stack);
-		string 											createEmptyScriptFileOnServer(const string& stack);
-		bool                							populateRemoteScript(const string& script);
-        void 											runJob(const string& job);
-        void											applyContrastControl(MagickWand *image_wand);
-		void 											flipImage(MagickWand *image_wand, int deg);
-		void 											colorImage(MagickWand *image_wand, int colorIndex);
-
 	    TImageForm*										gImageForm;
         string 											mCurrentImageFile;
 

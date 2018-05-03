@@ -53,26 +53,6 @@ void __fastcall TMainForm::NewProjectAExecute(TObject *Sender)
 //    ProjectTView->Items->AddObject(NULL, mCurrentVCProject->getProjectName().c_str(), (void*) mCurrentVCProject);
 }
 
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::AddRenderProjectExecute(TObject *Sender)
-{
-    TTreeNode* vcNode = ProjectTView->Selected;
-	VolumeCreatorProject* vcp = (VolumeCreatorProject*) vcNode->Data;
-
-    if(vcp)
-    {
-		//Create a render project and associate with current VC project
-	  	RenderProject* rp = new RenderProject("", "", "" , "");
-
-	    //Check how many renderproject childs
-        int nrOfChilds = vcp->getNumberOfChilds();
-        rp->setProjectName("Render project " + dsl::toString(nrOfChilds + 1));
-    	vcp->addChild(rp);
-    	vcp->setModified();
-		addRenderProjectToTreeView(vcNode, rp, ProjectTView);
-    }
-}
-
 VolumeCreatorProject* __fastcall TMainForm::createNewProject()
 {
 	//Check how many main nodes

@@ -50,23 +50,12 @@ void __fastcall TMainForm::mShutDownTimerTimer(TObject *Sender)
 		mLogFileReader.stop();
 	}
 
-	if(TSSHFrame1->isConnected())
-    {
-		TSSHFrame1->disconnect();
-	}
-
-    TSSHFrame* f = TParaConverterFrame1->TSSHFrame1;
-	if(f->isConnected())
-    {
-		f->disconnect();
-	}
     Close();
 }
 
 void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
 {
 
-    IdHTTP1->Disconnect();
 	Log(lInfo) << "In FormClose";
 	mIniFileC->clear();
 	Log(lInfo) << "In main forms destructor";
@@ -81,9 +70,6 @@ void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
 	mBottomPanelHeight = mBottomPanel->Height;
 
 	mGeneralProperties.write();
-	mServer1Properties.write();
-	mServer2Properties.write();
-
 	//Write to file
 	mIniFileC->save();
 }
@@ -98,14 +84,6 @@ void __fastcall TMainForm::FormCloseQuery(TObject *Sender, bool &CanClose)
 	if(mLogFileReader.isRunning())
     {
     	CanClose = false;
-    }
-	else if(TSSHFrame1->isConnected())
-    {
-		CanClose = false;
-    }
-	else if(TParaConverterFrame1->TSSHFrame1->isConnected())
-    {
-		CanClose = false;
     }
 
     else if(mCurrentVCProject && mCurrentVCProject->isNeverSaved() == false)
