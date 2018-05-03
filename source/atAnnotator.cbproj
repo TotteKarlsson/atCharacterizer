@@ -144,50 +144,15 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <DependentOn>Core\atApplicationSupportFunctions.h</DependentOn>
             <BuildOrder>20</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Core\atFetchImagesThread.cpp">
-            <DependentOn>Core\atFetchImagesThread.h</DependentOn>
-            <BuildOrder>12</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Core\atFetchImageThread.cpp">
-            <DependentOn>Core\atFetchImageThread.h</DependentOn>
-            <BuildOrder>13</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Core\atImageProcessingFunctions.cpp">
-            <DependentOn>Core\atImageProcessingFunctions.h</DependentOn>
-            <BuildOrder>14</BuildOrder>
-        </CppCompile>
         <CppCompile Include="Core\atProjectManager.cpp">
             <DependentOn>Core\atProjectManager.h</DependentOn>
             <BuildOrder>26</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Core\atRenderBox.cpp">
-            <DependentOn>Core\atRenderBox.h</DependentOn>
-            <BuildOrder>15</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Core\atRenderClient.cpp">
-            <DependentOn>Core\atRenderClient.h</DependentOn>
-            <BuildOrder>16</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Core\atRenderClientUtils.cpp">
-            <DependentOn>Core\atRenderClientUtils.h</DependentOn>
-            <BuildOrder>17</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Core\atRenderProject.cpp">
-            <DependentOn>Core\atRenderProject.h</DependentOn>
-            <BuildOrder>18</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Core\atROIHistory.cpp">
-            <DependentOn>Core\atROIHistory.h</DependentOn>
-            <BuildOrder>19</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Core\atSSHUtils.cpp">
-            <DependentOn>Core\atSSHUtils.h</DependentOn>
-            <BuildOrder>23</BuildOrder>
-        </CppCompile>
         <CppCompile Include="Core\atVolumeCreatorProject.cpp">
             <BuildOrder>24</BuildOrder>
         </CppCompile>
-        <CppCompile Include="forms\TAboutVolumeCreatorForm.cpp">
+        <CppCompile Include="Forms\TAboutATAnnotatorForm.cpp">
+            <Form>AboutATAnnotator</Form>
             <BuildOrder>21</BuildOrder>
         </CppCompile>
         <CppCompile Include="Forms\TImageForm.cpp">
@@ -201,24 +166,9 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <DependentOn>Forms\TOverlayedImage.h</DependentOn>
             <BuildOrder>21</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Forms\TSelectZsForm.cpp">
-            <Form>SelectZsForm</Form>
-            <DependentOn>Forms\TSelectZsForm.h</DependentOn>
-            <BuildOrder>21</BuildOrder>
-        </CppCompile>
         <CppCompile Include="Frames\TImageControlsFrame.cpp">
             <FormType>dfm</FormType>
             <BuildOrder>27</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Frames\TParaConverterFrame.cpp">
-            <Form>ParaConverterFrame</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TFrame</DesignClass>
-            <DependentOn>Frames\TParaConverterFrame.h</DependentOn>
-            <BuildOrder>26</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="ImageMagick.cpp">
-            <BuildOrder>19</BuildOrder>
         </CppCompile>
         <CppCompile Include="Initializing.cpp">
             <DependentOn>Initializing.h</DependentOn>
@@ -230,27 +180,16 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <CppCompile Include="ProjectRelated.cpp">
             <BuildOrder>25</BuildOrder>
         </CppCompile>
-        <CppCompile Include="ScriptCreation.cpp">
-            <BuildOrder>18</BuildOrder>
-        </CppCompile>
         <CppCompile Include="TMainForm.cpp">
             <Form>MainForm</Form>
             <FormType>dfm</FormType>
             <DependentOn>TMainForm.h</DependentOn>
             <BuildOrder>2</BuildOrder>
         </CppCompile>
-        <CppCompile Include="P:\libs\atapi\source\vcl\frames\TSSHFrame.cpp">
-            <Form>SSHFrame</Form>
-            <DesignClass>TFrame</DesignClass>
-            <DependentOn>P:\libs\atapi\source\vcl\frames\TSSHFrame.h</DependentOn>
-            <BuildOrder>11</BuildOrder>
-        </CppCompile>
-        <FormResources Include="Frames\TParaConverterFrame.dfm"/>
-        <FormResources Include="Forms\TSelectZsForm.dfm"/>
-        <FormResources Include="Forms\TImageForm.dfm"/>
         <FormResources Include="Forms\TOverlayedImage.dfm"/>
+        <FormResources Include="Forms\TAboutATAnnotatorForm.dfm"/>
+        <FormResources Include="Forms\TImageForm.dfm"/>
         <FormResources Include="TMainForm.dfm"/>
-        <FormResources Include="P:\libs\atapi\source\vcl\frames\TSSHFrame.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -343,6 +282,12 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="p:\build\debug\bin\atAnnotator.tds" Configuration="Debug" Class="DebugSymbols">
+                    <Platform Name="Win32">
+                        <RemoteName>atAnnotator.tds</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true'" LocalName="$(BDS)\Redist\osx32\libcgstl.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
                         <Overwrite>true</Overwrite>
@@ -369,9 +314,9 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="p:\build\debug\bin\atAnnotator.tds" Configuration="Debug" Class="DebugSymbols">
+                <DeployFile LocalName="p:\build\debug\bin\atAnnotator.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>atAnnotator.tds</RemoteName>
+                        <RemoteName>atAnnotator.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -384,12 +329,6 @@ $(PostBuildEvent)]]></PostBuildEvent>
                     <Platform Name="Win32">
                         <RemoteDir>Assets\</RemoteDir>
                         <RemoteName>Logo44x44.png</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="p:\build\debug\bin\atAnnotator.exe" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>atAnnotator.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

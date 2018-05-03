@@ -12,12 +12,10 @@
 using namespace dsl;
 
 using std::string;
-USEFORM("Frames\TParaConverterFrame.cpp", ParaConverterFrame); /* TFrame: File Type */
-USEFORM("Forms\TSelectZsForm.cpp", SelectZsForm);
-USEFORM("Forms\TImageForm.cpp", ImageForm);
 USEFORM("Forms\TOverlayedImage.cpp", OverlayedImage);
+USEFORM("Forms\TAboutATAnnotatorForm.cpp", AboutATAnnotator);
+USEFORM("Forms\TImageForm.cpp", ImageForm);
 USEFORM("TMainForm.cpp", MainForm);
-USEFORM("P:\libs\atapi\source\vcl\frames\TSSHFrame.cpp", SSHFrame); /* TFrame: File Type */
 //---------------------------------------------------------------------------
 extern string		gAppName					= "VolumeCreator";
 extern string       gLogFileName                = "VolumeCreator.log";
@@ -57,7 +55,6 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
 		TStyleManager::TrySetStyle("Carbon");
 		Application->CreateForm(__classid(TMainForm), &MainForm);
-		Application->CreateForm(__classid(TSSHFrame), &SSHFrame);
 		Application->CreateForm(__classid(TOverlayedImage), &OverlayedImage);
 		Application->Run();
 		writeStringToRegistry(gApplicationRegistryRoot, "", "Theme",  gApplicationStyle);

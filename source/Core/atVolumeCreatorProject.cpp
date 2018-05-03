@@ -220,30 +220,30 @@ VolumeCreatorProject* VolumeCreatorProject::createVCObject(tinyxml2::XMLElement*
     VCObjectType pt = toVCObjectType(element->Attribute("type"));
     switch(pt)
     {
-        case vcoRenderProject: return createRenderProject(element);
+//        case vcoRenderProject: return createRenderProject(element);
         default: return NULL;
     }
 }
 
-RenderProject* VolumeCreatorProject::createRenderProject(tinyxml2::XMLElement* element)
-{
-    if(!element && !compareStrings(element->Name(), "render_project", csCaseInsensitive))
-    {
-    	Log(lError) <<"Bad 'render_project' xml!";
-    	return NULL;
-    }
-
-	const char* name = element->Attribute("name");
-
-	RenderProject* p = new RenderProject(name ? string(name) : string(""), "", "" ,"");
-	if(!p->loadFromXML(element))
-    {
-    	Log(lError) << "There was a problem loading model from XML";
-    }
-
-    return p;
-}
-
+//RenderProject* VolumeCreatorProject::createRenderProject(tinyxml2::XMLElement* element)
+//{
+//    if(!element && !compareStrings(element->Name(), "render_project", csCaseInsensitive))
+//    {
+//    	Log(lError) <<"Bad 'render_project' xml!";
+//    	return NULL;
+//    }
+//
+//	const char* name = element->Attribute("name");
+//
+//	RenderProject* p = new RenderProject(name ? string(name) : string(""), "", "" ,"");
+//	if(!p->loadFromXML(element))
+//    {
+//    	Log(lError) << "There was a problem loading model from XML";
+//    }
+//
+//    return p;
+//}
+//
 string toString(VCObjectType tp)
 {
 	switch(tp)

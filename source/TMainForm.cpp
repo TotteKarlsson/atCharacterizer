@@ -4,11 +4,8 @@
 #include "dslVCLUtils.h"
 #include "dslLogger.h"
 #include <vector>
-#include "atRenderClient.h"
-//#include "dslExeFile.h"
 #include "dslMathUtils.h"
 #include "dslTMemoLogger.h"
-#include "TSelectZsForm.h"
 #include "TImageForm.h"
 #include "atApplicationSupportFunctions.h"
 #include "TOverlayedImage.h"
@@ -16,23 +13,14 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "dslTFloatLabeledEdit"
-#pragma link "dslTIntegerLabeledEdit"
-#pragma link "dslTSTDStringLabeledEdit"
-#pragma link "dslTIntLabel"
-#pragma link "dslTPropertyCheckBox"
 #pragma link "dslTIniFileC"
 #pragma link "dslTIntegerEdit"
-#pragma link "TSSHFrame"
+#pragma link "dslTIntegerLabeledEdit"
+#pragma link "dslTIntLabel"
+#pragma link "dslTPropertyCheckBox"
+#pragma link "dslTSTDStringLabeledEdit"
 #pragma link "TImageControlsFrame"
-#pragma link "TParaConverterFrame"
-
-#pragma link "dslTFloatLabeledEdit"
-#pragma link "dslTIniFileC"
-#pragma link "dslTIntegerEdit"
-#pragma link "dslTIntegerLabeledEdit"
-#pragma link "dslTIntLabel"
-#pragma link "dslTPropertyCheckBox"
-#pragma link "dslTSTDStringLabeledEdit"
+#pragma link "dslTSTDStringEdit"
 #pragma resource "*.dfm"
 TMainForm *MainForm;
 
@@ -42,7 +30,6 @@ TImage *CurrImage;
 extern string gAppDataLocation;
 extern string gLogFileName;
 
-//__fastcall      TRegistryForm(const string& regRoot, const string& formName, TComponent* Owner);
 //---------------------------------------------------------------------------
 __fastcall TMainForm::TMainForm(TComponent* Owner)
 	: TRegistryForm(gApplicationRegistryRoot, "MainForm", Owner),
@@ -52,7 +39,6 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
     mIsStyleMenuPopulated(false),
 	gImageForm(NULL),
-    mProjectManager((*ProjectTView)),
     mAppProperties("VolumeCreator", gApplicationRegistryRoot, "")
 {
     setupIniFile();
@@ -66,20 +52,6 @@ __fastcall TMainForm::~TMainForm()
 	delete gImageForm;
 }
 
-//#define ThrowWandException(wand) \
-//{ \
-//  char \
-//    *description; \
-// \
-//  ExceptionType \
-//    severity; \
-// \
-//  description=MagickGetException(wand,&severity); \
-//  (void) fprintf(stderr,"%s %s %lu %s\n",GetMagickModule(),description); \
-//  description=(char *) MagickRelinquishMemory(description); \
-//  exit(-1); \
-//}
-//
 void ThrowWandException(MagickWand* wand)
 {
   	char *description;
@@ -257,44 +229,16 @@ void __fastcall TMainForm::AddOverlayedImage1Click(TObject *Sender)
     f->Show();
 }
 
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::ProjectTViewEditing(TObject *Sender, TTreeNode *Node,
-          bool &AllowEdit)
-{
-	AllowEdit = true;
-}
 
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::ProjectTViewEdited(TObject *Sender, TTreeNode *Node,
-          UnicodeString &S)
+void __fastcall TMainForm::BrowseForFolder1Accept(TObject *Sender)
 {
-	//Update underlying object with new valuse..
-    VolumeCreatorProject* vcp = (VolumeCreatorProject*) Node->Data;
-    if(vcp)
+	//Extract Folder
+    if(!BrowseForFolder1->Folder.Length())
     {
-    	vcp->setProjectName(stdstr(S));
-        vcp->setModified();
-		SaveProjectA->Update();
+        return;
     }
-}
 
-void __fastcall TMainForm::EditViewNodeExecute(TObject *Sender)
-{
-	TTreeNode* item = ProjectTView->Selected;
-    if(item)
-    {
-    	item->EditText();
-    }
+    mImageFolderE->setValue(stdstr(BrowseForFolder1->Folder));
 }
-
 //---------------------------------------------------------------------------
-void __fastcall TMainForm::ProjectTViewClick(TObject *Sender)
-{
-	//Get current node from the treeview
-	TTreeNode* item = ProjectTView->Selected;
-	mProjectManager.selectItem(item);
-
-}
-
-
 

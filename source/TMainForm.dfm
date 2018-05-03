@@ -75,18 +75,23 @@ object MainForm: TMainForm
     Align = alTop
     Alignment = taLeftJustify
     TabOrder = 3
-    object ProjFileLbl: TLabel
-      AlignWithMargins = True
-      Left = 16
-      Top = 4
-      Width = 1401
-      Height = 27
-      Margins.Left = 15
-      Align = alClient
-      Caption = '<none>'
-      Layout = tlCenter
-      ExplicitWidth = 40
-      ExplicitHeight = 13
+    object mBrowseForCacheFolder: TButton
+      Left = 560
+      Top = 6
+      Width = 33
+      Height = 25
+      Action = BrowseForFolder1
+      Caption = '...'
+      TabOrder = 1
+    end
+    object mImageFolderE: TSTDStringEdit
+      Left = 12
+      Top = 9
+      Width = 493
+      Height = 21
+      TabOrder = 0
+      Text = 'c:\ImageCache'
+      Value = 'c:\ImageCache'
     end
   end
   object MainPanel: TPanel
@@ -107,68 +112,43 @@ object MainForm: TMainForm
       ExplicitTop = 685
     end
     object PageControl1: TPageControl
-      Left = 186
+      Left = 1
       Top = 1
-      Width = 1234
+      Width = 1419
       Height = 662
       ActivePage = TabSheet1
       Align = alClient
       TabOrder = 0
       object TabSheet1: TTabSheet
         Caption = 'General'
+        ExplicitWidth = 1226
         object Panel5: TPanel
           Left = 0
           Top = 0
-          Width = 1226
-          Height = 113
+          Width = 1411
+          Height = 41
           Align = alTop
           TabOrder = 0
           object Splitter1: TSplitter
             Left = 1
             Top = 1
             Width = 2
-            Height = 111
+            Height = 39
             ExplicitLeft = 593
+            ExplicitHeight = 111
           end
           object GroupBox8: TGroupBox
             Left = 3
             Top = 1
             Width = 144
-            Height = 111
+            Height = 39
             Align = alLeft
             Caption = 'Image/Mouse properties'
             TabOrder = 0
-            object mX: TIntLabel
-              Left = 16
-              Top = 43
-              Width = 10
-              Height = 13
-              Caption = '-1'
-              Transparent = True
-              Value = -1
-              TheFont.Charset = DEFAULT_CHARSET
-              TheFont.Color = clWindowText
-              TheFont.Height = -11
-              TheFont.Name = 'Tahoma'
-              TheFont.Style = []
-            end
+            ExplicitHeight = 111
             object mXC: TIntLabel
               Left = 16
               Top = 19
-              Width = 10
-              Height = 13
-              Caption = '-1'
-              Transparent = True
-              Value = -1
-              TheFont.Charset = DEFAULT_CHARSET
-              TheFont.Color = clWindowText
-              TheFont.Height = -11
-              TheFont.Name = 'Tahoma'
-              TheFont.Style = []
-            end
-            object mY: TIntLabel
-              Left = 65
-              Top = 43
               Width = 10
               Height = 13
               Caption = '-1'
@@ -198,16 +178,19 @@ object MainForm: TMainForm
         end
         object Panel1: TPanel
           Left = 0
-          Top = 113
-          Width = 1226
-          Height = 521
+          Top = 41
+          Width = 1411
+          Height = 593
           Align = alClient
           TabOrder = 1
+          ExplicitTop = 113
+          ExplicitWidth = 1226
+          ExplicitHeight = 521
           object PaintBox1: TPaintBox
             Left = 1
             Top = 1
-            Width = 1224
-            Height = 502
+            Width = 1409
+            Height = 574
             Align = alClient
             Color = clRed
             ParentColor = False
@@ -219,8 +202,8 @@ object MainForm: TMainForm
           object Image1: TImage
             Left = 1
             Top = 1
-            Width = 1224
-            Height = 502
+            Width = 1409
+            Height = 574
             Align = alClient
             AutoSize = True
             Picture.Data = {
@@ -16239,8 +16222,8 @@ object MainForm: TMainForm
           end
           object HeaderControl1: THeaderControl
             Left = 1
-            Top = 503
-            Width = 1224
+            Top = 575
+            Width = 1409
             Height = 17
             Align = alBottom
             Sections = <
@@ -16249,42 +16232,8 @@ object MainForm: TMainForm
                 Text = 'Misc'
                 Width = 50
               end>
-          end
-        end
-      end
-      object TabSheet3: TTabSheet
-        Caption = 'Settings'
-        ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 567
-        object GroupBox6: TGroupBox
-          Left = 19
-          Top = 25
-          Width = 222
-          Height = 129
-          Caption = 'General'
-          TabOrder = 0
-          object mImageCacheFolderE: TSTDStringLabeledEdit
-            Left = 19
-            Top = 40
-            Width = 121
-            Height = 21
-            EditLabel.Width = 102
-            EditLabel.Height = 13
-            EditLabel.Caption = 'Root folder for cache'
-            TabOrder = 0
-            Text = 'c:\ImageCache'
-            Value = 'c:\ImageCache'
-          end
-          object mBrowseForCacheFolder: TButton
-            Left = 152
-            Top = 38
-            Width = 33
-            Height = 25
-            Caption = '...'
-            TabOrder = 1
+            ExplicitTop = 503
+            ExplicitWidth = 1224
           end
         end
       end
@@ -16345,30 +16294,6 @@ object MainForm: TMainForm
         end
       end
     end
-    object ProjectManagerPanel: TPanel
-      Left = 1
-      Top = 1
-      Width = 185
-      Height = 662
-      Align = alLeft
-      TabOrder = 2
-      Visible = False
-      object ProjectTView: TTreeView
-        Left = 1
-        Top = 1
-        Width = 183
-        Height = 660
-        Align = alClient
-        Indent = 19
-        PopupMenu = ProjTreeViewPopup
-        RightClickSelect = True
-        TabOrder = 0
-        OnClick = ProjectTViewClick
-        OnContextPopup = ProjectTViewContextPopup
-        OnEdited = ProjectTViewEdited
-        OnEditing = ProjectTViewEditing
-      end
-    end
   end
   object mShutDownTimer: TTimer
     Enabled = False
@@ -16385,7 +16310,7 @@ object MainForm: TMainForm
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
-    Left = 240
+    Left = 872
     Top = 24
     object File1: TMenuItem
       Caption = 'File'
@@ -16453,8 +16378,8 @@ object MainForm: TMainForm
   end
   object MenuActions: TActionList
     Images = ImageList1
-    Left = 48
-    Top = 88
+    Left = 320
+    Top = 32
     object FileOpen1: TFileOpen
       Category = 'File'
       Caption = '&Open...'
@@ -16463,32 +16388,24 @@ object MainForm: TMainForm
       Hint = 'Open|Opens an existing file'
       ImageIndex = 1
       ShortCut = 16463
-      OnAccept = FileOpen1Accept
     end
     object NewProjectA: TAction
       Category = 'File'
       Caption = 'New'
       ImageIndex = 0
-      OnExecute = NewProjectAExecute
     end
     object SaveProjectA: TAction
       Category = 'File'
       Caption = 'Save'
       ImageIndex = 2
-      OnExecute = SaveProjectAExecute
-      OnUpdate = SaveProjectAUpdate
     end
     object SaveProjectAsA: TAction
       Category = 'File'
       Caption = 'Save As'
-      OnExecute = SaveProjectAsAExecute
-      OnUpdate = SaveProjectAsAUpdate
     end
     object CloseProjectA: TAction
       Category = 'File'
       Caption = 'Close'
-      OnExecute = CloseProjectAExecute
-      OnUpdate = CloseProjectAUpdate
     end
     object AddRenderProject: TAction
       Category = 'TreeView'
@@ -16497,7 +16414,14 @@ object MainForm: TMainForm
     object EditViewNode: TAction
       Category = 'TreeView'
       Caption = 'EditViewNode'
-      OnExecute = EditViewNodeExecute
+    end
+    object BrowseForFolder1: TBrowseForFolder
+      Category = 'File'
+      Caption = 'BrowseForFolder1'
+      DialogCaption = 'BrowseForFolder1'
+      BrowseOptions = [bifNewDialogStyle]
+      BrowseOptionsEx = []
+      OnAccept = BrowseForFolder1Accept
     end
   end
   object SaveDialog1: TSaveDialog
@@ -16507,8 +16431,8 @@ object MainForm: TMainForm
     Top = 336
   end
   object ImageList1: TImageList
-    Left = 408
-    Top = 8
+    Left = 768
+    Top = 24
     Bitmap = {
       494C010108001800E40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
@@ -16912,15 +16836,5 @@ object MainForm: TMainForm
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000}
-  end
-  object ProjTreeViewPopup: TPopupMenu
-    Left = 64
-    Top = 144
-    object AddRenderProject1: TMenuItem
-      Action = AddRenderProject
-    end
-    object Close2: TMenuItem
-      Action = CloseProjectA
-    end
   end
 end

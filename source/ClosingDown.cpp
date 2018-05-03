@@ -18,32 +18,6 @@ void __fastcall TMainForm::mShutDownTimerTimer(TObject *Sender)
 {
 	mShutDownTimer->Enabled = false;
 
-    VolumeCreatorProject* mCurrentVCProject = mProjectManager.getCurrentProject();
-	if(mCurrentVCProject && mCurrentVCProject->isNeverSaved() == true)
-    {
-    	int mrResult = MessageDlg("Do you want to save current project?", mtWarning, TMsgDlgButtons() << mbYes<<mbNo<<mbCancel, 0);
-        if(mrResult == mrYes)
-        {
-    		if(closeProject() == mrCancel)
-	        {
-    	    	return;
-        	}
-        }
-        else if(mrResult == mrCancel)
-        {
-        	return;
-        }
-    }
-    else if(mCurrentVCProject)
-    {
-
-		mCurrentVCProject->save();
-    }
-
-    delete mCurrentVCProject;
-    mCurrentVCProject = NULL;
-
-
 	if(mLogFileReader.isRunning())
 	{
 		Log(lDebug) << "Shutting down log file reader";
@@ -79,16 +53,11 @@ void __fastcall TMainForm::FormCloseQuery(TObject *Sender, bool &CanClose)
 {
 	Log(lInfo) << "Closing down....";
 
-    VolumeCreatorProject* mCurrentVCProject = mProjectManager.getCurrentProject();
+
 	//Check if we can close.. abort all threads..
 	if(mLogFileReader.isRunning())
     {
     	CanClose = false;
-    }
-
-    else if(mCurrentVCProject && mCurrentVCProject->isNeverSaved() == false)
-    {
-		CanClose = false;
     }
 
 	if(CanClose == false)

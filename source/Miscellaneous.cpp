@@ -3,10 +3,8 @@
 #include "TMainForm.h"
 #include "dslVCLUtils.h"
 #include "dslLogger.h"
-#include "atRenderClient.h"
-#include "atROIHistory.h"
 #include "dslRestartApplicationUtils.h"
-#include "TAboutVolumeCreatorForm.h"
+#include "TAboutATAnnotatorForm.h"
 //---------------------------------------------------------------------------
 
 using namespace dsl;
@@ -23,7 +21,7 @@ void __fastcall TMainForm::logMsg()
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::About1Click(TObject *Sender)
 {
-	TAboutVolumeCreator* a = new TAboutVolumeCreator(this);
+	TAboutATAnnotator* a = new TAboutATAnnotator(this);
 	a->ShowModal();
     delete a;
 }

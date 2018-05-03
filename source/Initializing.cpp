@@ -3,8 +3,6 @@
 #include "TMainForm.h"
 #include "dslVCLUtils.h"
 #include "dslLogger.h"
-#include "atRenderClient.h"
-#include "atROIHistory.h"
 //---------------------------------------------------------------------------
 
 using namespace dsl;

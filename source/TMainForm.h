@@ -20,9 +20,6 @@
 #include <Vcl.ComCtrls.hpp>
 #include "dslTIntLabel.h"
 #include "dslTPropertyCheckBox.h"
-#include "atRenderClient.h"
-#include "atROIHistory.h"
-//#include "dslProcess.h"
 #include "dslIniFileProperties.h"
 #include "dslRegistryProperties.h"
 #include "dslTIniFileC.h"
@@ -35,7 +32,6 @@
 #include "MagickWand/MagickWand.h"
 #include <Vcl.Buttons.hpp>
 #include <Vcl.Imaging.pngimage.hpp>
-#include "TParaConverterFrame.h"
 #include <System.Actions.hpp>
 #include <Vcl.ActnList.hpp>
 #include <Vcl.StdActns.hpp>
@@ -53,6 +49,7 @@
 #include "dslTIntLabel.h"
 #include "dslTPropertyCheckBox.h"
 #include "dslTSTDStringLabeledEdit.h"
+#include "dslTSTDStringEdit.h"
 class TImageForm;
 //using dsl::Process;
 //---------------------------------------------------------------------------
@@ -81,16 +78,10 @@ __published:	// IDE-managed Components
 	TSplitter *Splitter2;
 	TButton *mCloseBottomPanelBtn;
 	TButton *mShowBottomPanelBtn;
-	TTabSheet *TabSheet3;
-	TButton *mBrowseForCacheFolder;
-	TSTDStringLabeledEdit *mImageCacheFolderE;
-	TGroupBox *GroupBox6;
 	TPanel *mLogPanel;
 	TPanel *Panel5;
 	TIntLabel *mXC;
 	TIntLabel *mYC;
-	TIntLabel *mX;
-	TIntLabel *mY;
 	TGroupBox *GroupBox8;
 	TMainMenu *MainMenu1;
 	TMenuItem *File1;
@@ -123,72 +114,36 @@ __published:	// IDE-managed Components
 	TImageList *ImageList1;
 	TToolButton *ToolButton2;
 	TToolButton *ToolButton3;
-	TPanel *ProjectManagerPanel;
 	TMenuItem *N1;
 	TMenuItem *N2;
 	TMenuItem *Reopen;
 	TMenuItem *N3;
-	TTreeView *ProjectTView;
 	TPanel *ProjFilePathPanel;
-	TLabel *ProjFileLbl;
-	TPopupMenu *ProjTreeViewPopup;
 	TAction *AddRenderProject;
-	TMenuItem *AddRenderProject1;
-	TMenuItem *Close2;
 	TPanel *MainPanel;
 	TAction *EditViewNode;
+	TButton *mBrowseForCacheFolder;
+	TSTDStringEdit *mImageFolderE;
+	TBrowseForFolder *BrowseForFolder1;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall mShutDownTimerTimer(TObject *Sender);
 	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
 	void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
-
 	void __fastcall Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
 	void __fastcall FormMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
 	void __fastcall FormMouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
 	void __fastcall FormMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
-
-
-
-
-
-
 	void __fastcall mCLearMemoClick(TObject *Sender);
-
-
-
-
-
-
 	void __fastcall mCloseBottomPanelBtnClick(TObject *Sender);
 	void __fastcall mShowBottomPanelBtnClick(TObject *Sender);
 	void __fastcall About1Click(TObject *Sender);
-
 	void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
-
-
 	void __fastcall Exit1Click(TObject *Sender);
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall ThemesMenuClick(TObject *Sender);
-
 	void __fastcall OpenaClone1Click(TObject *Sender);
 	void __fastcall AddOverlayedImage1Click(TObject *Sender);
-	void __fastcall NewProjectAExecute(TObject *Sender);
-	void __fastcall ProjectStatusTimerTimer(TObject *Sender);
-	void __fastcall FileOpen1Accept(TObject *Sender);
-	void __fastcall CloseProjectAExecute(TObject *Sender);
-	void __fastcall CloseProjectAUpdate(TObject *Sender);
-	void __fastcall SaveProjectAsAUpdate(TObject *Sender);
-	void __fastcall SaveProjectAUpdate(TObject *Sender);
-	void __fastcall SaveProjectAExecute(TObject *Sender);
-	void __fastcall SaveProjectAsAExecute(TObject *Sender);
-
-	void __fastcall ProjectTViewContextPopup(TObject *Sender, TPoint &MousePos,
-          bool &Handled);
-	void __fastcall ProjectTViewEditing(TObject *Sender, TTreeNode *Node, bool &AllowEdit);
-	void __fastcall ProjectTViewEdited(TObject *Sender, TTreeNode *Node, UnicodeString &S);
-	void __fastcall EditViewNodeExecute(TObject *Sender);
-	void __fastcall ProjectTViewClick(TObject *Sender);
-
+	void __fastcall BrowseForFolder1Accept(TObject *Sender);
 
 	private:	// User declarations
        	void __fastcall 								DrawShape(TPoint TopLeft, TPoint BottomRight, TPenMode AMode);
@@ -212,7 +167,6 @@ __published:	// IDE-managed Components
         TPoint 											MovePt;
         TPoint											mTopLeftSelCorner;
         TPoint											mBottomRightSelCorner;
-		void								            render(RenderBox* box = NULL);
 
         //Render areas history
       	TCanvas*										getCanvas();
@@ -221,19 +175,9 @@ __published:	// IDE-managed Components
 	    TImageForm*										gImageForm;
         string 											mCurrentImageFile;
 
-        												//!VC can have only one VC project open at any one time.
-		ProjectManager									mProjectManager;
-		VolumeCreatorProject*							getCurrentVCProject();
-
-        vector<VolumeCreatorProject*>					mVCProjects;
-		int __fastcall 									saveProject();
-		int __fastcall 									saveProjectAs();
-		int __fastcall 									closeProject();
-		VolumeCreatorProject* __fastcall 				createNewProject();
-
-public:
-	__fastcall 											TMainForm(TComponent* Owner);
-	__fastcall 											~TMainForm();
+	public:
+		__fastcall 					 					TMainForm(TComponent* Owner);
+		__fastcall 					 					~TMainForm();
 };
 
 extern PACKAGE TMainForm *MainForm;

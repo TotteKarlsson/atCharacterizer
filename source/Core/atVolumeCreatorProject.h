@@ -16,8 +16,9 @@ namespace tinyxml2
 
 using namespace std;
 using dsl::gEmptyString;
-//!A render project is a project as exposed by Render
-class RenderProject;
+
+////!A render project is a project as exposed by Render
+//class RenderProject;
 
 //!We are using an enum for process type in order to save/retrieve different processes from XML
 enum VCObjectType
@@ -73,7 +74,6 @@ class VolumeCreatorProject : public dsl::Project, public ATObject
         VCObjectType		  		            mVCObjectType;
 
         VolumeCreatorProject*		            createVCObject(tinyxml2::XMLElement* element);
-		RenderProject*							createRenderProject(tinyxml2::XMLElement* element);
 
         										//!Childs can be various tuypes of objecs, e.g. renderprojects and volumes
         vector<VolumeCreatorProject*>			mChilds;
