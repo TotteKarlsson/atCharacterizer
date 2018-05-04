@@ -75,6 +75,14 @@ object MainForm: TMainForm
       Text = 'UserE'
       Value = 'UserE'
     end
+    object ValidationCB: TPropertyCheckBox
+      Left = 784
+      Top = 10
+      Width = 137
+      Height = 17
+      Caption = 'Validation Dialog'
+      TabOrder = 3
+    end
   end
   object MainPanel: TPanel
     Left = 0
@@ -214,7 +222,6 @@ object MainForm: TMainForm
         Caption = 'Open Folder'
         TabOrder = 1
         OnClick = CheckFolderBtnClick
-        ExplicitWidth = 181
       end
       object filesCLB: TListBox
         Left = 2
@@ -234,8 +241,6 @@ object MainForm: TMainForm
       Height = 684
       Align = alClient
       TabOrder = 2
-      ExplicitLeft = 186
-      ExplicitWidth = 1234
       object Image1: TImage
         Left = 1
         Top = 1
@@ -16266,7 +16271,6 @@ object MainForm: TMainForm
             Text = 'Misc'
             Width = 50
           end>
-        ExplicitWidth = 1232
       end
     end
   end
@@ -16403,7 +16407,7 @@ object MainForm: TMainForm
     Left = 768
     Top = 24
     Bitmap = {
-      494C0101080018000C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010108001800100110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

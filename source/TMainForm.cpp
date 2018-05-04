@@ -237,17 +237,38 @@ void __fastcall TMainForm::CharacterizeAction(TObject *Sender)
     if(a == YesA)
     {
         Log(lInfo) <<  "Yes action";
+        if(ValidationCB->Checked)
+        {
+            if(MessageDlg("YES ??", mtInformation, TMsgDlgButtons() << mbOK<<mbCancel, 0) == mrCancel)
+            {
+                return;
+            }
+        }
         //Add.change value
         key->mValue = "Yes";
     }
     else if(a == NoA)
     {
         Log(lInfo) <<  "No action";
+        if(ValidationCB->Checked)
+        {
+            if(MessageDlg("NO ??", mtInformation, TMsgDlgButtons() << mbOK<<mbCancel, 0) == mrCancel)
+            {
+                return;
+            }
+        }
         key->mValue = "No";
     }
     else if(a = MaybeA)
     {
         Log(lInfo) <<  "Maybe action";
+        if(ValidationCB->Checked)
+        {
+            if(MessageDlg("PASS ??", mtInformation, TMsgDlgButtons() << mbOK<<mbCancel, 0) == mrCancel)
+            {
+                return;
+            }
+        }
         key->mValue = "Pass";
     }
 

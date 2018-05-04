@@ -109,6 +109,7 @@ __published:	// IDE-managed Components
 	TAction *MaybeA;
 	TButton *CheckFolderBtn;
 	TListBox *filesCLB;
+	TPropertyCheckBox *ValidationCB;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall mShutDownTimerTimer(TObject *Sender);
 	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
