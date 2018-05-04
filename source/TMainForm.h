@@ -54,7 +54,6 @@ __published:	// IDE-managed Components
 	TMemo *infoMemo;
 	TTimer *mShutDownTimer;
 	TPanel *mBottomPanel;
-	TPaintBox *PaintBox1;
 	TIniFileC *mIniFileC;
 	TPanel *Panel2;
 	TButton *mCLearMemo;
@@ -97,9 +96,7 @@ __published:	// IDE-managed Components
 	TButton *mBrowseForCacheFolder;
 	TSTDStringEdit *mImageFolderE;
 	TBrowseForFolder *BrowseForFolder1;
-	TCheckListBox *filesCLB;
 	TGroupBox *GroupBox1;
-	TButton *CheckFolderBtn;
 	TSTDStringEdit *UserE;
 	TPanel *ActionbuttonsPanel;
 	TArrayBotButton *YesBtn;
@@ -110,6 +107,8 @@ __published:	// IDE-managed Components
 	TAction *YesA;
 	TAction *NoA;
 	TAction *MaybeA;
+	TButton *CheckFolderBtn;
+	TListBox *filesCLB;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall mShutDownTimerTimer(TObject *Sender);
 	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
@@ -157,6 +156,7 @@ __published:	// IDE-managed Components
 
         void                                            onOpenFolder();
         void                                            onCloseFolder();
+        bool                                            isFolderOpen();
 
 	public:
 		__fastcall 					 					TMainForm(TComponent* Owner);

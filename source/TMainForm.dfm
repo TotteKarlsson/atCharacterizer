@@ -61,6 +61,7 @@ object MainForm: TMainForm
       Top = 9
       Width = 493
       Height = 21
+      ReadOnly = True
       TabOrder = 0
       Text = 'c:\ImageCache'
       Value = 'c:\ImageCache'
@@ -90,19 +91,6 @@ object MainForm: TMainForm
       Cursor = crVSplit
       Align = alBottom
       ExplicitLeft = 46
-    end
-    object PaintBox1: TPaintBox
-      Left = 186
-      Top = 1
-      Width = 1234
-      Height = 684
-      Align = alClient
-      Color = clRed
-      ParentColor = False
-      ExplicitLeft = 278
-      ExplicitTop = -1
-      ExplicitWidth = 711
-      ExplicitHeight = 635
     end
     object mBottomPanel: TPanel
       Left = 1
@@ -172,6 +160,7 @@ object MainForm: TMainForm
         Width = 452
         Height = 134
         Align = alLeft
+        Enabled = False
         TabOrder = 1
         object YesBtn: TArrayBotButton
           Left = 1
@@ -211,43 +200,46 @@ object MainForm: TMainForm
     object GroupBox1: TGroupBox
       Left = 1
       Top = 1
-      Width = 185
+      Width = 128
       Height = 684
       Align = alLeft
       Caption = 'Image Files'
       TabOrder = 1
-      object filesCLB: TCheckListBox
+      object CheckFolderBtn: TButton
         Left = 2
         Top = 15
-        Width = 181
-        Height = 615
+        Width = 124
+        Height = 34
+        Align = alTop
+        Caption = 'Open Folder'
+        TabOrder = 1
+        OnClick = CheckFolderBtnClick
+        ExplicitWidth = 181
+      end
+      object filesCLB: TListBox
+        Left = 2
+        Top = 49
+        Width = 124
+        Height = 633
         Align = alClient
         ItemHeight = 13
         TabOrder = 0
         OnClick = filesCLBClick
       end
-      object CheckFolderBtn: TButton
-        Left = 2
-        Top = 630
-        Width = 181
-        Height = 52
-        Align = alBottom
-        Caption = 'Open Folder'
-        TabOrder = 1
-        OnClick = CheckFolderBtnClick
-      end
     end
     object Panel1: TPanel
-      Left = 186
+      Left = 129
       Top = 1
-      Width = 1234
+      Width = 1291
       Height = 684
       Align = alClient
       TabOrder = 2
+      ExplicitLeft = 186
+      ExplicitWidth = 1234
       object Image1: TImage
         Left = 1
         Top = 1
-        Width = 1232
+        Width = 1289
         Height = 665
         Align = alClient
         AutoSize = True
@@ -16265,7 +16257,7 @@ object MainForm: TMainForm
       object HeaderControl1: THeaderControl
         Left = 1
         Top = 666
-        Width = 1232
+        Width = 1289
         Height = 17
         Align = alBottom
         Sections = <
@@ -16274,6 +16266,7 @@ object MainForm: TMainForm
             Text = 'Misc'
             Width = 50
           end>
+        ExplicitWidth = 1232
       end
     end
   end

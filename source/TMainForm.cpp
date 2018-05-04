@@ -63,6 +63,11 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 	}
 }
 
+bool TMainForm::isFolderOpen()
+{
+    return ActionbuttonsPanel->Enabled;
+}
+
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::OpenaClone1Click(TObject *Sender)
 {
@@ -186,6 +191,11 @@ void __fastcall TMainForm::filesCLBClick(TObject *Sender)
     //Extract filename and show image
     int index = filesCLB->ItemIndex;
 
+    if(index < 0)
+    {
+        return;
+    }
+
     IniKey* key = (IniKey*) filesCLB->Items->Objects[index];
     if(!key)
     {
@@ -207,6 +217,13 @@ void __fastcall TMainForm::filesCLBClick(TObject *Sender)
 void __fastcall TMainForm::CharacterizeAction(TObject *Sender)
 {
 	int idx = filesCLB->ItemIndex;
+
+    if(idx < 0)
+    {
+        Log(lWarning) << "No image is selected..";
+        return;
+    }
+
     //Extract key
     IniKey* key = (IniKey*) filesCLB->Items->Objects[idx];
     if(!key)
@@ -254,19 +271,23 @@ void __fastcall TMainForm::FormKeyDown(TObject *Sender, WORD &Key, TShiftState S
     }
     char ch = Key;
 
-    switch(ch)
+    if(isFolderOpen())
     {
-        case 's':
-        case 'S':     		SendMessage(YesBtn->Handle, BM_CLICK, 0, 0);      break;
+        switch(ch)
+        {
+            case 's':
+            case 'S':     		SendMessage(YesBtn->Handle, BM_CLICK, 0, 0);      break;
 
-        case 'd':
-        case 'D':           SendMessage(MaybeBtn->Handle, BM_CLICK, 0, 0);     break;
+            case 'd':
+            case 'D':           SendMessage(MaybeBtn->Handle, BM_CLICK, 0, 0);     break;
 
-        case 'F':
-        case 'f':           SendMessage(NoBtn->Handle, BM_CLICK, 0, 0);      break;
+            case 'F':
+            case 'f':           SendMessage(NoBtn->Handle, BM_CLICK, 0, 0);      break;
+        }
     }
 
-    filesCLB->SetFocus();
+//    if(Sender)
+//    filesCLB->SetFocus();
 }
 
 
