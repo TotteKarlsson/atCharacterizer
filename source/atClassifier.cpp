@@ -13,9 +13,9 @@ using namespace dsl;
 
 using std::string;
 USEFORM("Forms\TOverlayedImage.cpp", OverlayedImage);
-USEFORM("Forms\TAboutATAnnotatorForm.cpp", AboutATAnnotator);
 USEFORM("Forms\TImageForm.cpp", ImageForm);
 USEFORM("TMainForm.cpp", MainForm);
+USEFORM("Forms\TAboutATAnnotatorForm.cpp", AboutATAnnotator);
 //---------------------------------------------------------------------------
 extern string		gAppName					= "Annotator";
 extern string       gLogFileName                = "Annotator.log";

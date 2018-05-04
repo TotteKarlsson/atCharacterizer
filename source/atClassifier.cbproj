@@ -4,7 +4,7 @@
         <ProjectVersion>18.4</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
         <AppType>Application</AppType>
-        <MainSource>atAnnotator.cpp</MainSource>
+        <MainSource>atClassifier.cpp</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
@@ -61,7 +61,7 @@
         <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
         <BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\release\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
-        <SanitizedProjectName>atAnnotator</SanitizedProjectName>
+        <SanitizedProjectName>atClassifier</SanitizedProjectName>
         <Custom_Styles>Carbon|VCLSTYLE|C:\Users\Public\Documents\Embarcadero\Studio\19.0\Styles\Carbon.vsf;Glow|VCLSTYLE|C:\Users\Public\Documents\Embarcadero\Studio\19.0\Styles\Glow.vsf;&quot;Iceberg Classico|VCLSTYLE|C:\Users\Public\Documents\Embarcadero\Studio\19.0\Styles\IcebergClassico.vsf&quot;;Luna|VCLSTYLE|C:\Users\Public\Documents\Embarcadero\Studio\19.0\Styles\Luna.vsf;TabletDark|VCLSTYLE|C:\Users\Public\Documents\Embarcadero\Studio\19.0\Styles\TabletDark.vsf</Custom_Styles>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
@@ -134,7 +134,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <BuildOrder>26</BuildOrder>
             <IgnorePath>true</IgnorePath>
         </LibFiles>
-        <CppCompile Include="atAnnotator.cpp">
+        <CppCompile Include="atClassifier.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
         <CppCompile Include="ClosingDown.cpp">
@@ -208,7 +208,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <BorlandProject>
             <CPlusPlusBuilder.Personality>
                 <Source>
-                    <Source Name="MainSource">atAnnotator.cpp</Source>
+                    <Source Name="MainSource">atClassifier.cpp</Source>
                 </Source>
                 <VersionInfo>
                     <VersionInfo Name="IncludeVerInfo">False</VersionInfo>
@@ -282,9 +282,9 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="p:\build\debug\bin\atAnnotator.tds" Configuration="Debug" Class="DebugSymbols">
+                <DeployFile LocalName="p:\build\debug\bin\atClassifier.tds" Configuration="Debug" Class="DebugSymbols">
                     <Platform Name="Win32">
-                        <RemoteName>atAnnotator.tds</RemoteName>
+                        <RemoteName>atClassifier.tds</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -314,9 +314,9 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="p:\build\debug\bin\atAnnotator.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="p:\build\debug\bin\atClassifier.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>atAnnotator.exe</RemoteName>
+                        <RemoteName>atClassifier.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

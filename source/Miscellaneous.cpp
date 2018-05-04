@@ -25,14 +25,6 @@ void __fastcall TMainForm::About1Click(TObject *Sender)
 	a->ShowModal();
     delete a;
 }
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
-{
-	if(Key == VK_ESCAPE)
-    {
-        Close();
-    }
-}
 
 void __fastcall TMainForm::ThemesMenuClick(TObject *Sender)
 {

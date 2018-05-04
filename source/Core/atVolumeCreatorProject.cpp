@@ -2,7 +2,7 @@
 #include "atVolumeCreatorProject.h"
 #include "dslXMLUtils.h"
 #include "dslLogger.h"
-#include "atRenderProject.h"
+
 using namespace dsl;
 using namespace tinyxml2;
 

@@ -1,21 +1,24 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{D5D51B14-8ED2-4DFA-9A66-B5F682AEEF42}</ProjectGuid>
+        <ProjectGuid>{2B0EC54C-A0FD-4D65-84F1-614E620C0894}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
+        <Projects Include="P:\libs\dsl\builds\dslCommon\dslCommon.cbproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="P:\libs\dsl\builds\dslVCLCommon\dslVCLCommon.cbproj">
             <Dependencies/>
         </Projects>
         <Projects Include="P:\libs\dsl\builds\dslVCLComponents\dslVCLComponents.cbproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="P:\libs\dsl\builds\dslVCLVisualComponents\dslVCLVisualComponents.cbproj">
+        <Projects Include="P:\libs\atapi\builds\atFoundation\atFoundation.cbproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="P:\libs\atapi\builds\atCore\atCore.cbproj">
+        <Projects Include="P:\libs\atapi\builds\atVCLComponents\atVCLComponents.cbproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="..\source\atAnnotator.cbproj">
+        <Projects Include="..\source\atCharacterizer.cbproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -26,6 +29,15 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
+    <Target Name="dslCommon">
+        <MSBuild Projects="P:\libs\dsl\builds\dslCommon\dslCommon.cbproj"/>
+    </Target>
+    <Target Name="dslCommon:Clean">
+        <MSBuild Projects="P:\libs\dsl\builds\dslCommon\dslCommon.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="dslCommon:Make">
+        <MSBuild Projects="P:\libs\dsl\builds\dslCommon\dslCommon.cbproj" Targets="Make"/>
+    </Target>
     <Target Name="dslVCLCommon">
         <MSBuild Projects="P:\libs\dsl\builds\dslVCLCommon\dslVCLCommon.cbproj"/>
     </Target>
@@ -44,41 +56,41 @@
     <Target Name="dslVCLComponents:Make">
         <MSBuild Projects="P:\libs\dsl\builds\dslVCLComponents\dslVCLComponents.cbproj" Targets="Make"/>
     </Target>
-    <Target Name="dslVCLVisualComponents">
-        <MSBuild Projects="P:\libs\dsl\builds\dslVCLVisualComponents\dslVCLVisualComponents.cbproj"/>
+    <Target Name="atFoundation">
+        <MSBuild Projects="P:\libs\atapi\builds\atFoundation\atFoundation.cbproj"/>
     </Target>
-    <Target Name="dslVCLVisualComponents:Clean">
-        <MSBuild Projects="P:\libs\dsl\builds\dslVCLVisualComponents\dslVCLVisualComponents.cbproj" Targets="Clean"/>
+    <Target Name="atFoundation:Clean">
+        <MSBuild Projects="P:\libs\atapi\builds\atFoundation\atFoundation.cbproj" Targets="Clean"/>
     </Target>
-    <Target Name="dslVCLVisualComponents:Make">
-        <MSBuild Projects="P:\libs\dsl\builds\dslVCLVisualComponents\dslVCLVisualComponents.cbproj" Targets="Make"/>
+    <Target Name="atFoundation:Make">
+        <MSBuild Projects="P:\libs\atapi\builds\atFoundation\atFoundation.cbproj" Targets="Make"/>
     </Target>
-    <Target Name="atCore">
-        <MSBuild Projects="P:\libs\atapi\builds\atCore\atCore.cbproj"/>
+    <Target Name="atVCLComponents">
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLComponents\atVCLComponents.cbproj"/>
     </Target>
-    <Target Name="atCore:Clean">
-        <MSBuild Projects="P:\libs\atapi\builds\atCore\atCore.cbproj" Targets="Clean"/>
+    <Target Name="atVCLComponents:Clean">
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLComponents\atVCLComponents.cbproj" Targets="Clean"/>
     </Target>
-    <Target Name="atCore:Make">
-        <MSBuild Projects="P:\libs\atapi\builds\atCore\atCore.cbproj" Targets="Make"/>
+    <Target Name="atVCLComponents:Make">
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLComponents\atVCLComponents.cbproj" Targets="Make"/>
     </Target>
-    <Target Name="atAnnotator">
-        <MSBuild Projects="..\source\atAnnotator.cbproj"/>
+    <Target Name="atCharacterizer">
+        <MSBuild Projects="..\source\atCharacterizer.cbproj"/>
     </Target>
-    <Target Name="atAnnotator:Clean">
-        <MSBuild Projects="..\source\atAnnotator.cbproj" Targets="Clean"/>
+    <Target Name="atCharacterizer:Clean">
+        <MSBuild Projects="..\source\atCharacterizer.cbproj" Targets="Clean"/>
     </Target>
-    <Target Name="atAnnotator:Make">
-        <MSBuild Projects="..\source\atAnnotator.cbproj" Targets="Make"/>
+    <Target Name="atCharacterizer:Make">
+        <MSBuild Projects="..\source\atCharacterizer.cbproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="dslVCLCommon;dslVCLComponents;dslVCLVisualComponents;atCore;atAnnotator"/>
+        <CallTarget Targets="dslCommon;dslVCLCommon;dslVCLComponents;atFoundation;atVCLComponents;atCharacterizer"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="dslVCLCommon:Clean;dslVCLComponents:Clean;dslVCLVisualComponents:Clean;atCore:Clean;atAnnotator:Clean"/>
+        <CallTarget Targets="dslCommon:Clean;dslVCLCommon:Clean;dslVCLComponents:Clean;atFoundation:Clean;atVCLComponents:Clean;atCharacterizer:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="dslVCLCommon:Make;dslVCLComponents:Make;dslVCLVisualComponents:Make;atCore:Make;atAnnotator:Make"/>
+        <CallTarget Targets="dslCommon:Make;dslVCLCommon:Make;dslVCLComponents:Make;atFoundation:Make;atVCLComponents:Make;atCharacterizer:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

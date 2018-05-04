@@ -13,18 +13,18 @@ using namespace dsl;
 
 using std::string;
 USEFORM("Forms\TOverlayedImage.cpp", OverlayedImage);
-USEFORM("Forms\TAboutATAnnotatorForm.cpp", AboutATAnnotator);
 USEFORM("Forms\TImageForm.cpp", ImageForm);
 USEFORM("TMainForm.cpp", MainForm);
+USEFORM("Forms\TAboutATAnnotatorForm.cpp", AboutATAnnotator);
 //---------------------------------------------------------------------------
-extern string		gAppName					= "Annotator";
-extern string       gLogFileName                = "Annotator.log";
+extern string		gAppName					= "The Characterizer";
+extern string       gLogFileName                = "Characterizer.log";
 extern string       gAppDataLocation            = joinPath(getSpecialFolder(CSIDL_LOCAL_APPDATA), gAppName);
-extern string 		gApplicationRegistryRoot  	= "\\Software\\Allen Institute\\Annotator\\0.5.0";
+extern string 		gApplicationRegistryRoot  	= "\\Software\\Allen Institute\\Characterizer\\0.5.0";
 extern string       gApplicationStyle           = "Iceberg Classico";
-extern string       gApplicationMutexName       = "AnnotatorMutex";
+extern string       gApplicationMutexName       = "CharacterizerMutex";
 extern HWND         gOtherAppWindow             = NULL;
-extern string       gRestartMutexName           = "AnnotatorRestartMutex";
+extern string       gRestartMutexName           = "CharacterizerRestartMutex";
 
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {
@@ -37,7 +37,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
         if( ERROR_ALREADY_EXISTS == GetLastError() )
         {
             // The Program is already running somewhere
-            MessageDlg("It seems Annotator is already running!\nOnly one instance can be running at any one time..", mtWarning, TMsgDlgButtons() << mbOK, 0);
+            MessageDlg("It seems that the Characterizer is already running!\nOnly one instance can be running at any one time..", mtWarning, TMsgDlgButtons() << mbOK, 0);
             ::EnumWindows(FindOtherWindow, NULL);
 
             if(gOtherAppWindow != NULL)
@@ -50,6 +50,19 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
 		gApplicationStyle = readStringFromRegistry(gApplicationRegistryRoot, "", "Theme",  gApplicationStyle);
 		Application->Initialize();
+
+
+        string iconFile("App_Icon.ico");
+        if(fileExists(iconFile))
+        {
+			Application->Icon->LoadFromFile(iconFile.c_str());
+        }
+        else
+        {
+            Log(lWarning) << "Application icon ("<<iconFile<<")  was not found";
+        }
+
+
 		Application->MainFormOnTaskBar = true;
         setupLogging();
 

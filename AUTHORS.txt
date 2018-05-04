@@ -1,8 +1,9 @@
-The VolumeCreator application was primarily designed and developed by
+The Characterizer application was primarily designed and developed by
 
     Totte Karlsson (totte@dunescientific.com)
 
 In addition, the following people have contributed in various ways
 
+Michelle Naugle <michellen@alleninstitute.org>
 Stephen Smith <stephens@alleninstitute.org>
 Forrest Collman <forrestc@alleninstitute.org>

@@ -1,55 +1,44 @@
 #ifndef TMainFormH
 #define TMainFormH
-#include <System.Classes.hpp>
-#include <Vcl.Controls.hpp>
-#include <Vcl.StdCtrls.hpp>
-#include <Vcl.Forms.hpp>
-#include <Vcl.ExtCtrls.hpp>
-#include <Vcl.Graphics.hpp>
-#include "dslTFloatLabeledEdit.h"
-#include "dslTIntegerLabeledEdit.h"
-#include "dslTSTDStringLabeledEdit.h"
-#include <Vcl.CheckLst.hpp>
-#include <IdBaseComponent.hpp>
-#include <IdComponent.hpp>
-#include <IdHTTP.hpp>
-#include <IdTCPClient.hpp>
-#include <IdTCPConnection.hpp>
+
+#include "atFetchImagesThread.h"
+#include "atProjectManager.h"
+#include "dslApplicationProperties.h"
+#include "dslIniFileProperties.h"
 #include "dslLogFileReader.h"
 #include "dslLogLevel.h"
-#include <Vcl.ComCtrls.hpp>
-#include "dslTIntLabel.h"
-#include "dslTPropertyCheckBox.h"
-#include "dslIniFileProperties.h"
 #include "dslRegistryProperties.h"
-#include "dslTIniFileC.h"
-#include "dslApplicationProperties.h"
-#include "atFetchImagesThread.h"
-#include <Vcl.Menus.hpp>
-#include "dslTIntegerEdit.h"
-#include "TSSHFrame.h"
-#include "TImageControlsFrame.h"
-#include "MagickWand/MagickWand.h"
-#include <Vcl.Buttons.hpp>
-#include <Vcl.Imaging.pngimage.hpp>
-#include <System.Actions.hpp>
-#include <Vcl.ActnList.hpp>
-#include <Vcl.StdActns.hpp>
-#include <Vcl.ToolWin.hpp>
-#include <Vcl.Dialogs.hpp>
-#include <Vcl.ExtDlgs.hpp>
-#include <Vcl.ImgList.hpp>
-#include "atProjectManager.h"
-#include <System.ImageList.hpp>
-#include "dslTRegistryForm.h"
 #include "dslTFloatLabeledEdit.h"
 #include "dslTIniFileC.h"
 #include "dslTIntegerEdit.h"
 #include "dslTIntegerLabeledEdit.h"
 #include "dslTIntLabel.h"
 #include "dslTPropertyCheckBox.h"
-#include "dslTSTDStringLabeledEdit.h"
+#include "dslTRegistryForm.h"
 #include "dslTSTDStringEdit.h"
+#include "dslTSTDStringLabeledEdit.h"
+#include "MagickWand/MagickWand.h"
+#include "TImageControlsFrame.h"
+#include <System.Actions.hpp>
+#include <System.Classes.hpp>
+#include <System.ImageList.hpp>
+#include <Vcl.ActnList.hpp>
+#include <Vcl.Buttons.hpp>
+#include <Vcl.CheckLst.hpp>
+#include <Vcl.ComCtrls.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.Dialogs.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.ExtDlgs.hpp>
+#include <Vcl.Forms.hpp>
+#include <Vcl.Graphics.hpp>
+#include <Vcl.Imaging.pngimage.hpp>
+#include <Vcl.ImgList.hpp>
+#include <Vcl.Menus.hpp>
+#include <Vcl.StdActns.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.ToolWin.hpp>
+#include "TArrayBotBtn.h"
 class TImageForm;
 //using dsl::Process;
 //---------------------------------------------------------------------------
@@ -67,9 +56,6 @@ __published:	// IDE-managed Components
 	TImage *Image1;
 	TMemo *infoMemo;
 	TTimer *mShutDownTimer;
-	TPageControl *PageControl1;
-	TTabSheet *TabSheet1;
-	TSplitter *Splitter1;
 	TPanel *mBottomPanel;
 	TPaintBox *PaintBox1;
 	TIniFileC *mIniFileC;
@@ -79,10 +65,6 @@ __published:	// IDE-managed Components
 	TButton *mCloseBottomPanelBtn;
 	TButton *mShowBottomPanelBtn;
 	TPanel *mLogPanel;
-	TPanel *Panel5;
-	TIntLabel *mXC;
-	TIntLabel *mYC;
-	TGroupBox *GroupBox8;
 	TMainMenu *MainMenu1;
 	TMenuItem *File1;
 	TMenuItem *Help1;
@@ -100,8 +82,6 @@ __published:	// IDE-managed Components
 	TMenuItem *Open1;
 	TActionList *MenuActions;
 	TFileOpen *FileOpen1;
-	TToolBar *ToolBar1;
-	TToolButton *ToolButton1;
 	TMenuItem *New1;
 	TAction *NewProjectA;
 	TSaveDialog *SaveDialog1;
@@ -112,8 +92,6 @@ __published:	// IDE-managed Components
 	TAction *CloseProjectA;
 	TMenuItem *Close1;
 	TImageList *ImageList1;
-	TToolButton *ToolButton2;
-	TToolButton *ToolButton3;
 	TMenuItem *N1;
 	TMenuItem *N2;
 	TMenuItem *Reopen;
@@ -125,6 +103,19 @@ __published:	// IDE-managed Components
 	TButton *mBrowseForCacheFolder;
 	TSTDStringEdit *mImageFolderE;
 	TBrowseForFolder *BrowseForFolder1;
+	TCheckListBox *filesCLB;
+	TGroupBox *GroupBox1;
+	TButton *CheckFolderBtn;
+	TSTDStringEdit *UserE;
+	TPanel *Panel3;
+	TArrayBotButton *YesBtn;
+	TArrayBotButton *MaybeBtn;
+	TArrayBotButton *NoBtn;
+	TSplitter *Splitter1;
+	TActionList *ActionList1;
+	TAction *YesA;
+	TAction *NoA;
+	TAction *MaybeA;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall mShutDownTimerTimer(TObject *Sender);
 	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
@@ -144,6 +135,10 @@ __published:	// IDE-managed Components
 	void __fastcall OpenaClone1Click(TObject *Sender);
 	void __fastcall AddOverlayedImage1Click(TObject *Sender);
 	void __fastcall BrowseForFolder1Accept(TObject *Sender);
+	void __fastcall BrowseForFolder1BeforeExecute(TObject *Sender);
+	void __fastcall CheckFolderBtnClick(TObject *Sender);
+	void __fastcall filesCLBClick(TObject *Sender);
+	void __fastcall CharacterizeAction(TObject *Sender);
 
 	private:	// User declarations
        	void __fastcall 								DrawShape(TPoint TopLeft, TPoint BottomRight, TPenMode AMode);
@@ -154,6 +149,8 @@ __published:	// IDE-managed Components
         IniFileProperties	      	                    mGeneralProperties;
         dsl::Property<int>	                            mBottomPanelHeight;
 		dsl::Property<dsl::LogLevel>	                mLogLevel;
+
+        IniFile                                         mCharacterizationFile;
 
         bool                                            setupAndReadIniParameters();
         void                                            setupIniFile();
@@ -174,6 +171,9 @@ __published:	// IDE-managed Components
         //Remote jobs
 	    TImageForm*										gImageForm;
         string 											mCurrentImageFile;
+        void                                            onOpenFolder();
+        void                                            onCloseFolder();
+
 
 	public:
 		__fastcall 					 					TMainForm(TComponent* Owner);
