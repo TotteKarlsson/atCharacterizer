@@ -100,7 +100,7 @@
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\debug\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <BCC_PCHInject>AnnotatorPCH1.h</BCC_PCHInject>
+        <BCC_PCHInject>atCharacterizerPCH1.h</BCC_PCHInject>
         <VerInfo_Keys>CompanyName=Allen Institute for Brain Science;FileVersion=0.5.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=0.5.5;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <Icon_MainIcon>App_Icon.ico</Icon_MainIcon>
@@ -129,10 +129,6 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
     </PropertyGroup>
     <ItemGroup>
-        <LibFiles Include="C:\Program Files (x86)\ImageMagick-7.0.7-Q16\lib\CORE_RL_MagickWand_B.lib" Condition="'$(Platform)'=='Win32'">
-            <BuildOrder>26</BuildOrder>
-            <IgnorePath>true</IgnorePath>
-        </LibFiles>
         <CppCompile Include="atCharacterizer.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
@@ -143,31 +139,14 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <DependentOn>Core\atApplicationSupportFunctions.h</DependentOn>
             <BuildOrder>20</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Core\atProjectManager.cpp">
-            <DependentOn>Core\atProjectManager.h</DependentOn>
-            <BuildOrder>26</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Core\atVolumeCreatorProject.cpp">
-            <BuildOrder>24</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Forms\TAboutATAnnotatorForm.cpp">
-            <Form>AboutATAnnotator</Form>
+        <CppCompile Include="Forms\TAboutATCharacterizerForm.cpp">
+            <Form>AboutATCharacterizer</Form>
             <BuildOrder>21</BuildOrder>
         </CppCompile>
         <CppCompile Include="Forms\TImageForm.cpp">
             <Form>ImageForm</Form>
             <DependentOn>Forms\TImageForm.h</DependentOn>
             <BuildOrder>20</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Forms\TOverlayedImage.cpp">
-            <Form>OverlayedImage</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>Forms\TOverlayedImage.h</DependentOn>
-            <BuildOrder>21</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Frames\TImageControlsFrame.cpp">
-            <FormType>dfm</FormType>
-            <BuildOrder>27</BuildOrder>
         </CppCompile>
         <CppCompile Include="Initializing.cpp">
             <DependentOn>Initializing.h</DependentOn>
@@ -185,10 +164,9 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <DependentOn>TMainForm.h</DependentOn>
             <BuildOrder>2</BuildOrder>
         </CppCompile>
-        <FormResources Include="Forms\TOverlayedImage.dfm"/>
         <FormResources Include="Forms\TImageForm.dfm"/>
         <FormResources Include="TMainForm.dfm"/>
-        <FormResources Include="Forms\TAboutATAnnotatorForm.dfm"/>
+        <FormResources Include="Forms\TAboutATCharacterizerForm.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -283,12 +261,6 @@ $(PostBuildEvent)]]></PostBuildEvent>
                 </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true'" LocalName="$(BDS)\Redist\osx32\libcgstl.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="C:\Program Files (x86)\ImageMagick-7.0.7-Q16\lib\CORE_RL_MagickWand_B.lib" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

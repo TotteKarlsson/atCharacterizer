@@ -1,8 +1,5 @@
 #ifndef TMainFormH
 #define TMainFormH
-
-#include "atFetchImagesThread.h"
-#include "atProjectManager.h"
 #include "dslApplicationProperties.h"
 #include "dslIniFileProperties.h"
 #include "dslLogFileReader.h"
@@ -18,7 +15,6 @@
 #include "dslTSTDStringEdit.h"
 #include "dslTSTDStringLabeledEdit.h"
 #include "MagickWand/MagickWand.h"
-#include "TImageControlsFrame.h"
 #include <System.Actions.hpp>
 #include <System.Classes.hpp>
 #include <System.ImageList.hpp>
@@ -39,6 +35,7 @@
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.ToolWin.hpp>
 #include "TArrayBotBtn.h"
+
 class TImageForm;
 //using dsl::Process;
 //---------------------------------------------------------------------------
@@ -70,7 +67,6 @@ __published:	// IDE-managed Components
 	TMenuItem *Help1;
 	TMenuItem *About1;
 	TPopupMenu *ImagePopup;
-	TMenuItem *ParseNDVIZURL1;
 	TMenuItem *Exit1;
 	TMenuItem *Options1;
 	TMenuItem *ThemesMenu;
@@ -78,7 +74,6 @@ __published:	// IDE-managed Components
 	TMenuItem *OpenaClone1;
 	THeaderControl *HeaderControl1;
 	TPanel *Panel1;
-	TMenuItem *AddOverlayedImage1;
 	TMenuItem *Open1;
 	TActionList *MenuActions;
 	TFileOpen *FileOpen1;
@@ -97,7 +92,6 @@ __published:	// IDE-managed Components
 	TMenuItem *Reopen;
 	TMenuItem *N3;
 	TPanel *ProjFilePathPanel;
-	TAction *AddRenderProject;
 	TPanel *MainPanel;
 	TAction *EditViewNode;
 	TButton *mBrowseForCacheFolder;
@@ -107,7 +101,7 @@ __published:	// IDE-managed Components
 	TGroupBox *GroupBox1;
 	TButton *CheckFolderBtn;
 	TSTDStringEdit *UserE;
-	TPanel *Panel3;
+	TPanel *ActionbuttonsPanel;
 	TArrayBotButton *YesBtn;
 	TArrayBotButton *MaybeBtn;
 	TArrayBotButton *NoBtn;
@@ -120,10 +114,6 @@ __published:	// IDE-managed Components
 	void __fastcall mShutDownTimerTimer(TObject *Sender);
 	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
 	void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
-	void __fastcall Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
-	void __fastcall FormMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
-	void __fastcall FormMouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
-	void __fastcall FormMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
 	void __fastcall mCLearMemoClick(TObject *Sender);
 	void __fastcall mCloseBottomPanelBtnClick(TObject *Sender);
 	void __fastcall mShowBottomPanelBtnClick(TObject *Sender);
@@ -133,7 +123,6 @@ __published:	// IDE-managed Components
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall ThemesMenuClick(TObject *Sender);
 	void __fastcall OpenaClone1Click(TObject *Sender);
-	void __fastcall AddOverlayedImage1Click(TObject *Sender);
 	void __fastcall BrowseForFolder1Accept(TObject *Sender);
 	void __fastcall BrowseForFolder1BeforeExecute(TObject *Sender);
 	void __fastcall CheckFolderBtnClick(TObject *Sender);
@@ -141,17 +130,15 @@ __published:	// IDE-managed Components
 	void __fastcall CharacterizeAction(TObject *Sender);
 
 	private:	// User declarations
-       	void __fastcall 								DrawShape(TPoint TopLeft, TPoint BottomRight, TPenMode AMode);
         void __fastcall                                 logMsg();
 		LogFileReader                                   mLogFileReader;
 		bool          									mIsStyleMenuPopulated;
+
         ApplicationProperties                           mAppProperties;
         IniFileProperties	      	                    mGeneralProperties;
         dsl::Property<int>	                            mBottomPanelHeight;
 		dsl::Property<dsl::LogLevel>	                mLogLevel;
-
         IniFile                                         mCharacterizationFile;
-
         bool                                            setupAndReadIniParameters();
         void                                            setupIniFile();
 
@@ -165,15 +152,11 @@ __published:	// IDE-managed Components
         TPoint											mTopLeftSelCorner;
         TPoint											mBottomRightSelCorner;
 
-        //Render areas history
-      	TCanvas*										getCanvas();
-
         //Remote jobs
 	    TImageForm*										gImageForm;
-        string 											mCurrentImageFile;
+
         void                                            onOpenFolder();
         void                                            onCloseFolder();
-
 
 	public:
 		__fastcall 					 					TMainForm(TComponent* Owner);

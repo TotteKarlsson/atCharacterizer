@@ -4,7 +4,7 @@
 #include "dslVCLUtils.h"
 #include "dslLogger.h"
 #include "TImageForm.h"
-#include "atVolumeCreatorProject.h"
+//---------------------------------------------------------------------------
 using namespace dsl;
 
 //---------------------------------------------------------------------------

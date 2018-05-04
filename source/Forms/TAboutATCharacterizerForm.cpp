@@ -1,6 +1,6 @@
 #include <vcl.h>
 #pragma hdrstop
-#include "TAboutATAnnotatorForm.h"
+#include "TAboutATCharacterizerForm.h"
 #include "dslApplicationInfo.h"
 #include "dslLogger.h"
 #include <sstream>
@@ -9,17 +9,17 @@
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 
-TAboutATAnnotator *AboutATAnnotator;
+TAboutATCharacterizer *AboutATCharacterizer;
 using namespace std;
 using namespace dsl;
 
 //---------------------------------------------------------------------------
-__fastcall TAboutATAnnotator::TAboutATAnnotator(TComponent* Owner)
+__fastcall TAboutATCharacterizer::TAboutATCharacterizer(TComponent* Owner)
 	: TForm(Owner)
 {}
 
 //---------------------------------------------------------------------------
-void __fastcall TAboutATAnnotator::FormShow(TObject *Sender)
+void __fastcall TAboutATCharacterizer::FormShow(TObject *Sender)
 {
     stringstream ss;
     dslApplicationInfo appInfo(Application);
@@ -33,7 +33,7 @@ void __fastcall TAboutATAnnotator::FormShow(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TAboutATAnnotator::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
+void __fastcall TAboutATCharacterizer::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
 {
 	if(Key == vkEscape)
     {

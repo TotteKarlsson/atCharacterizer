@@ -1,4 +1,4 @@
-object AboutATAnnotator: TAboutATAnnotator
+object AboutATCharacterizer: TAboutATCharacterizer
   Left = 0
   Top = 0
   BorderStyle = bsDialog
@@ -870,7 +870,7 @@ object AboutATAnnotator: TAboutATAnnotator
       737
       79)
     object Label2: TLabel
-      Left = 255
+      Left = 18
       Top = 30
       Width = 359
       Height = 30
@@ -887,8 +887,8 @@ object AboutATAnnotator: TAboutATAnnotator
       StyleElements = [seClient, seBorder]
     end
     object CloseBtn: TButton
-      Left = 600
-      Top = 11
+      Left = 592
+      Top = 10
       Width = 115
       Height = 59
       Caption = 'Close'

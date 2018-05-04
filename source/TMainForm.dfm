@@ -18,9 +18,6 @@ object MainForm: TMainForm
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
-  OnMouseDown = FormMouseDown
-  OnMouseMove = FormMouseMove
-  OnMouseUp = FormMouseUp
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -169,7 +166,7 @@ object MainForm: TMainForm
           end
         end
       end
-      object Panel3: TPanel
+      object ActionbuttonsPanel: TPanel
         Left = 1
         Top = 1
         Width = 452
@@ -16260,9 +16257,6 @@ object MainForm: TMainForm
         Proportional = True
         Stretch = True
         Transparent = True
-        OnMouseDown = FormMouseDown
-        OnMouseMove = FormMouseMove
-        OnMouseUp = FormMouseUp
         ExplicitLeft = 529
         ExplicitTop = 150
         ExplicitWidth = 821
@@ -16352,16 +16346,9 @@ object MainForm: TMainForm
   object ImagePopup: TPopupMenu
     Left = 912
     Top = 280
-    object ParseNDVIZURL1: TMenuItem
-      Caption = 'Parse NDVIZ URL'
-    end
     object OpenaClone1: TMenuItem
       Caption = 'Open a Clone'
       OnClick = OpenaClone1Click
-    end
-    object AddOverlayedImage1: TMenuItem
-      Caption = 'Add Overlayed Image'
-      OnClick = AddOverlayedImage1Click
     end
   end
   object MenuActions: TActionList
@@ -16423,7 +16410,7 @@ object MainForm: TMainForm
     Left = 768
     Top = 24
     Bitmap = {
-      494C010108001800080110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101080018000C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

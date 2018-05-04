@@ -4,7 +4,7 @@
 #include "dslVCLUtils.h"
 #include "dslLogger.h"
 #include "dslRestartApplicationUtils.h"
-#include "TAboutATAnnotatorForm.h"
+#include "TAboutATCharacterizerForm.h"
 //---------------------------------------------------------------------------
 
 using namespace dsl;
@@ -21,7 +21,7 @@ void __fastcall TMainForm::logMsg()
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::About1Click(TObject *Sender)
 {
-	TAboutATAnnotator* a = new TAboutATAnnotator(this);
+	TAboutATCharacterizer* a = new TAboutATCharacterizer(this);
 	a->ShowModal();
     delete a;
 }

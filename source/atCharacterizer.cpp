@@ -12,10 +12,9 @@
 using namespace dsl;
 
 using std::string;
-USEFORM("Forms\TOverlayedImage.cpp", OverlayedImage);
 USEFORM("Forms\TImageForm.cpp", ImageForm);
 USEFORM("TMainForm.cpp", MainForm);
-USEFORM("Forms\TAboutATAnnotatorForm.cpp", AboutATAnnotator);
+USEFORM("Forms\TAboutATCharacterizerForm.cpp", AboutATCharacterizer);
 //---------------------------------------------------------------------------
 extern string		gAppName					= "The Characterizer";
 extern string       gLogFileName                = "Characterizer.log";
@@ -68,7 +67,6 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
 		TStyleManager::TrySetStyle("Carbon");
 		Application->CreateForm(__classid(TMainForm), &MainForm);
-		Application->CreateForm(__classid(TOverlayedImage), &OverlayedImage);
 		Application->Run();
 		writeStringToRegistry(gApplicationRegistryRoot, "", "Theme",  gApplicationStyle);
 	}
