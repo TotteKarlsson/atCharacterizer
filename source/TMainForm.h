@@ -107,9 +107,12 @@ __published:	// IDE-managed Components
 	TAction *YesA;
 	TAction *NoA;
 	TAction *MaybeA;
-	TButton *CheckFolderBtn;
 	TListBox *filesCLB;
 	TPropertyCheckBox *ValidationCB;
+	TPopupMenu *listPopup;
+	TAction *sortByValueA;
+	TPanel *Panel3;
+	TButton *OpenCloseProjectBtn;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall mShutDownTimerTimer(TObject *Sender);
 	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
@@ -125,9 +128,12 @@ __published:	// IDE-managed Components
 	void __fastcall OpenaClone1Click(TObject *Sender);
 	void __fastcall BrowseForFolder1Accept(TObject *Sender);
 	void __fastcall BrowseForFolder1BeforeExecute(TObject *Sender);
-	void __fastcall CheckFolderBtnClick(TObject *Sender);
+
 	void __fastcall filesCLBClick(TObject *Sender);
 	void __fastcall CharacterizeAction(TObject *Sender);
+	void __fastcall sortByValueAExecute(TObject *Sender);
+	void __fastcall FileOpen1Accept(TObject *Sender);
+	void __fastcall CloseProjectAExecute(TObject *Sender);
 
 	private:	// User declarations
         void __fastcall                                 logMsg();
@@ -138,7 +144,10 @@ __published:	// IDE-managed Components
         IniFileProperties	      	                    mGeneralProperties;
         dsl::Property<int>	                            mBottomPanelHeight;
 		dsl::Property<dsl::LogLevel>	                mLogLevel;
-        IniFile                                         mCharacterizationFile;
+
+                                                        //This file contains all the data for
+                                                        //any particular "project"
+        IniFile                                         mProjectFile;
         bool                                            setupAndReadIniParameters();
         void                                            setupIniFile();
 
@@ -155,7 +164,7 @@ __published:	// IDE-managed Components
         //Remote jobs
 	    TImageForm*										gImageForm;
 
-        void                                            onOpenFolder();
+        bool                                            openProject(const string& fName);
         void                                            onCloseFolder();
         bool                                            isFolderOpen();
 

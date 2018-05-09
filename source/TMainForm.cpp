@@ -98,48 +98,61 @@ void __fastcall TMainForm::BrowseForFolder1BeforeExecute(TObject *Sender)
 	BrowseForFolder1->Folder = vclstr( mImageFolderE->getValue());
 }
 
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::CheckFolderBtnClick(TObject *Sender)
+bool TMainForm::openProject(const string& fName)
 {
-	if(CheckFolderBtn->Caption == "Close Folder")
+	mProjectFile.clear();
+
+    Log(lInfo) << "Loading project file: " << fName;
+    if(!mProjectFile.load(fName))
     {
-        onCloseFolder();
+        Log(lError) << "Failed loading project file: " << fName;
+    }
+
+    //Get SETTINGS section
+    IniSection* settings = mProjectFile.getSection("SETTINGS", true); //Autocreate section
+    if(!settings)
+    {
+        Log(lError) << "Failed creating \"SETTINGS\" section";
+        return false;
+    }
+
+    IniKey* user = settings->getKey("USER", true);
+    if(!user)
+    {
+        Log(lError) << "Failed creating \"USER\" key";
+        return false;
+    }
+
+    if(user->mValue.size() == 0)
+    {
+        user->mValue = UserE->getValue();
     }
     else
     {
-        onOpenFolder();
+        UserE->setValue(user->mValue);
     }
-}
 
-void  TMainForm::onOpenFolder()
-{
-	mCharacterizationFile.clear();
-
-    //Check for characterization file. If not exist, create a new one.
-    string characterizationFileName(joinPath(mImageFolderE->getValue(), UserE->getValue() + "_Classifications.txt"));
-    if(!fileExists(characterizationFileName))
+    IniKey* imageFolder = settings->getKey("IMAGE_FOLDER", true);
+    if(!imageFolder)
     {
-        Log(lInfo) << "Creating characterization file: " << characterizationFileName;
-        createFile(characterizationFileName);
+        Log(lError) << "Failed creating \"IMAGE_FOLDER\" key";
+        return false;
     }
 
-    Log(lInfo) << "Loading characterization file: " << characterizationFileName;
-    if(!mCharacterizationFile.load(characterizationFileName))
-    {
-        Log(lError) << "Failed loading characterization file: " << characterizationFileName;
-    }
+    imageFolder->mValue = mImageFolderE->getValue();
 
     //Check current folder for files and populate list box
 	StringList files = getFilesInDir(mImageFolderE->getValue(), "png", false);
 
     //Create ini file section
-    IniSection* sec = mCharacterizationFile.getSection(mImageFolderE->getValue(), true); //Autocreate section
+    IniSection* sec = mProjectFile.getSection("VALUES", true); //Autocreate section
     if(!sec)
     {
-
+        Log(lError) << "Failed creating \"VALUES\" section";
+        return false;
     }
 
-    //Make sure the section has the same number of keys as images
+    //Make sure the section has the same number of keys as images in the folder
     if(sec->keyCount() != files.count())
     {
         for(int i = 0; i < files.count(); i++)
@@ -170,19 +183,9 @@ void  TMainForm::onOpenFolder()
         }
     }
 
-    CheckFolderBtn->Caption = "Close Folder";
     enableDisablePanel(ProjFilePathPanel, false);
     enableDisablePanel(ActionbuttonsPanel, true);
-}
-
-void   TMainForm::onCloseFolder()
-{
-    mCharacterizationFile.save();
-    UserE->Enabled = true;
-    filesCLB->Clear();
-    CheckFolderBtn->Caption = "Open Folder";
-    enableDisablePanel(ProjFilePathPanel, true);
-    enableDisablePanel(ActionbuttonsPanel, false);
+    return true;
 }
 
 //---------------------------------------------------------------------------
@@ -306,9 +309,40 @@ void __fastcall TMainForm::FormKeyDown(TObject *Sender, WORD &Key, TShiftState S
             case 'f':           SendMessage(NoBtn->Handle, BM_CLICK, 0, 0);      break;
         }
     }
+}
 
-//    if(Sender)
-//    filesCLB->SetFocus();
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::sortByValueAExecute(TObject *Sender)
+{
+    //
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::FileOpen1Accept(TObject *Sender)
+{
+    //Open project file here
+    string fName(stdstr(FileOpen1->Dialog->FileName));
+    Log(lInfo) << "Opening file: "<<fName;
+
+	if(openProject(fName))
+    {
+		FileOpen1->Enabled = false;
+	    CloseProjectA->Enabled = true;
+ 		OpenCloseProjectBtn->Action = CloseProjectA;
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::CloseProjectAExecute(TObject *Sender)
+{
+    mProjectFile.save();
+    UserE->Enabled = true;
+    filesCLB->Clear();
+    enableDisablePanel(ProjFilePathPanel, true);
+    enableDisablePanel(ActionbuttonsPanel, false);
+    OpenCloseProjectBtn->Action = FileOpen1;
+    FileOpen1->Enabled = true;
+    CloseProjectA->Enabled = false;
 }
 
 

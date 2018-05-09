@@ -164,8 +164,8 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <DependentOn>TMainForm.h</DependentOn>
             <BuildOrder>2</BuildOrder>
         </CppCompile>
-        <FormResources Include="Forms\TImageForm.dfm"/>
         <FormResources Include="TMainForm.dfm"/>
+        <FormResources Include="Forms\TImageForm.dfm"/>
         <FormResources Include="Forms\TAboutATCharacterizerForm.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

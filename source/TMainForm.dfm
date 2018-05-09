@@ -41,12 +41,13 @@ object MainForm: TMainForm
   end
   object ProjFilePathPanel: TPanel
     Left = 0
-    Top = 0
+    Top = 41
     Width = 1421
     Height = 35
     Align = alTop
     Alignment = taLeftJustify
     TabOrder = 2
+    ExplicitTop = 0
     object mBrowseForCacheFolder: TButton
       Left = 511
       Top = 6
@@ -86,27 +87,31 @@ object MainForm: TMainForm
   end
   object MainPanel: TPanel
     Left = 0
-    Top = 35
+    Top = 76
     Width = 1421
-    Height = 827
+    Height = 786
     Align = alClient
     TabOrder = 3
+    ExplicitTop = 35
+    ExplicitHeight = 827
     object Splitter2: TSplitter
       Left = 1
-      Top = 685
+      Top = 644
       Width = 1419
       Height = 5
       Cursor = crVSplit
       Align = alBottom
       ExplicitLeft = 46
+      ExplicitTop = 685
     end
     object mBottomPanel: TPanel
       Left = 1
-      Top = 690
+      Top = 649
       Width = 1419
       Height = 136
       Align = alBottom
       TabOrder = 0
+      ExplicitTop = 690
       object Splitter1: TSplitter
         Left = 453
         Top = 1
@@ -209,43 +214,37 @@ object MainForm: TMainForm
       Left = 1
       Top = 1
       Width = 128
-      Height = 684
+      Height = 643
       Align = alLeft
       Caption = 'Image Files'
       TabOrder = 1
-      object CheckFolderBtn: TButton
+      ExplicitHeight = 684
+      object filesCLB: TListBox
         Left = 2
         Top = 15
         Width = 124
-        Height = 34
-        Align = alTop
-        Caption = 'Open Folder'
-        TabOrder = 1
-        OnClick = CheckFolderBtnClick
-      end
-      object filesCLB: TListBox
-        Left = 2
-        Top = 49
-        Width = 124
-        Height = 633
+        Height = 626
         Align = alClient
         ItemHeight = 13
         TabOrder = 0
         OnClick = filesCLBClick
+        ExplicitTop = 49
+        ExplicitHeight = 633
       end
     end
     object Panel1: TPanel
       Left = 129
       Top = 1
       Width = 1291
-      Height = 684
+      Height = 643
       Align = alClient
       TabOrder = 2
+      ExplicitHeight = 684
       object Image1: TImage
         Left = 1
         Top = 1
         Width = 1289
-        Height = 665
+        Height = 624
         Align = alClient
         AutoSize = True
         Picture.Data = {
@@ -16261,7 +16260,7 @@ object MainForm: TMainForm
       end
       object HeaderControl1: THeaderControl
         Left = 1
-        Top = 666
+        Top = 625
         Width = 1289
         Height = 17
         Align = alBottom
@@ -16271,7 +16270,27 @@ object MainForm: TMainForm
             Text = 'Misc'
             Width = 50
           end>
+        ExplicitTop = 666
       end
+    end
+  end
+  object Panel3: TPanel
+    Left = 0
+    Top = 0
+    Width = 1421
+    Height = 41
+    Align = alTop
+    TabOrder = 4
+    ExplicitLeft = -8
+    ExplicitTop = -14
+    object OpenCloseProjectBtn: TButton
+      Left = 1
+      Top = 1
+      Width = 96
+      Height = 39
+      Action = FileOpen1
+      Align = alLeft
+      TabOrder = 0
     end
   end
   object mShutDownTimer: TTimer
@@ -16289,8 +16308,8 @@ object MainForm: TMainForm
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
-    Left = 872
-    Top = 24
+    Left = 864
+    Top = 128
     object File1: TMenuItem
       Caption = 'File'
       object New1: TMenuItem
@@ -16341,8 +16360,8 @@ object MainForm: TMainForm
     end
   end
   object ImagePopup: TPopupMenu
-    Left = 912
-    Top = 280
+    Left = 640
+    Top = 168
     object OpenaClone1: TMenuItem
       Caption = 'Open a Clone'
       OnClick = OpenaClone1Click
@@ -16355,11 +16374,14 @@ object MainForm: TMainForm
     object FileOpen1: TFileOpen
       Category = 'File'
       Caption = '&Open...'
-      Dialog.DefaultExt = 'vc'
-      Dialog.Filter = '*.vc||*.*'
+      Dialog.DefaultExt = 'chf'
+      Dialog.Filter = 'Files|*.chf'
+      Dialog.FilterIndex = 0
+      Dialog.Options = [ofHideReadOnly, ofFileMustExist, ofEnableSizing]
       Hint = 'Open|Opens an existing file'
       ImageIndex = 1
       ShortCut = 16463
+      OnAccept = FileOpen1Accept
     end
     object NewProjectA: TAction
       Category = 'File'
@@ -16369,15 +16391,19 @@ object MainForm: TMainForm
     object SaveProjectA: TAction
       Category = 'File'
       Caption = 'Save'
+      Enabled = False
       ImageIndex = 2
     end
     object SaveProjectAsA: TAction
       Category = 'File'
       Caption = 'Save As'
+      Enabled = False
     end
     object CloseProjectA: TAction
       Category = 'File'
       Caption = 'Close'
+      Enabled = False
+      OnExecute = CloseProjectAExecute
     end
     object AddRenderProject: TAction
       Category = 'TreeView'
@@ -16407,7 +16433,7 @@ object MainForm: TMainForm
     Left = 768
     Top = 24
     Bitmap = {
-      494C010108001800100110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010108001800140110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -16811,8 +16837,8 @@ object MainForm: TMainForm
       000000000000}
   end
   object ActionList1: TActionList
-    Left = 105
-    Top = 428
+    Left = 297
+    Top = 196
     object YesA: TAction
       Caption = 'Yes'
       OnExecute = CharacterizeAction
@@ -16825,5 +16851,13 @@ object MainForm: TMainForm
       Caption = 'Pass'
       OnExecute = CharacterizeAction
     end
+    object sortByValueA: TAction
+      Caption = 'Sort by Value'
+      OnExecute = sortByValueAExecute
+    end
+  end
+  object listPopup: TPopupMenu
+    Left = 48
+    Top = 224
   end
 end
