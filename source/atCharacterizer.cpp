@@ -12,9 +12,10 @@
 using namespace dsl;
 
 using std::string;
-USEFORM("Forms\TImageForm.cpp", ImageForm);
 USEFORM("TMainForm.cpp", MainForm);
+USEFORM("Forms\TImageForm.cpp", ImageForm);
 USEFORM("Forms\TAboutATCharacterizerForm.cpp", AboutATCharacterizer);
+USEFORM("Forms\TNewProjectForm.cpp", NewProjectForm);
 //---------------------------------------------------------------------------
 extern string		gAppName					= "The Characterizer";
 extern string       gLogFileName                = "Characterizer.log";
@@ -67,6 +68,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
 		TStyleManager::TrySetStyle("Carbon");
 		Application->CreateForm(__classid(TMainForm), &MainForm);
+		Application->CreateForm(__classid(TNewProjectForm), &NewProjectForm);
 		Application->Run();
 		writeStringToRegistry(gApplicationRegistryRoot, "", "Theme",  gApplicationStyle);
 	}

@@ -1,4 +1,11 @@
-Release 0.5.0 (March 10)
+Release 0.5.1 (May 9)
+=======================
+* Added sorting of values
+* Added sorting of filename
+* Added loging to create new projects
+* Defined file extension for Characterizer files -> ".chf"
+
+Release 0.5.0 (May 7)
 =======================
 * Created an initial release
 

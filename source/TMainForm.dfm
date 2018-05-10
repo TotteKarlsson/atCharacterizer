@@ -39,64 +39,16 @@ object MainForm: TMainForm
     Visible = False
     OnClick = mShowBottomPanelBtnClick
   end
-  object ProjFilePathPanel: TPanel
+  object MainPanel: TPanel
     Left = 0
     Top = 41
     Width = 1421
-    Height = 35
-    Align = alTop
-    Alignment = taLeftJustify
-    TabOrder = 2
-    ExplicitTop = 0
-    object mBrowseForCacheFolder: TButton
-      Left = 511
-      Top = 6
-      Width = 33
-      Height = 25
-      Action = BrowseForFolder1
-      Caption = '...'
-      TabOrder = 1
-    end
-    object mImageFolderE: TSTDStringEdit
-      Left = 12
-      Top = 9
-      Width = 493
-      Height = 21
-      ReadOnly = True
-      TabOrder = 0
-      Text = 'c:\ImageCache'
-      Value = 'c:\ImageCache'
-    end
-    object UserE: TSTDStringEdit
-      Left = 576
-      Top = 9
-      Width = 121
-      Height = 21
-      TabOrder = 2
-      Text = 'UserE'
-      Value = 'UserE'
-    end
-    object ValidationCB: TPropertyCheckBox
-      Left = 784
-      Top = 10
-      Width = 137
-      Height = 17
-      Caption = 'Validation Dialog'
-      TabOrder = 3
-    end
-  end
-  object MainPanel: TPanel
-    Left = 0
-    Top = 76
-    Width = 1421
-    Height = 786
+    Height = 821
     Align = alClient
-    TabOrder = 3
-    ExplicitTop = 35
-    ExplicitHeight = 827
+    TabOrder = 2
     object Splitter2: TSplitter
       Left = 1
-      Top = 644
+      Top = 679
       Width = 1419
       Height = 5
       Cursor = crVSplit
@@ -106,12 +58,11 @@ object MainForm: TMainForm
     end
     object mBottomPanel: TPanel
       Left = 1
-      Top = 649
+      Top = 684
       Width = 1419
       Height = 136
       Align = alBottom
       TabOrder = 0
-      ExplicitTop = 690
       object Splitter1: TSplitter
         Left = 453
         Top = 1
@@ -214,37 +165,34 @@ object MainForm: TMainForm
       Left = 1
       Top = 1
       Width = 128
-      Height = 643
+      Height = 678
       Align = alLeft
       Caption = 'Image Files'
       TabOrder = 1
-      ExplicitHeight = 684
-      object filesCLB: TListBox
+      object imagesLB: TListBox
         Left = 2
         Top = 15
         Width = 124
-        Height = 626
+        Height = 661
         Align = alClient
         ItemHeight = 13
+        PopupMenu = listPopup
         TabOrder = 0
-        OnClick = filesCLBClick
-        ExplicitTop = 49
-        ExplicitHeight = 633
+        OnClick = imagesLBClick
       end
     end
     object Panel1: TPanel
       Left = 129
       Top = 1
       Width = 1291
-      Height = 643
+      Height = 678
       Align = alClient
       TabOrder = 2
-      ExplicitHeight = 684
       object Image1: TImage
         Left = 1
         Top = 1
         Width = 1289
-        Height = 624
+        Height = 659
         Align = alClient
         AutoSize = True
         Picture.Data = {
@@ -16260,7 +16208,7 @@ object MainForm: TMainForm
       end
       object HeaderControl1: THeaderControl
         Left = 1
-        Top = 625
+        Top = 660
         Width = 1289
         Height = 17
         Align = alBottom
@@ -16270,7 +16218,6 @@ object MainForm: TMainForm
             Text = 'Misc'
             Width = 50
           end>
-        ExplicitTop = 666
       end
     end
   end
@@ -16280,17 +16227,75 @@ object MainForm: TMainForm
     Width = 1421
     Height = 41
     Align = alTop
-    TabOrder = 4
-    ExplicitLeft = -8
-    ExplicitTop = -14
-    object OpenCloseProjectBtn: TButton
+    Caption = 'Panel3'
+    TabOrder = 3
+    object TopPanel: TPanel
       Left = 1
       Top = 1
-      Width = 96
+      Width = 176
       Height = 39
-      Action = FileOpen1
       Align = alLeft
+      AutoSize = True
       TabOrder = 0
+      object OpenCloseProjectBtn: TButton
+        Left = 1
+        Top = 1
+        Width = 87
+        Height = 37
+        Action = FileOpen1
+        Align = alLeft
+        TabOrder = 0
+        ExplicitLeft = 65
+      end
+      object Button2: TButton
+        Left = 88
+        Top = 1
+        Width = 87
+        Height = 37
+        Action = SaveProjectA
+        Align = alLeft
+        TabOrder = 1
+        ExplicitLeft = 152
+      end
+    end
+    object ProjFilePathPanel: TPanel
+      Left = 177
+      Top = 1
+      Width = 1243
+      Height = 39
+      Align = alClient
+      Alignment = taLeftJustify
+      TabOrder = 1
+      ExplicitLeft = 246
+      ExplicitTop = -2
+      ExplicitWidth = 1179
+      object ImageFolderE: TSTDStringEdit
+        Left = 12
+        Top = 9
+        Width = 493
+        Height = 21
+        ReadOnly = True
+        TabOrder = 0
+        Text = 'c:\ImageCache'
+        Value = 'c:\ImageCache'
+      end
+      object UserE: TSTDStringEdit
+        Left = 511
+        Top = 9
+        Width = 121
+        Height = 21
+        TabOrder = 1
+        Text = 'UserE'
+        Value = 'UserE'
+      end
+      object ValidationCB: TPropertyCheckBox
+        Left = 638
+        Top = 11
+        Width = 137
+        Height = 17
+        Caption = 'Validation Dialog'
+        TabOrder = 2
+      end
     end
   end
   object mShutDownTimer: TTimer
@@ -16387,12 +16392,14 @@ object MainForm: TMainForm
       Category = 'File'
       Caption = 'New'
       ImageIndex = 0
+      OnExecute = NewProjectAExecute
     end
     object SaveProjectA: TAction
       Category = 'File'
       Caption = 'Save'
       Enabled = False
       ImageIndex = 2
+      OnExecute = SaveProjectAExecute
     end
     object SaveProjectAsA: TAction
       Category = 'File'
@@ -16433,7 +16440,7 @@ object MainForm: TMainForm
     Left = 768
     Top = 24
     Bitmap = {
-      494C010108001800140110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101080018001C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -16852,12 +16859,24 @@ object MainForm: TMainForm
       OnExecute = CharacterizeAction
     end
     object sortByValueA: TAction
+      Category = 'Sorting'
       Caption = 'Sort by Value'
       OnExecute = sortByValueAExecute
+    end
+    object sortByFileNameA: TAction
+      Category = 'Sorting'
+      Caption = 'Sort by File Name'
+      OnExecute = sortByFileNameAExecute
     end
   end
   object listPopup: TPopupMenu
     Left = 48
     Top = 224
+    object SortbyValue1: TMenuItem
+      Action = sortByValueA
+    end
+    object sortByFileNameA1: TMenuItem
+      Action = sortByFileNameA
+    end
   end
 end

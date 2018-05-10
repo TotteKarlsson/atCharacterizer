@@ -8,6 +8,7 @@
 #include "dslTMemoLogger.h"
 #include "TImageForm.h"
 #include "atApplicationSupportFunctions.h"
+#include "forms/TNewProjectForm.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "dslTFloatLabeledEdit"
@@ -77,8 +78,7 @@ void __fastcall TMainForm::OpenaClone1Click(TObject *Sender)
     }
 
 	gImageForm->Show();
-
-	filesCLBClick(Sender);
+	imagesLBClick(Sender);
 }
 
 void __fastcall TMainForm::BrowseForFolder1Accept(TObject *Sender)
@@ -89,19 +89,18 @@ void __fastcall TMainForm::BrowseForFolder1Accept(TObject *Sender)
         return;
     }
 
-    mImageFolderE->setValue(stdstr(BrowseForFolder1->Folder));
+    ImageFolderE->setValue(stdstr(BrowseForFolder1->Folder));
 }
 
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::BrowseForFolder1BeforeExecute(TObject *Sender)
 {
-	BrowseForFolder1->Folder = vclstr( mImageFolderE->getValue());
+	BrowseForFolder1->Folder = vclstr( ImageFolderE->getValue());
 }
 
 bool TMainForm::openProject(const string& fName)
 {
 	mProjectFile.clear();
-
     Log(lInfo) << "Loading project file: " << fName;
     if(!mProjectFile.load(fName))
     {
@@ -139,10 +138,10 @@ bool TMainForm::openProject(const string& fName)
         return false;
     }
 
-    imageFolder->mValue = mImageFolderE->getValue();
+    imageFolder->mValue = ImageFolderE->getValue();
 
     //Check current folder for files and populate list box
-	StringList files = getFilesInDir(mImageFolderE->getValue(), "png", false);
+	StringList files = getFilesInDir(ImageFolderE->getValue(), "png", false);
 
     //Create ini file section
     IniSection* sec = mProjectFile.getSection("VALUES", true); //Autocreate section
@@ -171,7 +170,7 @@ bool TMainForm::openProject(const string& fName)
     }
 
     //Populate list box from the keys..
-	filesCLB->Clear();
+	imagesLB->Clear();
     for(size_t i = 0; i < sec->keyCount(); i++)
     {
         IniKey* key = sec->getKey(i);
@@ -179,7 +178,7 @@ bool TMainForm::openProject(const string& fName)
         {
             string item(key->mKey);
             item = item + " " + key->mValue;
-        	filesCLB->Items->AddObject(vclstr(item), (TObject*) key );
+        	imagesLB->Items->AddObject(vclstr(item), (TObject*) key );
         }
     }
 
@@ -189,23 +188,23 @@ bool TMainForm::openProject(const string& fName)
 }
 
 //---------------------------------------------------------------------------
-void __fastcall TMainForm::filesCLBClick(TObject *Sender)
+void __fastcall TMainForm::imagesLBClick(TObject *Sender)
 {
     //Extract filename and show image
-    int index = filesCLB->ItemIndex;
+    int index = imagesLB->ItemIndex;
 
     if(index < 0)
     {
         return;
     }
 
-    IniKey* key = (IniKey*) filesCLB->Items->Objects[index];
+    IniKey* key = (IniKey*) imagesLB->Items->Objects[index];
     if(!key)
     {
         Log(lError) << "No Such file: " <<key->mKey;
         return;
     }
-    string fName(joinPath(mImageFolderE->getValue(), key->mKey + ".png"));
+    string fName(joinPath(ImageFolderE->getValue(), key->mKey + ".png"));
 
     Image1->Picture->LoadFromFile(fName.c_str());
     Log(lInfo) << "Opened file: " << fName.c_str();
@@ -219,7 +218,7 @@ void __fastcall TMainForm::filesCLBClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::CharacterizeAction(TObject *Sender)
 {
-	int idx = filesCLB->ItemIndex;
+	int idx = imagesLB->ItemIndex;
 
     if(idx < 0)
     {
@@ -228,7 +227,7 @@ void __fastcall TMainForm::CharacterizeAction(TObject *Sender)
     }
 
     //Extract key
-    IniKey* key = (IniKey*) filesCLB->Items->Objects[idx];
+    IniKey* key = (IniKey*) imagesLB->Items->Objects[idx];
     if(!key)
     {
         Log(lError) << "Bad key..";
@@ -276,13 +275,13 @@ void __fastcall TMainForm::CharacterizeAction(TObject *Sender)
     }
 
     //Update item in listbox
-	filesCLB->Items->Strings[idx] = string(key->mKey + " " + key->mValue).c_str();
+	imagesLB->Items->Strings[idx] = string(key->mKey + " " + key->mValue).c_str();
 
     //Auto advance..
-    if(idx < filesCLB->Count)
+    if(idx < imagesLB->Count)
     {
-		filesCLB->ItemIndex = filesCLB->ItemIndex + 1;
-        filesCLBClick(NULL);
+		imagesLB->ItemIndex = imagesLB->ItemIndex + 1;
+        imagesLBClick(NULL);
     }
 }
 
@@ -311,10 +310,41 @@ void __fastcall TMainForm::FormKeyDown(TObject *Sender, WORD &Key, TShiftState S
     }
 }
 
+int __fastcall SortListByValue (TStringList* sl, int item1, int item2)
+{
+    IniKey* k1 = (IniKey*) sl->Objects[item1];
+    IniKey* k2 = (IniKey*) sl->Objects[item2];
+    return CompareStr(k1->mValue.c_str(), k2->mValue.c_str()) * -1;
+}
+
+int __fastcall SortListByKey (TStringList* sl, int item1, int item2)
+{
+	IniKey* k1 = (IniKey*) sl->Objects[item1];
+  	IniKey* k2 = (IniKey*) sl->Objects[item2];
+
+    return CompareStr(k1->mKey.c_str(), k2->mKey.c_str());
+}
+
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::sortByValueAExecute(TObject *Sender)
 {
-    //
+    Log(lInfo) << "Sorting list based on Values";
+
+    TStringList* sl = new TStringList();
+    sl->Assign(imagesLB->Items);
+    sl->CustomSort(SortListByValue);
+    imagesLB->Items->Assign(sl);
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::sortByFileNameAExecute(TObject *Sender)
+{
+	Log(lInfo) << "Sorting list based on Keys";
+    TStringList* sl = new TStringList();
+
+    sl->Assign(imagesLB->Items);
+    sl->CustomSort(SortListByKey);
+    imagesLB->Items->Assign(sl);
 }
 
 //---------------------------------------------------------------------------
@@ -329,6 +359,7 @@ void __fastcall TMainForm::FileOpen1Accept(TObject *Sender)
 		FileOpen1->Enabled = false;
 	    CloseProjectA->Enabled = true;
  		OpenCloseProjectBtn->Action = CloseProjectA;
+	    SaveProjectA->Enabled = true;
     }
 }
 
@@ -337,13 +368,60 @@ void __fastcall TMainForm::CloseProjectAExecute(TObject *Sender)
 {
     mProjectFile.save();
     UserE->Enabled = true;
-    filesCLB->Clear();
+    imagesLB->Clear();
     enableDisablePanel(ProjFilePathPanel, true);
     enableDisablePanel(ActionbuttonsPanel, false);
     OpenCloseProjectBtn->Action = FileOpen1;
     FileOpen1->Enabled = true;
     CloseProjectA->Enabled = false;
+    SaveProjectA->Enabled = false;
 }
 
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::NewProjectAExecute(TObject *Sender)
+{
+    //Create a new project file
+    //Bring up a custom dialog..
+    auto_ptr<TNewProjectForm> f = auto_ptr<TNewProjectForm>(new TNewProjectForm(this));
+    f->ImageFolderE->setValue(ImageFolderE->getValue());
+    f->UserE->setValue(UserE->getValue());
+
+    int r = f->ShowModal();
+
+    if(r == mrOk)
+    {
+        //Create and open new project
+        //Create fileName
+        string fName = f->UserE->getValue() + string("_") + f->ProjectNameE->getValue() + string(".chf");
+        fName = joinPath(f->ImageFolderE->getValue(), fName);
+
+        if(fileExists(fName))
+        {
+            int mr = MessageDlg("File exists. Over write?", mtWarning, TMsgDlgButtons() << mbOK<<mbCancel, 0);
+            if(mr == mrCancel)
+            {
+                return;
+            }
+            else
+            {
+                clearFile(fName);
+            }
+        }
+
+        //Open project
+        FileOpen1->Dialog->FileName = vclstr(fName);
+        FileOpen1Accept(Sender);
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::SaveProjectAExecute(TObject *Sender)
+{
+    //Save current project
+	if(mProjectFile.save())
+    {
+        Log(lInfo) << "The projectfile: "<<mProjectFile.getFileName()<< " was saved to folder: "<<getFilePath(mProjectFile.getFullFileName());
+    }
+}
 
 
