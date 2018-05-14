@@ -35,11 +35,11 @@
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.ToolWin.hpp>
 #include "TArrayBotBtn.h"
-#include "core/atClassifierBase.h"
-#include "atClassesFrame.h"
+#include "atTClassifierFrame.h"
 class TImageForm;
-//using dsl::Process;
+
 //---------------------------------------------------------------------------
+using dsl::ApplicationProperties;
 using dsl::IniFileProperties;
 using dsl::TRegistryProperties;
 extern string gApplicationRegistryRoot;
@@ -55,7 +55,6 @@ __published:	// IDE-managed Components
 	TMemo *infoMemo;
 	TTimer *mShutDownTimer;
 	TPanel *mBottomPanel;
-	TIniFileC *mIniFileC;
 	TPanel *Panel2;
 	TButton *mCLearMemo;
 	TSplitter *Splitter2;
@@ -96,7 +95,7 @@ __published:	// IDE-managed Components
 	TAction *EditViewNode;
 	TSTDStringEdit *ImageFolderE;
 	TGroupBox *GroupBox1;
-	TPanel *ActionbuttonsPanel;
+	TPanel *ClassifierPanel;
 	TSplitter *Splitter1;
 	TActionList *ActionList1;
 	TAction *YesA;
@@ -114,7 +113,7 @@ __published:	// IDE-managed Components
 	TMenuItem *SortbyValue1;
 	TMenuItem *sortByFileNameA1;
 	TSTDStringEdit *UserE;
-	TClassesFrame *TClassesFrame1;
+	TButton *Button1;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall mShutDownTimerTimer(TObject *Sender);
 	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
@@ -138,19 +137,21 @@ __published:	// IDE-managed Components
 	void __fastcall sortByFileNameAExecute(TObject *Sender);
 	void __fastcall SaveProjectAsAExecute(TObject *Sender);
 
-	private:	// User declarations
+	private:
         void __fastcall                                 logMsg();
 		LogFileReader                                   mLogFileReader;
 		bool          									mIsStyleMenuPopulated;
 
         ApplicationProperties                           mAppProperties;
-        IniFileProperties	      	                    mGeneralProperties;
+
         dsl::Property<int>	                            mBottomPanelHeight;
 		dsl::Property<dsl::LogLevel>	                mLogLevel;
 
                                                         //This file contains all the data for
                                                         //any particular "project"
-        IniFile                                         mProjectFile;
+        IniFile                                         mClassifierFile;
+        ClassifierBase                                  mClassifier;
+        TClassifierFrame*                               mCF;
 
         bool                                            setupAndReadIniParameters();
         void                                            setupIniFile();
@@ -172,6 +173,8 @@ __published:	// IDE-managed Components
         void                                            onCloseFolder();
         bool                                            isFolderOpen();
         void                                            setupClassifierPanel();
+
+
 	public:
 		__fastcall 					 					TMainForm(TComponent* Owner);
 		__fastcall 					 					~TMainForm();

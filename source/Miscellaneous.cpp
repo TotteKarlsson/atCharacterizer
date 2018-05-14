@@ -28,7 +28,6 @@ void __fastcall TMainForm::About1Click(TObject *Sender)
 
 void __fastcall TMainForm::ThemesMenuClick(TObject *Sender)
 {
-
    TMenuItem* menuItem = dynamic_cast<TMenuItem*>(Sender);
     if(!menuItem)
     {
@@ -83,5 +82,3 @@ void __fastcall TMainForm::mShowBottomPanelBtnClick(TObject *Sender)
     Splitter2->Top = mBottomPanel->Top - 1;
     StatusBar1->Top = mBottomPanel->Top + mBottomPanel->Height + 1;
 }
-
-

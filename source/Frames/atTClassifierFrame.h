@@ -1,5 +1,5 @@
-#ifndef atClassesFrameH
-#define atClassesFrameH
+#ifndef atTClassifierFrameH
+#define atTClassifierFrameH
 #include <System.Classes.hpp>
 #include <Vcl.Controls.hpp>
 #include <Vcl.StdCtrls.hpp>
@@ -11,13 +11,14 @@
 #include <vector>
 #include "atClassifierBase.h"
 #include "dslSharedPointer.h"
+#include "atClassifierBase.h"
 //---------------------------------------------------------------------------
 using dsl::StringList;
 using std::vector;
 using std::auto_ptr;
 using dsl::shared_ptr;
 
-class TClassesFrame : public TFrame
+class TClassifierFrame : public TFrame
 {
     __published:
 	TPopupMenu *PopupMenu1;
@@ -27,16 +28,16 @@ class TClassesFrame : public TFrame
 
     private:
                                                     //Classifier holds various class values
-        ClassifierBase			        			mClasses;
+        ClassifierBase&			        			mClassifier;
 
     public:
-    					__fastcall 	                TClassesFrame(TComponent* Owner);
+    							__fastcall 	        TClassifierFrame(ClassifierBase& c, TComponent* Owner);
         void                    	                populate(const StringList& cats);
         TArrayBotButton*                 			getButtonWithKey(char ch);
-        void                                        emptyFrame();
+        void                                        empty();
 
 };
 
-extern PACKAGE TClassesFrame *ClassesFrame;
+extern PACKAGE TClassifierFrame *ClassifierFrame;
 
 #endif

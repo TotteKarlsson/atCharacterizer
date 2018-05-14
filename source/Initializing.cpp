@@ -9,7 +9,6 @@ using namespace dsl;
 extern string gAppName;
 extern string gAppDataLocation;
 extern string gApplicationStyle;
-
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::FormCreate(TObject *Sender)
 {
@@ -22,40 +21,22 @@ void __fastcall TMainForm::FormCreate(TObject *Sender)
 	mLogFileReader.start(true);
 }
 
-void TMainForm::setupIniFile()
-{
-	string fldr = getSpecialFolder(CSIDL_LOCAL_APPDATA);
-	fldr =  joinPath(fldr, gAppName);
-
-	if(!folderExists(fldr))
-	{
-		CreateDir(fldr.c_str());
-	}
-
-	mIniFileC->init(fldr);
-
-	//For convenience and for option form, populate appProperties container
-	mAppProperties.append(&mGeneralProperties);
-}
-
 bool TMainForm::setupAndReadIniParameters()
 {
-	mIniFileC->load();
-	mGeneralProperties.setIniFile(mIniFileC->getIniFile());
+//	shared_ptr<IniFileProperties> GeneralProperties = shared_ptr<IniFileProperties>(new IniFileProperties(&(mAppProperties.getIniFile()), "GENERAL"));
+	shared_ptr<IniFileProperties> GeneralProperties = mAppProperties.appendNewINISection("GENERAL");
 
 	//Setup parameters
-	mGeneralProperties.setSection("GENERAL");
-	mGeneralProperties.add((BaseProperty*)  &mBottomPanelHeight.setup( 	            	"HEIGHT_OF_BOTTOM_PANEL",    	    205));
-	mGeneralProperties.add((BaseProperty*)  &mLogLevel.setup( 	                    	"LOG_LEVEL",    	                lAny));
-	mGeneralProperties.add((BaseProperty*)  &ImageFolderE->getProperty()->setup(      	"IMAGE_FOLDER",    	                "C:"));
-	mGeneralProperties.add((BaseProperty*)  &UserE->getProperty()->setup(      			"USER",    	                        "John Mcafee"));
+	GeneralProperties->setSection("GENERAL");
+	GeneralProperties->add((BaseProperty*)  &mBottomPanelHeight.setup( 	            	"HEIGHT_OF_BOTTOM_PANEL",    	    205));
+	GeneralProperties->add((BaseProperty*)  &mLogLevel.setup( 	                    	"LOG_LEVEL",    	                lAny));
+	GeneralProperties->add((BaseProperty*)  &UserE->getProperty()->setup(      			"USER",    	                        "JohnDoe"));
+	GeneralProperties->add((BaseProperty*)  &ImageFolderE->getProperty()->setup(      	"IMAGE_FOLDER",    	                "C:"));
 
 	//Read from file. Create if file do not exist
-	mGeneralProperties.read();
+	GeneralProperties->read();
 
 	//Update UI
-
-
 	mBottomPanel->Height = mBottomPanelHeight;
     ImageFolderE->update();
 	UserE->update();

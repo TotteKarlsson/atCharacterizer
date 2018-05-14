@@ -71,9 +71,9 @@ object NewProjectForm: TNewProjectForm
       Top = 112
       Width = 185
       Height = 180
-      Caption = 'Categories'
+      Caption = 'Classes'
       TabOrder = 4
-      object CategoryLB: TListBox
+      object ClassesLB: TListBox
         Left = 2
         Top = 15
         Width = 181
@@ -134,6 +134,7 @@ object NewProjectForm: TNewProjectForm
       Caption = 'Create'
       ModalResult = 1
       TabOrder = 1
+      OnClick = Button2Click
     end
   end
   object ActionList1: TActionList

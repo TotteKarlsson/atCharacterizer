@@ -26,7 +26,7 @@ void __fastcall TNewProjectForm::Button3Click(TObject *Sender)
 
 StringList TNewProjectForm::getValues()
 {
-    StringList items(getStrings(CategoryLB));
+    StringList items(getStrings(ClassesLB));
 
     return items;
 }
@@ -36,27 +36,27 @@ void __fastcall TNewProjectForm::AddCategoryBtnClick(TObject *Sender)
 {
 	auto_ptr<TTextInputDialog> d = auto_ptr<TTextInputDialog>(new TTextInputDialog(this));
 
-    StringList items(getStrings(CategoryLB));
+    StringList items(getStrings(ClassesLB));
 
     string text = items.asString();
     d->setText(text);
     d->ShowModal();
 
-	CategoryLB->Clear();
+	ClassesLB->Clear();
 
     items.clear();
     items.appendList(StringList(d->getText()));
 
     for(int i = 0; i < items.count(); i++)
     {
-    	CategoryLB->AddItem(items[i].c_str(), NULL);
+    	ClassesLB->AddItem(items[i].c_str(), NULL);
     }
 }
 
 //---------------------------------------------------------------------------
 void __fastcall TNewProjectForm::Button4Click(TObject *Sender)
 {
-	CategoryLB->Clear();
+	ClassesLB->Clear();
 }
 
 //---------------------------------------------------------------------------
@@ -69,6 +69,18 @@ void __fastcall TNewProjectForm::FileOpenDialog1FileOkClick(TObject *Sender, boo
     }
 
     ImageFolderE->setValue(stdstr(FileOpenDialog1->FileName));
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TNewProjectForm::Button2Click(TObject *Sender)
+{
+    //Validate
+    //Make sure the cateogy listbox have at least two categories
+    if(ClassesLB->Count < 2)
+    {
+        MessageDlg("You need to specify at least two classes..!", mtWarning, TMsgDlgButtons() << mbOK, 0);
+        this->ModalResult = mrTryAgain;
+    }
 }
 
 

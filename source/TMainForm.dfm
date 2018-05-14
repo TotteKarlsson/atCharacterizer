@@ -3,8 +3,8 @@ object MainForm: TMainForm
   Top = 0
   AlphaBlendValue = 100
   Caption = 'The Characterizer'
-  ClientHeight = 900
-  ClientWidth = 1421
+  ClientHeight = 504
+  ClientWidth = 823
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,16 +23,16 @@ object MainForm: TMainForm
   TextHeight = 13
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 881
-    Width = 1421
+    Top = 485
+    Width = 823
     Height = 19
     Panels = <>
     SimplePanel = True
   end
   object mShowBottomPanelBtn: TButton
     Left = 0
-    Top = 862
-    Width = 1421
+    Top = 466
+    Width = 823
     Height = 19
     Align = alBottom
     Caption = '^'
@@ -43,24 +43,25 @@ object MainForm: TMainForm
   object MainPanel: TPanel
     Left = 0
     Top = 41
-    Width = 1421
-    Height = 821
+    Width = 823
+    Height = 425
     Align = alClient
     TabOrder = 2
     object Splitter2: TSplitter
       Left = 1
-      Top = 679
-      Width = 1419
+      Top = 283
+      Width = 821
       Height = 5
       Cursor = crVSplit
       Align = alBottom
       ExplicitLeft = 46
       ExplicitTop = 685
+      ExplicitWidth = 1419
     end
     object mBottomPanel: TPanel
       Left = 1
-      Top = 684
-      Width = 1419
+      Top = 288
+      Width = 821
       Height = 136
       Align = alBottom
       TabOrder = 0
@@ -74,14 +75,14 @@ object MainForm: TMainForm
       object mLogPanel: TPanel
         Left = 456
         Top = 1
-        Width = 962
+        Width = 364
         Height = 134
         Align = alClient
         TabOrder = 0
         object infoMemo: TMemo
           Left = 1
           Top = 42
-          Width = 960
+          Width = 362
           Height = 91
           Align = alClient
           ScrollBars = ssBoth
@@ -91,12 +92,12 @@ object MainForm: TMainForm
         object Panel2: TPanel
           Left = 1
           Top = 1
-          Width = 960
+          Width = 362
           Height = 41
           Align = alTop
           TabOrder = 1
           DesignSize = (
-            960
+            362
             41)
           object mCLearMemo: TButton
             Left = 9
@@ -108,7 +109,7 @@ object MainForm: TMainForm
             OnClick = mCLearMemoClick
           end
           object mCloseBottomPanelBtn: TButton
-            Left = 921
+            Left = 323
             Top = 5
             Width = 29
             Height = 25
@@ -119,7 +120,7 @@ object MainForm: TMainForm
           end
         end
       end
-      object ActionbuttonsPanel: TPanel
+      object ClassifierPanel: TPanel
         Left = 1
         Top = 1
         Width = 452
@@ -127,26 +128,13 @@ object MainForm: TMainForm
         Align = alLeft
         Enabled = False
         TabOrder = 1
-        inline TClassesFrame1: TClassesFrame
-          Left = 1
-          Top = 1
-          Width = 450
-          Height = 132
-          Align = alClient
-          PopupMenu = TClassesFrame1.PopupMenu1
-          TabOrder = 0
-          ExplicitLeft = 1
-          ExplicitTop = 1
-          ExplicitWidth = 450
-          ExplicitHeight = 132
-        end
       end
     end
     object GroupBox1: TGroupBox
       Left = 1
       Top = 1
       Width = 128
-      Height = 678
+      Height = 282
       Align = alLeft
       Caption = 'Image Files'
       TabOrder = 1
@@ -154,7 +142,7 @@ object MainForm: TMainForm
         Left = 2
         Top = 15
         Width = 124
-        Height = 661
+        Height = 265
         Align = alClient
         ItemHeight = 13
         PopupMenu = listPopup
@@ -165,15 +153,15 @@ object MainForm: TMainForm
     object Panel1: TPanel
       Left = 129
       Top = 1
-      Width = 1291
-      Height = 678
+      Width = 693
+      Height = 282
       Align = alClient
       TabOrder = 2
       object Image1: TImage
         Left = 1
         Top = 1
-        Width = 1289
-        Height = 659
+        Width = 691
+        Height = 263
         Align = alClient
         AutoSize = True
         Picture.Data = {
@@ -16189,8 +16177,8 @@ object MainForm: TMainForm
       end
       object HeaderControl1: THeaderControl
         Left = 1
-        Top = 660
-        Width = 1289
+        Top = 264
+        Width = 691
         Height = 17
         Align = alBottom
         Sections = <
@@ -16205,20 +16193,20 @@ object MainForm: TMainForm
   object TopBackPanel: TPanel
     Left = 0
     Top = 0
-    Width = 1421
+    Width = 823
     Height = 41
     Align = alTop
     TabOrder = 3
     object TopPanel: TPanel
       Left = 1
       Top = 1
-      Width = 176
+      Width = 263
       Height = 39
       Align = alLeft
       AutoSize = True
       TabOrder = 0
       object OpenCloseProjectBtn: TButton
-        Left = 1
+        Left = 88
         Top = 1
         Width = 87
         Height = 37
@@ -16227,7 +16215,7 @@ object MainForm: TMainForm
         TabOrder = 0
       end
       object Button2: TButton
-        Left = 88
+        Left = 175
         Top = 1
         Width = 87
         Height = 37
@@ -16235,11 +16223,20 @@ object MainForm: TMainForm
         Align = alLeft
         TabOrder = 1
       end
+      object Button1: TButton
+        Left = 1
+        Top = 1
+        Width = 87
+        Height = 37
+        Action = NewProjectA
+        Align = alLeft
+        TabOrder = 2
+      end
     end
     object ProjFilePathPanel: TPanel
-      Left = 177
+      Left = 264
       Top = 1
-      Width = 1243
+      Width = 558
       Height = 39
       Align = alClient
       Alignment = taLeftJustify
@@ -16279,12 +16276,6 @@ object MainForm: TMainForm
     OnTimer = mShutDownTimerTimer
     Left = 1016
     Top = 376
-  end
-  object mIniFileC: TIniFileC
-    IniFileName = 'annotator.ini'
-    RootFolder = '.'
-    Left = 1048
-    Top = 264
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
@@ -16349,8 +16340,8 @@ object MainForm: TMainForm
   end
   object MenuActions: TActionList
     Images = ImageList1
-    Left = 184
-    Top = 248
+    Left = 32
+    Top = 88
     object FileOpen1: TFileOpen
       Category = 'File'
       Caption = '&Open...'
@@ -16407,7 +16398,7 @@ object MainForm: TMainForm
     Left = 768
     Top = 24
     Bitmap = {
-      494C0101080018002C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010108001800480110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

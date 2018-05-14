@@ -32,7 +32,7 @@ __published:	// IDE-managed Components
 	TActionList *ActionList1;
 	TBrowseForFolder *BrowseForFolder1;
 	TGroupBox *GroupBox2;
-	TListBox *CategoryLB;
+	TListBox *ClassesLB;
 	TButton *AddCategoryBtn;
 	TPanel *Panel2;
 	TButton *Button4;
@@ -41,6 +41,7 @@ __published:	// IDE-managed Components
 	void __fastcall AddCategoryBtnClick(TObject *Sender);
 	void __fastcall Button4Click(TObject *Sender);
 	void __fastcall FileOpenDialog1FileOkClick(TObject *Sender, bool &CanClose);
+	void __fastcall Button2Click(TObject *Sender);
 
     private:
 

@@ -1,32 +1,33 @@
 #include <vcl.h>
 #pragma hdrstop
-#include "atClassesFrame.h"
+#include "atTClassifierFrame.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "TArrayBotBtn"
 #pragma resource "*.dfm"
-TClassesFrame *ClassesFrame;
+TClassifierFrame *ClassifierFrame;
 
 //---------------------------------------------------------------------------
-__fastcall TClassesFrame::TClassesFrame(TComponent* Owner)
-	: TFrame(Owner)
+__fastcall TClassifierFrame::TClassifierFrame(ClassifierBase& c, TComponent* Owner)
+	: TFrame(Owner),
+    mClassifier(c)
 {
 }
 
-void TClassesFrame::emptyFrame()
+void TClassifierFrame::empty()
 {
-    mClasses.clear();
+    mClassifier.clear();
 }
 //---------------------------------------------------------------------------
-void TClassesFrame::populate(const StringList& categories)
+void TClassifierFrame::populate(const StringList& categories)
 {
-    mClasses.clear();
+    mClassifier.clear();
     int buttonWidth = this->Width / categories.count();
 
     for(int i = 0; i < categories.count(); i++)
     {
         //Return a class
-	    ClassValue& aClass = mClasses.addClass(categories[i], 's' + i);
+	    ClassValue& aClass = mClassifier.addClass(categories[i], 's' + i);
 //        aClass.mButton->Left = buttonWidth * i + 1;
         aClass.mButton->Align = alLeft;
         aClass.mButton->Parent = this;
@@ -35,9 +36,9 @@ void TClassesFrame::populate(const StringList& categories)
 }
 
 //---------------------------------------------------------------------------
-TArrayBotButton* TClassesFrame::getButtonWithKey(char ch)
+TArrayBotButton* TClassifierFrame::getButtonWithKey(char ch)
 {
-    for(int i = 0; i < mClasses.count(); i++)
+    for(int i = 0; i < mClassifier.count(); i++)
     {
 
     }
@@ -45,7 +46,7 @@ TArrayBotButton* TClassesFrame::getButtonWithKey(char ch)
 
 
 //---------------------------------------------------------------------------
-void __fastcall TClassesFrame::AssignButtonKeys1Click(TObject *Sender)
+void __fastcall TClassifierFrame::AssignButtonKeys1Click(TObject *Sender)
 {
 	MessageDlg("Assign keys", mtWarning, TMsgDlgButtons() << mbOK, 0);
 }

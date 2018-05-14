@@ -20,7 +20,7 @@
 #pragma link "dslTSTDStringEdit"
 #pragma link "dslTSTDStringLabeledEdit"
 #pragma link "TArrayBotBtn"
-#pragma link "atClassesFrame"
+
 #pragma resource "*.dfm"
 //---------------------------------------------------------------------------
 
@@ -35,16 +35,15 @@ extern string gAppName;
 
 //---------------------------------------------------------------------------
 __fastcall TMainForm::TMainForm(TComponent* Owner)
-	: TRegistryForm(gApplicationRegistryRoot, "MainForm", Owner),
+	:
+    TRegistryForm(gApplicationRegistryRoot, "MainForm", Owner),
+    mAppProperties(gAppName, gApplicationRegistryRoot, ""),
     mLogLevel(lAny),
     mLogFileReader(joinPath(gAppDataLocation, gLogFileName), logMsg),
     mBottomPanelHeight(205),
-
     mIsStyleMenuPopulated(false),
-	gImageForm(NULL),
-    mAppProperties(gAppName, gApplicationRegistryRoot, "")
+	gImageForm(NULL)
 {
-    setupIniFile();
     setupAndReadIniParameters();
   	TMemoLogger::mMemoIsEnabled = true;
 	CurrImage = Image1;
@@ -52,7 +51,10 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
 __fastcall TMainForm::~TMainForm()
 {
-	delete gImageForm;
+    if(gImageForm)
+    {
+		delete gImageForm;
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -67,7 +69,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 
 bool TMainForm::isFolderOpen()
 {
-    return ActionbuttonsPanel->Enabled;
+    return ClassifierPanel->Enabled;
 }
 
 //---------------------------------------------------------------------------
@@ -84,15 +86,15 @@ void __fastcall TMainForm::OpenaClone1Click(TObject *Sender)
 
 bool TMainForm::openProject(const string& fName)
 {
-	mProjectFile.clear();
+	mClassifierFile.clear();
     Log(lInfo) << "Loading project from file: " << fName;
-    if(!mProjectFile.load(fName))
+    if(!mClassifierFile.load(fName))
     {
         Log(lError) << "Failed loading project file: " << fName;
     }
 
     //Get SETTINGS section
-    IniSection* settings = mProjectFile.getSection("SETTINGS", true); //Autocreate section
+    IniSection* settings = mClassifierFile.getSection("SETTINGS", true); //Autocreate section
     if(!settings)
     {
         Log(lError) << "Failed creating \"SETTINGS\" section";
@@ -122,13 +124,26 @@ bool TMainForm::openProject(const string& fName)
         return false;
     }
 
-    ImageFolderE->setValue(imageFolder->mValue);
+
+    if(imageFolder->mValue.size() != 0 )
+    {
+        //Verify that the currently selecte image folder
+        //matches what is written in the file
+        if(ImageFolderE->getValue() != imageFolder->mValue)
+        {
+            MessageDlg("This file don't belong in this folder!\nMake sure you know what you are doing..", mtError, TMsgDlgButtons() << mbOK, 0);
+        }
+    }
+    else
+    {
+		imageFolder->mValue = ImageFolderE->getValue();
+    }
 
     //Check current folder for files and populate list box
 	StringList files = getFilesInDir(ImageFolderE->getValue(), "png", false);
 
     //Create ini file section
-    IniSection* sec = mProjectFile.getSection("VALUES", true); //Autocreate section
+    IniSection* sec = mClassifierFile.getSection("VALUES", true); //Autocreate section
     if(!sec)
     {
         Log(lError) << "Failed creating \"VALUES\" section";
@@ -167,7 +182,7 @@ bool TMainForm::openProject(const string& fName)
     }
 
     enableDisablePanel(ProjFilePathPanel, false);
-    enableDisablePanel(ActionbuttonsPanel, true);
+    enableDisablePanel(ClassifierPanel, true);
     return true;
 }
 
@@ -281,7 +296,7 @@ void __fastcall TMainForm::FormKeyDown(TObject *Sender, WORD &Key, TShiftState S
     if(isFolderOpen())
     {
             //Find the button with key == ch
-            TArrayBotButton *btn = TClassesFrame1->getButtonWithKey(ch);
+            TArrayBotButton *btn = mCF->getButtonWithKey(ch);
             if(btn)
             {
 				SendMessage(btn->Handle, BM_CLICK, 0, 0);
@@ -341,6 +356,7 @@ void __fastcall TMainForm::FileOpen1Accept(TObject *Sender)
     //Open project file here
     string fName(stdstr(FileOpen1->Dialog->FileName));
     Log(lInfo) << "Opening file: "<<fName;
+    ImageFolderE->setValue(getFilePath(fName));
 
 	if(openProject(fName))
     {
@@ -356,11 +372,11 @@ void __fastcall TMainForm::FileOpen1Accept(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::CloseProjectAExecute(TObject *Sender)
 {
-    mProjectFile.save();
+    mClassifierFile.save();
     UserE->Enabled = true;
     imagesLB->Clear();
     enableDisablePanel(ProjFilePathPanel, true);
-    enableDisablePanel(ActionbuttonsPanel, false);
+    enableDisablePanel(ClassifierPanel, false);
     OpenCloseProjectBtn->Action = FileOpen1;
     FileOpen1->Enabled = true;
     CloseProjectA->Enabled = false;
@@ -379,11 +395,19 @@ void __fastcall TMainForm::NewProjectAExecute(TObject *Sender)
     f->UserE->setValue(UserE->getValue());
 
     int r = f->ShowModal();
-    if(r != mrOk)
+    while(r == mrTryAgain)
+    {
+        r = f->ShowModal();
+    }
+
+    if(r == mrCancel)
     {
         return;
     }
 
+    mCF = new TClassifierFrame(mClassifier, this);
+    mCF->Parent = ClassifierPanel;
+    mCF->Align = alClient;
     //Create and open new project
     //Create fileName
     string fName = f->UserE->getValue() + string("_") + f->ProjectNameE->getValue() + string(".chf");
@@ -409,22 +433,23 @@ void __fastcall TMainForm::NewProjectAExecute(TObject *Sender)
 
     //Setup classifer panel
     Log(lInfo) << "Setting up classifier panel with the following classes: " << cats;
-    TClassesFrame1->populate(cats);
-
+    mCF->populate(cats);
 
     //Open project
+    ImageFolderE->setValue(f->ImageFolderE->getValue());
     FileOpen1->Dialog->FileName = vclstr(fName);
     UserE->setValue(f->UserE->getValue());
     FileOpen1Accept(Sender);
 }
 
+
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::SaveProjectAExecute(TObject *Sender)
 {
     //Save current project
-	if(mProjectFile.save())
+	if(mClassifierFile.save())
     {
-        Log(lInfo) << "The projectfile: "<<mProjectFile.getFileName()<< " was saved to folder: "<<getFilePath(mProjectFile.getFullFileName());
+        Log(lInfo) << "The projectfile: "<<mClassifierFile.getFileName()<< " was saved to folder: "<<getFilePath(mClassifierFile.getFullFileName());
     }
 }
 
@@ -432,13 +457,13 @@ void __fastcall TMainForm::SaveProjectAExecute(TObject *Sender)
 void __fastcall TMainForm::SaveProjectAsAExecute(TObject *Sender)
 {
     //Open FileSaveAs dialog
-    SaveDialog1->FileName = mProjectFile.getFullFileName().c_str();
+    SaveDialog1->FileName = mClassifierFile.getFullFileName().c_str();
     SaveDialog1->Execute();
 
     string newFName(stdstr(SaveDialog1->FileName));
     Log(lInfo) << "Saving to file: " << newFName;
-    mProjectFile.setFileName(newFName);
-    mProjectFile.save();
+    mClassifierFile.setFileName(newFName);
+    mClassifierFile.save();
 
     //Open this new file
     FileOpen1->Dialog->FileName = newFName.c_str();
@@ -449,5 +474,7 @@ void TMainForm::setupClassifierPanel()
 {
 
 }
+
+
 
 

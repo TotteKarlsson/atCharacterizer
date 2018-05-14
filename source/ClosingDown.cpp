@@ -29,9 +29,7 @@ void __fastcall TMainForm::mShutDownTimerTimer(TObject *Sender)
 
 void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
 {
-
 	Log(lInfo) << "In FormClose";
-	mIniFileC->clear();
 	Log(lInfo) << "In main forms destructor";
 
 	if(gImageForm)
@@ -43,17 +41,15 @@ void __fastcall TMainForm::FormClose(TObject *Sender, TCloseAction &Action)
 	//Save project history
 	mBottomPanelHeight = mBottomPanel->Height;
 
-	mGeneralProperties.write();
-	//Write to file
-	mIniFileC->save();
+    //We have to write properties here, cause the form owns some of them and they will
+    //be destroyed here..
+    mAppProperties.writeProperties();
 }
 
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::FormCloseQuery(TObject *Sender, bool &CanClose)
 {
 	Log(lInfo) << "Closing down....";
-
-
 	//Check if we can close.. abort all threads..
 	if(mLogFileReader.isRunning())
     {

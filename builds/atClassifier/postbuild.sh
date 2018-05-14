@@ -20,13 +20,13 @@ echo "BDSCOMMONDIR: "$BDSCOMMONDIR
 
 #Extract version
 VERSION=`cat ./../../VERSION.txt | tr -d '\r'`
-APPNAME=atCharacterizer
+APPNAME=atClassifier
 
 echo "Copy stuff"
 mkdir $APP_RELEASES/$APPNAME
 
 dest=$APP_RELEASES/$APPNAME
-SRC_DIR="."
+SRC_DIR="../../source"
 
 #Borland Packages and dll's
 #CG_REDIST="/cygdrive/c/CodeGear/Tokyo/bin"
@@ -94,13 +94,13 @@ do
     cp $file $dest
 done
 
-#instead of using local bin folder
-cp $miscRedist/navusbapi.dll                                        $OUTPUTDIR
-cp $miscRedist/Thorlabs.MotionControl.TCube.StepperMotor.dll        $OUTPUTDIR
-cp $miscRedist/Thorlabs.MotionControl.TDIEngine.dll                 $OUTPUTDIR
-cp $miscRedist/Thorlabs.MotionControl.IntegratedStepperMotors.dll   $OUTPUTDIR
-cp $miscRedist/Thorlabs.MotionControl.TCube.DCServo.dll             $OUTPUTDIR
-cp $miscRedist/Thorlabs.MotionControl.Benchtop.StepperMotor.dll     $OUTPUTDIR
-cp $miscRedist/Thorlabs.MotionControl.DeviceManager.dll             $OUTPUTDIR
+##instead of using local bin folder
+#cp $miscRedist/navusbapi.dll                                        $OUTPUTDIR
+#cp $miscRedist/Thorlabs.MotionControl.TCube.StepperMotor.dll        $OUTPUTDIR
+#cp $miscRedist/Thorlabs.MotionControl.TDIEngine.dll                 $OUTPUTDIR
+#cp $miscRedist/Thorlabs.MotionControl.IntegratedStepperMotors.dll   $OUTPUTDIR
+#cp $miscRedist/Thorlabs.MotionControl.TCube.DCServo.dll             $OUTPUTDIR
+#cp $miscRedist/Thorlabs.MotionControl.Benchtop.StepperMotor.dll     $OUTPUTDIR
+#cp $miscRedist/Thorlabs.MotionControl.DeviceManager.dll             $OUTPUTDIR
 cp $SRC_DIR/../*.txt                                                $OUTPUTDIR
 cp $SRC_DIR/*.ico                                                   $OUTPUTDIR

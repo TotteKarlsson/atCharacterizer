@@ -8,23 +8,26 @@
 #include "dslRestartApplicationUtils.h"
 #include "dslVCLUtils.h"
 #include "dslLogger.h"
+#include "dslApplicationProperties.h"
 //---------------------------------------------------------------------------
 using namespace dsl;
 
 using std::string;
-USEFORM("Forms\TNewProjectForm.cpp", NewProjectForm);
-USEFORM("Forms\TImageForm.cpp", ImageForm);
-USEFORM("TMainForm.cpp", MainForm);
-USEFORM("Forms\TAboutATCharacterizerForm.cpp", AboutATCharacterizer);
+USEFORM("..\..\source\Forms\TNewProjectForm.cpp", NewProjectForm);
+USEFORM("..\..\source\Forms\TImageForm.cpp", ImageForm);
+USEFORM("..\..\source\TMainForm.cpp", MainForm);
+USEFORM("..\..\source\Forms\TAboutATCharacterizerForm.cpp", AboutATCharacterizer);
+USEFORM("..\..\source\Frames\atTClassifierFrame.cpp", ClassifierFrame); /* TFrame: File Type */
 //---------------------------------------------------------------------------
-extern string		gAppName					= "The Characterizer";
-extern string       gLogFileName                = "Characterizer.log";
+extern string		gAppName					= "atClassifier";
+extern string       gLogFileName                = "atClassifier.log";
 extern string       gAppDataLocation            = joinPath(getSpecialFolder(CSIDL_LOCAL_APPDATA), gAppName);
-extern string 		gApplicationRegistryRoot  	= "\\Software\\Allen Institute\\Characterizer\\0.5.0";
+extern string 		gApplicationRegistryRoot  	= "\\Software\\Allen Institute\\atClassifier\\0.5.0";
 extern string       gApplicationStyle           = "Iceberg Classico";
-extern string       gApplicationMutexName       = "CharacterizerMutex";
+extern string       gApplicationMutexName       = "atClassifierMutex";
 extern HWND         gOtherAppWindow             = NULL;
-extern string       gRestartMutexName           = "CharacterizerRestartMutex";
+extern string       gRestartMutexName           = "atClassifierRestartMutex";
+
 
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {

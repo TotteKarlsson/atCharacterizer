@@ -44,8 +44,8 @@
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=0.5.5.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>None</Manifest_File>
-        <ILINK_LibraryPath>Frames\;Core\;forms\;P:\libs\atapi\source\vcl\frames\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
-        <IncludePath>Frames\;Core\;forms\;P:\libs\atapi\source\vcl\frames\;Frames;Core;Forms;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>..\..\source\;..\..\source\Core\;..\..\source\Forms\;..\..\source\Frames\;..\builds\atClassifier\;Frames\;Core\;forms\;P:\libs\atapi\source\vcl\frames\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>..\..\source\;..\..\source\Core\;..\..\source\Forms\;..\..\source\Frames\;..\builds\atClassifier\;Frames\;Core\;forms\;P:\libs\atapi\source\vcl\frames\;Frames;Core;Forms;$(IncludePath)</IncludePath>
         <ProjectType>CppVCLApplication</ProjectType>
         <AllPackageLibs>rtl.lib;vcl.lib;bcbie.lib;vclie.lib;vclx.lib;vclactnband.lib;IndySystem.lib;IndyProtocols.lib;IndyCore.lib;vclimg.lib;sbridge250.lib;dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib</AllPackageLibs>
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
@@ -118,9 +118,10 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <BT_BuildType>Debug</BT_BuildType>
         <LinkPackageStatics>sbridge250.lib;dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib</LinkPackageStatics>
         <LinkPackageImports>rtl.bpi;vcl.bpi;bcbie.bpi;vclie.bpi;vclx.bpi;vclactnband.bpi;IndySystem.bpi;IndyProtocols.bpi;IndyCore.bpi;vclimg.bpi</LinkPackageImports>
-        <UWP_CppLogo44>..\resources\logo.png</UWP_CppLogo44>
-        <UWP_CppLogo150>..\resources\logo.png</UWP_CppLogo150>
+        <UWP_CppLogo44>..\..\resources\logo.png</UWP_CppLogo44>
+        <UWP_CppLogo150>..\..\resources\logo.png</UWP_CppLogo150>
         <VerInfo_Release>1</VerInfo_Release>
+        <_TCHARMapping>char</_TCHARMapping>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <Defines>NDEBUG;$(Defines)</Defines>
@@ -133,68 +134,68 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <CppCompile Include="atClassifier.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
-        <CppCompile Include="ClosingDown.cpp">
+        <CppCompile Include="..\..\source\ClosingDown.cpp">
             <BuildOrder>19</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Core\atApplicationSupportFunctions.cpp">
-            <DependentOn>Core\atApplicationSupportFunctions.h</DependentOn>
+        <CppCompile Include="..\..\source\Core\atApplicationSupportFunctions.cpp">
+            <DependentOn>..\..\source\Core\atApplicationSupportFunctions.h</DependentOn>
             <BuildOrder>20</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Core\atClassifierBase.cpp">
-            <DependentOn>Core\atClassifierBase.h</DependentOn>
+        <CppCompile Include="..\..\source\Core\atClassifierBase.cpp">
+            <DependentOn>..\..\source\Core\atClassifierBase.h</DependentOn>
             <BuildOrder>11</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Core\atClassifierProject.cpp">
-            <DependentOn>Core\atClassifierProject.h</DependentOn>
+        <CppCompile Include="..\..\source\Core\atClassifierProject.cpp">
+            <DependentOn>..\..\source\Core\atClassifierProject.h</DependentOn>
             <BuildOrder>10</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Core\atClassValue.cpp">
-            <DependentOn>Core\atClassValue.h</DependentOn>
+        <CppCompile Include="..\..\source\Core\atClassValue.cpp">
+            <DependentOn>..\..\source\Core\atClassValue.h</DependentOn>
             <BuildOrder>13</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Forms\TAboutATCharacterizerForm.cpp">
+        <CppCompile Include="..\..\source\Forms\TAboutATCharacterizerForm.cpp">
             <Form>AboutATCharacterizer</Form>
             <BuildOrder>21</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Forms\TImageForm.cpp">
+        <CppCompile Include="..\..\source\Forms\TImageForm.cpp">
             <Form>ImageForm</Form>
-            <DependentOn>Forms\TImageForm.h</DependentOn>
+            <DependentOn>..\..\source\Forms\TImageForm.h</DependentOn>
             <BuildOrder>20</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Forms\TNewProjectForm.cpp">
+        <CppCompile Include="..\..\source\Forms\TNewProjectForm.cpp">
             <Form>NewProjectForm</Form>
             <FormType>dfm</FormType>
-            <DependentOn>Forms\TNewProjectForm.h</DependentOn>
+            <DependentOn>..\..\source\Forms\TNewProjectForm.h</DependentOn>
             <BuildOrder>9</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Frames\atClassesFrame.cpp">
-            <Form>ClassesFrame</Form>
+        <CppCompile Include="..\..\source\Frames\atTClassifierFrame.cpp">
+            <Form>ClassifierFrame</Form>
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
-            <DependentOn>Frames\atClassesFrame.h</DependentOn>
+            <DependentOn>..\..\source\Frames\atTClassifierFrame.h</DependentOn>
+            <BuildOrder>13</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\source\Initializing.cpp">
+            <DependentOn>..\..\source\Initializing.h</DependentOn>
             <BuildOrder>12</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Initializing.cpp">
-            <DependentOn>Initializing.h</DependentOn>
-            <BuildOrder>12</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="Miscellaneous.cpp">
+        <CppCompile Include="..\..\source\Miscellaneous.cpp">
             <BuildOrder>4</BuildOrder>
         </CppCompile>
-        <CppCompile Include="ProjectRelated.cpp">
+        <CppCompile Include="..\..\source\ProjectRelated.cpp">
             <BuildOrder>25</BuildOrder>
         </CppCompile>
-        <CppCompile Include="TMainForm.cpp">
+        <CppCompile Include="..\..\source\TMainForm.cpp">
             <Form>MainForm</Form>
             <FormType>dfm</FormType>
-            <DependentOn>TMainForm.h</DependentOn>
+            <DependentOn>..\..\source\TMainForm.h</DependentOn>
             <BuildOrder>2</BuildOrder>
         </CppCompile>
-        <FormResources Include="Frames\atClassesFrame.dfm"/>
-        <FormResources Include="Forms\TNewProjectForm.dfm"/>
-        <FormResources Include="TMainForm.dfm"/>
-        <FormResources Include="Forms\TImageForm.dfm"/>
-        <FormResources Include="Forms\TAboutATCharacterizerForm.dfm"/>
+        <FormResources Include="..\..\source\Forms\TNewProjectForm.dfm"/>
+        <FormResources Include="..\..\source\Forms\TImageForm.dfm"/>
+        <FormResources Include="..\..\source\TMainForm.dfm"/>
+        <FormResources Include="..\..\source\Forms\TAboutATCharacterizerForm.dfm"/>
+        <FormResources Include="..\..\source\Frames\atTClassifierFrame.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -302,6 +303,19 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="p:\build\debug\bin\atClassifier.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>atClassifier.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\resources\logo.png" Configuration="Debug" Class="UWP_CppLogo44">
+                    <Platform Name="Win32">
+                        <RemoteDir>Assets\</RemoteDir>
+                        <RemoteName>Logo44x44.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="p:\build\debug\bin\atClassifier.tds" Configuration="Debug" Class="DebugSymbols">
                     <Platform Name="Win32">
                         <RemoteName>atClassifier.tds</RemoteName>
@@ -313,21 +327,8 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="p:\build\debug\bin\atClassifier.exe" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>atClassifier.exe</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin64\cc64250.dll" Class="DependencyModule">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="..\resources\logo.png" Configuration="Debug" Class="UWP_CppLogo44">
-                    <Platform Name="Win32">
-                        <RemoteDir>Assets\</RemoteDir>
-                        <RemoteName>Logo44x44.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

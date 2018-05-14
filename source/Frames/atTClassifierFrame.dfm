@@ -1,4 +1,4 @@
-object ClassesFrame: TClassesFrame
+object ClassifierFrame: TClassifierFrame
   Left = 0
   Top = 0
   Width = 662

@@ -39,7 +39,7 @@
         <Projects Include="P:\libs\atapi\builds\atVCLVisualComponents\atVCLVisualComponents.cbproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="..\source\atClassifier.cbproj">
+        <Projects Include="atClassifier\atClassifier.cbproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -159,13 +159,13 @@
         <MSBuild Projects="P:\libs\atapi\builds\atVCLVisualComponents\atVCLVisualComponents.cbproj" Targets="Make"/>
     </Target>
     <Target Name="atClassifier">
-        <MSBuild Projects="..\source\atClassifier.cbproj"/>
+        <MSBuild Projects="atClassifier\atClassifier.cbproj"/>
     </Target>
     <Target Name="atClassifier:Clean">
-        <MSBuild Projects="..\source\atClassifier.cbproj" Targets="Clean"/>
+        <MSBuild Projects="atClassifier\atClassifier.cbproj" Targets="Clean"/>
     </Target>
     <Target Name="atClassifier:Make">
-        <MSBuild Projects="..\source\atClassifier.cbproj" Targets="Make"/>
+        <MSBuild Projects="atClassifier\atClassifier.cbproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
         <CallTarget Targets="dslCommon;dslIPC;dslMath;dslPlugins;dslVCLCommon;dslVCLComponents;dslVCLVisualComponents;atFoundation;atVCLCommon;atVCLDataModules;atVCLComponents;atVCLVisualComponents;atClassifier"/>
