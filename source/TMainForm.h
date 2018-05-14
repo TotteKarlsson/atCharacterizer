@@ -35,7 +35,7 @@
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.ToolWin.hpp>
 #include "TArrayBotBtn.h"
-#include "core/atClassValues.h"
+#include "core/atClassifierBase.h"
 #include "atClassesFrame.h"
 class TImageForm;
 //using dsl::Process;

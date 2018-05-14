@@ -1,5 +1,5 @@
-#ifndef atCharacterizerProjectH
-#define atCharacterizerProjectH
+#ifndef atClassifierProjectH
+#define atClassifierProjectH
 #include "dslProject.h"
 //---------------------------------------------------------------------------
 

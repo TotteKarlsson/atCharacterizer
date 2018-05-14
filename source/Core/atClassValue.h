@@ -6,7 +6,7 @@
 //---------------------------------------------------------------------------
 
 using std::string;
-using dsl::StringList;
+
 using dsl::shared_ptr;
 
 class ClassValue

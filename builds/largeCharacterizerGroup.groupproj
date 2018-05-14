@@ -27,10 +27,19 @@
         <Projects Include="P:\libs\atapi\builds\atFoundation\atFoundation.cbproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="P:\libs\atapi\builds\atVCLCommon\atVCLCommon.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="P:\libs\atapi\builds\atVCLDataModules\atVCLDataModules.cbproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="P:\libs\atapi\builds\atVCLComponents\atVCLComponents.cbproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="..\source\atCharacterizer.cbproj">
+        <Projects Include="P:\libs\atapi\builds\atVCLVisualComponents\atVCLVisualComponents.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\source\atClassifier.cbproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -113,6 +122,24 @@
     <Target Name="atFoundation:Make">
         <MSBuild Projects="P:\libs\atapi\builds\atFoundation\atFoundation.cbproj" Targets="Make"/>
     </Target>
+    <Target Name="atVCLCommon">
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLCommon\atVCLCommon.cbproj"/>
+    </Target>
+    <Target Name="atVCLCommon:Clean">
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLCommon\atVCLCommon.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="atVCLCommon:Make">
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLCommon\atVCLCommon.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="atVCLDataModules">
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLDataModules\atVCLDataModules.cbproj"/>
+    </Target>
+    <Target Name="atVCLDataModules:Clean">
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLDataModules\atVCLDataModules.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="atVCLDataModules:Make">
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLDataModules\atVCLDataModules.cbproj" Targets="Make"/>
+    </Target>
     <Target Name="atVCLComponents">
         <MSBuild Projects="P:\libs\atapi\builds\atVCLComponents\atVCLComponents.cbproj"/>
     </Target>
@@ -122,23 +149,32 @@
     <Target Name="atVCLComponents:Make">
         <MSBuild Projects="P:\libs\atapi\builds\atVCLComponents\atVCLComponents.cbproj" Targets="Make"/>
     </Target>
-    <Target Name="atCharacterizer">
-        <MSBuild Projects="..\source\atCharacterizer.cbproj"/>
+    <Target Name="atVCLVisualComponents">
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLVisualComponents\atVCLVisualComponents.cbproj"/>
     </Target>
-    <Target Name="atCharacterizer:Clean">
-        <MSBuild Projects="..\source\atCharacterizer.cbproj" Targets="Clean"/>
+    <Target Name="atVCLVisualComponents:Clean">
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLVisualComponents\atVCLVisualComponents.cbproj" Targets="Clean"/>
     </Target>
-    <Target Name="atCharacterizer:Make">
-        <MSBuild Projects="..\source\atCharacterizer.cbproj" Targets="Make"/>
+    <Target Name="atVCLVisualComponents:Make">
+        <MSBuild Projects="P:\libs\atapi\builds\atVCLVisualComponents\atVCLVisualComponents.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="atClassifier">
+        <MSBuild Projects="..\source\atClassifier.cbproj"/>
+    </Target>
+    <Target Name="atClassifier:Clean">
+        <MSBuild Projects="..\source\atClassifier.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="atClassifier:Make">
+        <MSBuild Projects="..\source\atClassifier.cbproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="dslCommon;dslIPC;dslMath;dslPlugins;dslVCLCommon;dslVCLComponents;dslVCLVisualComponents;atFoundation;atVCLComponents;atCharacterizer"/>
+        <CallTarget Targets="dslCommon;dslIPC;dslMath;dslPlugins;dslVCLCommon;dslVCLComponents;dslVCLVisualComponents;atFoundation;atVCLCommon;atVCLDataModules;atVCLComponents;atVCLVisualComponents;atClassifier"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="dslCommon:Clean;dslIPC:Clean;dslMath:Clean;dslPlugins:Clean;dslVCLCommon:Clean;dslVCLComponents:Clean;dslVCLVisualComponents:Clean;atFoundation:Clean;atVCLComponents:Clean;atCharacterizer:Clean"/>
+        <CallTarget Targets="dslCommon:Clean;dslIPC:Clean;dslMath:Clean;dslPlugins:Clean;dslVCLCommon:Clean;dslVCLComponents:Clean;dslVCLVisualComponents:Clean;atFoundation:Clean;atVCLCommon:Clean;atVCLDataModules:Clean;atVCLComponents:Clean;atVCLVisualComponents:Clean;atClassifier:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="dslCommon:Make;dslIPC:Make;dslMath:Make;dslPlugins:Make;dslVCLCommon:Make;dslVCLComponents:Make;dslVCLVisualComponents:Make;atFoundation:Make;atVCLComponents:Make;atCharacterizer:Make"/>
+        <CallTarget Targets="dslCommon:Make;dslIPC:Make;dslMath:Make;dslPlugins:Make;dslVCLCommon:Make;dslVCLComponents:Make;dslVCLVisualComponents:Make;atFoundation:Make;atVCLCommon:Make;atVCLDataModules:Make;atVCLComponents:Make;atVCLVisualComponents:Make;atClassifier:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

@@ -9,7 +9,7 @@
 #include <Vcl.Buttons.hpp>
 #include <Vcl.Menus.hpp>
 #include <vector>
-#include "atClassValues.h"
+#include "atClassifierBase.h"
 #include "dslSharedPointer.h"
 //---------------------------------------------------------------------------
 using dsl::StringList;
@@ -23,13 +23,17 @@ class TClassesFrame : public TFrame
 	TPopupMenu *PopupMenu1;
 	TMenuItem *AssignButtonKeys1;
 	void __fastcall AssignButtonKeys1Click(TObject *Sender);
+
+
     private:
-        ClassValues				        			mClasses;
+                                                    //Classifier holds various class values
+        ClassifierBase			        			mClasses;
 
     public:
     					__fastcall 	                TClassesFrame(TComponent* Owner);
         void                    	                populate(const StringList& cats);
         TArrayBotButton*                 			getButtonWithKey(char ch);
+        void                                        emptyFrame();
 
 };
 

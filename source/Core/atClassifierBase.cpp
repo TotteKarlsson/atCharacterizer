@@ -1,34 +1,34 @@
 #pragma hdrstop
-#include "atClassifier.h"
+#include "atClassifierBase.h"
 #include <sstream>
 //---------------------------------------------------------------------------
 
 using namespace std;
 
 
-Classifier::Classifier()
+ClassifierBase::ClassifierBase()
 {}
 
-Classifier::~Classifier()
+ClassifierBase::~ClassifierBase()
 {}
 
-ClassValue Classifier::operator[](int i) const
+ClassValue ClassifierBase::operator[](int i) const
 {
 	return mValues[i];
 }
 
-int Classifier::count()
+int ClassifierBase::count()
 {
     return mValues.size();
 }
 
-ClassValue& Classifier::addClass(const string& value, char ch)
+ClassValue& ClassifierBase::addClass(const string& value, char ch)
 {
     mValues.push_back(ClassValue(value,ch));
     return mValues.back();
 }
 
-//StringList Classifier::getValues() const
+//StringList ClassifierBase::getValues() const
 //{
 //    StringList vals;
 //
@@ -36,7 +36,7 @@ ClassValue& Classifier::addClass(const string& value, char ch)
 //}
 
 
-void Classifier::clear()
+void ClassifierBase::clear()
 {
     mValues.clear();
 }

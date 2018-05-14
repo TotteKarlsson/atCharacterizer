@@ -12,11 +12,11 @@
 using namespace dsl;
 
 using std::string;
-USEFORM("Forms\TNewProjectForm.cpp", NewProjectForm);
-USEFORM("Forms\TImageForm.cpp", ImageForm);
-USEFORM("TMainForm.cpp", MainForm);
-USEFORM("Forms\TAboutATCharacterizerForm.cpp", AboutATCharacterizer);
 USEFORM("Frames\atClassesFrame.cpp", ClassesFrame); /* TFrame: File Type */
+USEFORM("Forms\TNewProjectForm.cpp", NewProjectForm);
+USEFORM("TMainForm.cpp", MainForm);
+USEFORM("Forms\TImageForm.cpp", ImageForm);
+USEFORM("Forms\TAboutATCharacterizerForm.cpp", AboutATCharacterizer);
 //---------------------------------------------------------------------------
 extern string		gAppName					= "The Characterizer";
 extern string       gLogFileName                = "Characterizer.log";

@@ -13,6 +13,10 @@ __fastcall TClassesFrame::TClassesFrame(TComponent* Owner)
 {
 }
 
+void TClassesFrame::emptyFrame()
+{
+    mClasses.clear();
+}
 //---------------------------------------------------------------------------
 void TClassesFrame::populate(const StringList& categories)
 {
@@ -21,8 +25,9 @@ void TClassesFrame::populate(const StringList& categories)
 
     for(int i = 0; i < categories.count(); i++)
     {
+        //Return a class
 	    ClassValue& aClass = mClasses.addClass(categories[i], 's' + i);
-        aClass.mButton->Left = buttonWidth * i + 1;
+//        aClass.mButton->Left = buttonWidth * i + 1;
         aClass.mButton->Align = alLeft;
         aClass.mButton->Parent = this;
         aClass.mButton->Width =  buttonWidth;
