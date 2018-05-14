@@ -35,7 +35,8 @@
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.ToolWin.hpp>
 #include "TArrayBotBtn.h"
-
+#include "core/atClassValues.h"
+#include "atClassesFrame.h"
 class TImageForm;
 //using dsl::Process;
 //---------------------------------------------------------------------------
@@ -94,13 +95,8 @@ __published:	// IDE-managed Components
 	TPanel *MainPanel;
 	TAction *EditViewNode;
 	TSTDStringEdit *ImageFolderE;
-	TBrowseForFolder *BrowseForFolder1;
 	TGroupBox *GroupBox1;
-	TSTDStringEdit *UserE;
 	TPanel *ActionbuttonsPanel;
-	TArrayBotButton *YesBtn;
-	TArrayBotButton *MaybeBtn;
-	TArrayBotButton *NoBtn;
 	TSplitter *Splitter1;
 	TActionList *ActionList1;
 	TAction *YesA;
@@ -112,11 +108,13 @@ __published:	// IDE-managed Components
 	TAction *sortByValueA;
 	TPanel *TopPanel;
 	TButton *OpenCloseProjectBtn;
-	TPanel *Panel3;
+	TPanel *TopBackPanel;
 	TButton *Button2;
 	TAction *sortByFileNameA;
 	TMenuItem *SortbyValue1;
 	TMenuItem *sortByFileNameA1;
+	TSTDStringEdit *UserE;
+	TClassesFrame *TClassesFrame1;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall mShutDownTimerTimer(TObject *Sender);
 	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
@@ -130,9 +128,6 @@ __published:	// IDE-managed Components
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall ThemesMenuClick(TObject *Sender);
 	void __fastcall OpenaClone1Click(TObject *Sender);
-	void __fastcall BrowseForFolder1Accept(TObject *Sender);
-	void __fastcall BrowseForFolder1BeforeExecute(TObject *Sender);
-
 	void __fastcall imagesLBClick(TObject *Sender);
 	void __fastcall CharacterizeAction(TObject *Sender);
 	void __fastcall sortByValueAExecute(TObject *Sender);
@@ -141,6 +136,7 @@ __published:	// IDE-managed Components
 	void __fastcall NewProjectAExecute(TObject *Sender);
 	void __fastcall SaveProjectAExecute(TObject *Sender);
 	void __fastcall sortByFileNameAExecute(TObject *Sender);
+	void __fastcall SaveProjectAsAExecute(TObject *Sender);
 
 	private:	// User declarations
         void __fastcall                                 logMsg();
@@ -155,6 +151,7 @@ __published:	// IDE-managed Components
                                                         //This file contains all the data for
                                                         //any particular "project"
         IniFile                                         mProjectFile;
+
         bool                                            setupAndReadIniParameters();
         void                                            setupIniFile();
 
@@ -174,7 +171,7 @@ __published:	// IDE-managed Components
         bool                                            openProject(const string& fName);
         void                                            onCloseFolder();
         bool                                            isFolderOpen();
-
+        void                                            setupClassifierPanel();
 	public:
 		__fastcall 					 					TMainForm(TComponent* Owner);
 		__fastcall 					 					~TMainForm();

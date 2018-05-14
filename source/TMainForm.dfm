@@ -27,6 +27,7 @@ object MainForm: TMainForm
     Width = 1421
     Height = 19
     Panels = <>
+    SimplePanel = True
   end
   object mShowBottomPanelBtn: TButton
     Left = 0
@@ -126,38 +127,18 @@ object MainForm: TMainForm
         Align = alLeft
         Enabled = False
         TabOrder = 1
-        object YesBtn: TArrayBotButton
+        inline TClassesFrame1: TClassesFrame
           Left = 1
           Top = 1
-          Width = 150
+          Width = 450
           Height = 132
-          Action = YesA
-          Align = alLeft
-          Caption = 'Yes'
+          Align = alClient
+          PopupMenu = TClassesFrame1.PopupMenu1
           TabOrder = 0
-          SoundID = 'BUTTON_CLICK_4'
-        end
-        object MaybeBtn: TArrayBotButton
-          Left = 151
-          Top = 1
-          Width = 150
-          Height = 132
-          Action = MaybeA
-          Align = alLeft
-          Caption = 'Pass'
-          TabOrder = 1
-          SoundID = 'BUTTON_CLICK_4'
-        end
-        object NoBtn: TArrayBotButton
-          Left = 301
-          Top = 1
-          Width = 150
-          Height = 132
-          Action = NoA
-          Align = alLeft
-          Caption = 'No'
-          TabOrder = 2
-          SoundID = 'BUTTON_CLICK_4'
+          ExplicitLeft = 1
+          ExplicitTop = 1
+          ExplicitWidth = 450
+          ExplicitHeight = 132
         end
       end
     end
@@ -191,8 +172,8 @@ object MainForm: TMainForm
       object Image1: TImage
         Left = 1
         Top = 1
-        Width = 1289
-        Height = 659
+        Width = 715
+        Height = 715
         Align = alClient
         AutoSize = True
         Picture.Data = {
@@ -16221,13 +16202,12 @@ object MainForm: TMainForm
       end
     end
   end
-  object Panel3: TPanel
+  object TopBackPanel: TPanel
     Left = 0
     Top = 0
     Width = 1421
     Height = 41
     Align = alTop
-    Caption = 'Panel3'
     TabOrder = 3
     object TopPanel: TPanel
       Left = 1
@@ -16245,7 +16225,6 @@ object MainForm: TMainForm
         Action = FileOpen1
         Align = alLeft
         TabOrder = 0
-        ExplicitLeft = 65
       end
       object Button2: TButton
         Left = 88
@@ -16255,7 +16234,6 @@ object MainForm: TMainForm
         Action = SaveProjectA
         Align = alLeft
         TabOrder = 1
-        ExplicitLeft = 152
       end
     end
     object ProjFilePathPanel: TPanel
@@ -16266,9 +16244,6 @@ object MainForm: TMainForm
       Align = alClient
       Alignment = taLeftJustify
       TabOrder = 1
-      ExplicitLeft = 246
-      ExplicitTop = -2
-      ExplicitWidth = 1179
       object ImageFolderE: TSTDStringEdit
         Left = 12
         Top = 9
@@ -16279,22 +16254,22 @@ object MainForm: TMainForm
         Text = 'c:\ImageCache'
         Value = 'c:\ImageCache'
       end
-      object UserE: TSTDStringEdit
-        Left = 511
-        Top = 9
-        Width = 121
-        Height = 21
-        TabOrder = 1
-        Text = 'UserE'
-        Value = 'UserE'
-      end
       object ValidationCB: TPropertyCheckBox
         Left = 638
         Top = 11
         Width = 137
         Height = 17
         Caption = 'Validation Dialog'
+        TabOrder = 1
+      end
+      object UserE: TSTDStringEdit
+        Left = 511
+        Top = 9
+        Width = 121
+        Height = 21
         TabOrder = 2
+        Text = 'UserE'
+        Value = 'UserE'
       end
     end
   end
@@ -16374,8 +16349,8 @@ object MainForm: TMainForm
   end
   object MenuActions: TActionList
     Images = ImageList1
-    Left = 464
-    Top = 144
+    Left = 184
+    Top = 248
     object FileOpen1: TFileOpen
       Category = 'File'
       Caption = '&Open...'
@@ -16405,6 +16380,7 @@ object MainForm: TMainForm
       Category = 'File'
       Caption = 'Save As'
       Enabled = False
+      OnExecute = SaveProjectAsAExecute
     end
     object CloseProjectA: TAction
       Category = 'File'
@@ -16420,27 +16396,18 @@ object MainForm: TMainForm
       Category = 'TreeView'
       Caption = 'EditViewNode'
     end
-    object BrowseForFolder1: TBrowseForFolder
-      Category = 'File'
-      Caption = 'BrowseForFolder1'
-      DialogCaption = 'BrowseForFolder1'
-      BrowseOptions = [bifNewDialogStyle]
-      BrowseOptionsEx = []
-      BeforeExecute = BrowseForFolder1BeforeExecute
-      OnAccept = BrowseForFolder1Accept
-    end
   end
   object SaveDialog1: TSaveDialog
     DefaultExt = 'vc'
-    Filter = 'Volume Creator Project|*.vc'
-    Left = 960
-    Top = 336
+    Filter = 'Characterizer File|*.chf'
+    Left = 80
+    Top = 440
   end
   object ImageList1: TImageList
     Left = 768
     Top = 24
     Bitmap = {
-      494C0101080018001C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010108001800280110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

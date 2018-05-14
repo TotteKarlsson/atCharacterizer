@@ -12,10 +12,11 @@
 using namespace dsl;
 
 using std::string;
-USEFORM("TMainForm.cpp", MainForm);
-USEFORM("Forms\TImageForm.cpp", ImageForm);
-USEFORM("Forms\TAboutATCharacterizerForm.cpp", AboutATCharacterizer);
 USEFORM("Forms\TNewProjectForm.cpp", NewProjectForm);
+USEFORM("Forms\TImageForm.cpp", ImageForm);
+USEFORM("TMainForm.cpp", MainForm);
+USEFORM("Forms\TAboutATCharacterizerForm.cpp", AboutATCharacterizer);
+USEFORM("Frames\atClassesFrame.cpp", ClassesFrame); /* TFrame: File Type */
 //---------------------------------------------------------------------------
 extern string		gAppName					= "The Characterizer";
 extern string       gLogFileName                = "Characterizer.log";
@@ -98,8 +99,11 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 #pragma comment(lib, "dslVCLComponents.bpi")
 #pragma comment(lib, "dslVCLVisualComponents.bpi")
 
-//#pragma comment(lib, "atCore.lib")
+#pragma comment(lib, "atFoundation.lib")
 #pragma comment(lib, "atResources.lib")
+#pragma comment(lib, "atVCLVisualComponents.bpi")
+
+
 #pragma comment(lib, "poco_foundation-static.lib")
 #pragma comment(lib, "tinyxml2-static.lib")
 

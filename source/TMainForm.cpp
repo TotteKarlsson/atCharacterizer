@@ -20,6 +20,7 @@
 #pragma link "dslTSTDStringEdit"
 #pragma link "dslTSTDStringLabeledEdit"
 #pragma link "TArrayBotBtn"
+#pragma link "atClassesFrame"
 #pragma resource "*.dfm"
 //---------------------------------------------------------------------------
 
@@ -81,27 +82,10 @@ void __fastcall TMainForm::OpenaClone1Click(TObject *Sender)
 	imagesLBClick(Sender);
 }
 
-void __fastcall TMainForm::BrowseForFolder1Accept(TObject *Sender)
-{
-	//Extract Folder
-    if(!BrowseForFolder1->Folder.Length())
-    {
-        return;
-    }
-
-    ImageFolderE->setValue(stdstr(BrowseForFolder1->Folder));
-}
-
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::BrowseForFolder1BeforeExecute(TObject *Sender)
-{
-	BrowseForFolder1->Folder = vclstr( ImageFolderE->getValue());
-}
-
 bool TMainForm::openProject(const string& fName)
 {
 	mProjectFile.clear();
-    Log(lInfo) << "Loading project file: " << fName;
+    Log(lInfo) << "Loading project from file: " << fName;
     if(!mProjectFile.load(fName))
     {
         Log(lError) << "Failed loading project file: " << fName;
@@ -138,7 +122,7 @@ bool TMainForm::openProject(const string& fName)
         return false;
     }
 
-    imageFolder->mValue = ImageFolderE->getValue();
+    ImageFolderE->setValue(imageFolder->mValue);
 
     //Check current folder for files and populate list box
 	StringList files = getFilesInDir(ImageFolderE->getValue(), "png", false);
@@ -296,17 +280,22 @@ void __fastcall TMainForm::FormKeyDown(TObject *Sender, WORD &Key, TShiftState S
 
     if(isFolderOpen())
     {
-        switch(ch)
-        {
-            case 's':
-            case 'S':     		SendMessage(YesBtn->Handle, BM_CLICK, 0, 0);      break;
+            //Find the button with key == ch
+            TArrayBotButton *btn = TClassesFrame1->getButtonWithKey(ch);
+            if(btn)
+            {
+				SendMessage(btn->Handle, BM_CLICK, 0, 0);
+            }
 
-            case 'd':
-            case 'D':           SendMessage(MaybeBtn->Handle, BM_CLICK, 0, 0);     break;
+//            case 's':
+//            case 'S':     		SendMessage(YesBtn->Handle, BM_CLICK, 0, 0);      break;
+//
+//            case 'd':
+//            case 'D':           SendMessage(MaybeBtn->Handle, BM_CLICK, 0, 0);     break;
+//
+//            case 'F':
+//            case 'f':           SendMessage(NoBtn->Handle, BM_CLICK, 0, 0);      break;
 
-            case 'F':
-            case 'f':           SendMessage(NoBtn->Handle, BM_CLICK, 0, 0);      break;
-        }
     }
 }
 
@@ -341,7 +330,6 @@ void __fastcall TMainForm::sortByFileNameAExecute(TObject *Sender)
 {
 	Log(lInfo) << "Sorting list based on Keys";
     TStringList* sl = new TStringList();
-
     sl->Assign(imagesLB->Items);
     sl->CustomSort(SortListByKey);
     imagesLB->Items->Assign(sl);
@@ -360,6 +348,8 @@ void __fastcall TMainForm::FileOpen1Accept(TObject *Sender)
 	    CloseProjectA->Enabled = true;
  		OpenCloseProjectBtn->Action = CloseProjectA;
 	    SaveProjectA->Enabled = true;
+	    SaveProjectAsA->Enabled = true;
+        StatusBar1->SimpleText = FileOpen1->Dialog->FileName;
     }
 }
 
@@ -375,6 +365,8 @@ void __fastcall TMainForm::CloseProjectAExecute(TObject *Sender)
     FileOpen1->Enabled = true;
     CloseProjectA->Enabled = false;
     SaveProjectA->Enabled = false;
+    SaveProjectAsA->Enabled = false;
+    StatusBar1->SimpleText = "";
 }
 
 //---------------------------------------------------------------------------
@@ -387,31 +379,43 @@ void __fastcall TMainForm::NewProjectAExecute(TObject *Sender)
     f->UserE->setValue(UserE->getValue());
 
     int r = f->ShowModal();
-
-    if(r == mrOk)
+    if(r != mrOk)
     {
-        //Create and open new project
-        //Create fileName
-        string fName = f->UserE->getValue() + string("_") + f->ProjectNameE->getValue() + string(".chf");
-        fName = joinPath(f->ImageFolderE->getValue(), fName);
-
-        if(fileExists(fName))
-        {
-            int mr = MessageDlg("File exists. Over write?", mtWarning, TMsgDlgButtons() << mbOK<<mbCancel, 0);
-            if(mr == mrCancel)
-            {
-                return;
-            }
-            else
-            {
-                clearFile(fName);
-            }
-        }
-
-        //Open project
-        FileOpen1->Dialog->FileName = vclstr(fName);
-        FileOpen1Accept(Sender);
+        return;
     }
+
+    //Create and open new project
+    //Create fileName
+    string fName = f->UserE->getValue() + string("_") + f->ProjectNameE->getValue() + string(".chf");
+    fName = joinPath(f->ImageFolderE->getValue(), fName);
+
+    if(fileExists(fName))
+    {
+        stringstream msg;
+        msg << "The file: " << fName << " exists!. Overwrite?";
+        int mr = MessageDlg(msg.str().c_str(), mtWarning, TMsgDlgButtons() << mbOK<<mbCancel, 0);
+        if(mr == mrCancel)
+        {
+            return;
+        }
+        else
+        {
+            clearFile(fName);
+        }
+    }
+
+    //Capture the categories
+    StringList cats = f->getValues();
+
+    //Setup classifer panel
+    Log(lInfo) << "Setting up classifier panel with the following classes: " << cats;
+    TClassesFrame1->populate(cats);
+
+
+    //Open project
+    FileOpen1->Dialog->FileName = vclstr(fName);
+    UserE->setValue(f->UserE->getValue());
+    FileOpen1Accept(Sender);
 }
 
 //---------------------------------------------------------------------------
@@ -422,6 +426,28 @@ void __fastcall TMainForm::SaveProjectAExecute(TObject *Sender)
     {
         Log(lInfo) << "The projectfile: "<<mProjectFile.getFileName()<< " was saved to folder: "<<getFilePath(mProjectFile.getFullFileName());
     }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::SaveProjectAsAExecute(TObject *Sender)
+{
+    //Open FileSaveAs dialog
+    SaveDialog1->FileName = mProjectFile.getFullFileName().c_str();
+    SaveDialog1->Execute();
+
+    string newFName(stdstr(SaveDialog1->FileName));
+    Log(lInfo) << "Saving to file: " << newFName;
+    mProjectFile.setFileName(newFName);
+    mProjectFile.save();
+
+    //Open this new file
+    FileOpen1->Dialog->FileName = newFName.c_str();
+	FileOpen1Accept(Sender);
+}
+
+void TMainForm::setupClassifierPanel()
+{
+
 }
 
 

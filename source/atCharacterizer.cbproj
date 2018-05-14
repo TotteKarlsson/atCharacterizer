@@ -113,7 +113,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <ILINK_LibraryPath>$(DEBUG_BCC32)\lib;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <IncludePath>$(DEBUG_BCC32)\include;C:\Program Files (x86)\ImageMagick-7.0.7-Q16\include;$(IncludePath)</IncludePath>
-        <Debugger_DebugSourcePath>P:\libs\dsl\VCL\Common\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
+        <Debugger_DebugSourcePath>P:\libs\dsl\VCL\Common\;P:\libs\atapi\source\resources\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BT_BuildType>Debug</BT_BuildType>
         <LinkPackageStatics>sbridge250.lib;dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib</LinkPackageStatics>
@@ -144,6 +144,10 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <DependentOn>Core\atCharacterizerProject.h</DependentOn>
             <BuildOrder>10</BuildOrder>
         </CppCompile>
+        <CppCompile Include="Core\atClassValues.cpp">
+            <DependentOn>Core\atClassValues.h</DependentOn>
+            <BuildOrder>11</BuildOrder>
+        </CppCompile>
         <CppCompile Include="Forms\TAboutATCharacterizerForm.cpp">
             <Form>AboutATCharacterizer</Form>
             <BuildOrder>21</BuildOrder>
@@ -158,6 +162,13 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <FormType>dfm</FormType>
             <DependentOn>Forms\TNewProjectForm.h</DependentOn>
             <BuildOrder>9</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="Frames\atClassesFrame.cpp">
+            <Form>ClassesFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+            <DependentOn>Frames\atClassesFrame.h</DependentOn>
+            <BuildOrder>12</BuildOrder>
         </CppCompile>
         <CppCompile Include="Initializing.cpp">
             <DependentOn>Initializing.h</DependentOn>
@@ -175,10 +186,11 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <DependentOn>TMainForm.h</DependentOn>
             <BuildOrder>2</BuildOrder>
         </CppCompile>
+        <FormResources Include="Frames\atClassesFrame.dfm"/>
+        <FormResources Include="Forms\TNewProjectForm.dfm"/>
         <FormResources Include="TMainForm.dfm"/>
         <FormResources Include="Forms\TImageForm.dfm"/>
         <FormResources Include="Forms\TAboutATCharacterizerForm.dfm"/>
-        <FormResources Include="Forms\TNewProjectForm.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

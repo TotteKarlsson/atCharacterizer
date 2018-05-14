@@ -1,7 +1,6 @@
 object NewProjectForm: TNewProjectForm
   Left = 0
   Top = 0
-  ActiveControl = IntegerLabeledEdit1
   BorderStyle = bsSizeToolWin
   Caption = 'New Project Properties'
   ClientHeight = 336
@@ -24,10 +23,6 @@ object NewProjectForm: TNewProjectForm
     Align = alClient
     Caption = 'Project '
     TabOrder = 0
-    ExplicitLeft = 160
-    ExplicitTop = 40
-    ExplicitWidth = 185
-    ExplicitHeight = 105
     object ImageFolderE: TSTDStringLabeledEdit
       Left = 168
       Top = 41
@@ -38,27 +33,15 @@ object NewProjectForm: TNewProjectForm
       EditLabel.Caption = 'Image Folder'
       TabOrder = 0
     end
-    object IntegerLabeledEdit1: TIntegerLabeledEdit
-      Left = 168
-      Top = 109
-      Width = 121
-      Height = 21
-      EditLabel.Width = 89
-      EditLabel.Height = 13
-      EditLabel.Caption = 'Number of Classes'
-      TabOrder = 1
-      Text = '3'
-      Value = 3
-    end
     object UserE: TSTDStringLabeledEdit
-      Left = 16
-      Top = 109
+      Left = 18
+      Top = 85
       Width = 121
       Height = 21
       EditLabel.Width = 22
       EditLabel.Height = 13
       EditLabel.Caption = 'User'
-      TabOrder = 2
+      TabOrder = 1
     end
     object ProjectNameE: TSTDStringLabeledEdit
       Left = 16
@@ -68,7 +51,7 @@ object NewProjectForm: TNewProjectForm
       EditLabel.Width = 63
       EditLabel.Height = 13
       EditLabel.Caption = 'Project name'
-      TabOrder = 3
+      TabOrder = 2
       Text = 'MyProject'
       Value = 'MyProject'
     end
@@ -77,8 +60,54 @@ object NewProjectForm: TNewProjectForm
       Top = 39
       Width = 41
       Height = 25
-      Action = BrowseForFolder1
+      Hint = 'Open|Opens an existing file'
+      Caption = '...'
+      ImageIndex = 7
+      TabOrder = 3
+      OnClick = Button3Click
+    end
+    object GroupBox2: TGroupBox
+      Left = 16
+      Top = 112
+      Width = 185
+      Height = 180
+      Caption = 'Categories'
       TabOrder = 4
+      object CategoryLB: TListBox
+        Left = 2
+        Top = 15
+        Width = 181
+        Height = 122
+        Align = alClient
+        ItemHeight = 13
+        TabOrder = 0
+      end
+      object Panel2: TPanel
+        Left = 2
+        Top = 137
+        Width = 181
+        Height = 41
+        Align = alBottom
+        TabOrder = 1
+        object AddCategoryBtn: TButton
+          Left = 8
+          Top = 6
+          Width = 63
+          Height = 27
+          Caption = 'Add'
+          TabOrder = 0
+          OnClick = AddCategoryBtnClick
+        end
+        object Button4: TButton
+          Left = 96
+          Top = 6
+          Width = 63
+          Height = 27
+          Caption = 'Clear'
+          TabOrder = 1
+          OnClick = Button4Click
+        end
+      end
     end
   end
   object Panel1: TPanel
@@ -88,8 +117,6 @@ object NewProjectForm: TNewProjectForm
     Height = 41
     Align = alBottom
     TabOrder = 1
-    ExplicitLeft = 296
-    ExplicitWidth = 185
     object Button1: TButton
       Left = 432
       Top = 6
@@ -110,16 +137,22 @@ object NewProjectForm: TNewProjectForm
     end
   end
   object ActionList1: TActionList
-    Left = 88
-    Top = 192
+    Left = 376
+    Top = 96
     object BrowseForFolder1: TBrowseForFolder
       Category = 'File'
       Caption = '...'
       DialogCaption = '...'
       BrowseOptions = []
       BrowseOptionsEx = []
-      BeforeExecute = BrowseForFolder1BeforeExecute
-      OnAccept = BrowseForFolder1Accept
     end
+  end
+  object FileOpenDialog1: TFileOpenDialog
+    FavoriteLinks = <>
+    FileTypes = <>
+    Options = [fdoPickFolders, fdoPathMustExist]
+    OnFileOkClick = FileOpenDialog1FileOkClick
+    Left = 288
+    Top = 160
   end
 end
