@@ -6,18 +6,22 @@
 //---------------------------------------------------------------------------
 
 using std::string;
-
 using dsl::shared_ptr;
 
 class ClassValue
 {
     public:
-                                       ClassValue(const string& cat, char ch = 's');
+    									ClassValue(const string& cat, char ch = 's');
                                        ~ClassValue();
 
-        string          	           mValue;
-        char            	           mKey;
-        shared_ptr<TArrayBotButton>    mButton;
+                                    	//Yes, no , etc...
+        string          	           	mValue;
+
+                                        //The keyboard key used to generate this value
+        char            	           	mKey;
+
+                                        //UI Button
+        shared_ptr<TArrayBotButton>    	mButton;
 };
 
 #endif

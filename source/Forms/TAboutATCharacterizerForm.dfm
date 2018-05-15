@@ -2,7 +2,7 @@ object AboutATCharacterizer: TAboutATCharacterizer
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = 'About VolumeCreator'
+  Caption = 'About atClassifier'
   ClientHeight = 631
   ClientWidth = 737
   Color = clBtnFace
@@ -848,9 +848,9 @@ object AboutATCharacterizer: TAboutATCharacterizer
     object Label1: TLabel
       Left = 18
       Top = 30
-      Width = 338
+      Width = 207
       Height = 52
-      Caption = 'The Characterizer'
+      Caption = 'atClassifier'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -43

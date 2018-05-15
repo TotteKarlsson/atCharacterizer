@@ -80,6 +80,12 @@ object NewProjectForm: TNewProjectForm
         Height = 122
         Align = alClient
         ItemHeight = 13
+        Items.Strings = (
+          'Yes'
+          'No '
+          'Maybe'
+          'Else'
+          'Redo')
         TabOrder = 0
       end
       object Panel2: TPanel
@@ -118,7 +124,7 @@ object NewProjectForm: TNewProjectForm
     Align = alBottom
     TabOrder = 1
     object Button1: TButton
-      Left = 432
+      Left = 536
       Top = 6
       Width = 75
       Height = 25
@@ -127,7 +133,7 @@ object NewProjectForm: TNewProjectForm
       TabOrder = 0
     end
     object Button2: TButton
-      Left = 536
+      Left = 455
       Top = 6
       Width = 75
       Height = 25

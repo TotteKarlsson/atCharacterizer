@@ -130,7 +130,7 @@ object MainForm: TMainForm
         TabOrder = 1
       end
     end
-    object GroupBox1: TGroupBox
+    object ImageFilesGB: TGroupBox
       Left = 1
       Top = 1
       Width = 128
@@ -138,7 +138,7 @@ object MainForm: TMainForm
       Align = alLeft
       Caption = 'Image Files'
       TabOrder = 1
-      object imagesLB: TListBox
+      object ImageFilesLB: TListBox
         Left = 2
         Top = 15
         Width = 124
@@ -147,7 +147,7 @@ object MainForm: TMainForm
         ItemHeight = 13
         PopupMenu = listPopup
         TabOrder = 0
-        OnClick = imagesLBClick
+        OnClick = ImageFilesLBClick
       end
     end
     object Panel1: TPanel
@@ -16353,6 +16353,7 @@ object MainForm: TMainForm
       ImageIndex = 1
       ShortCut = 16463
       OnAccept = FileOpen1Accept
+      OnCancel = FileOpen1Cancel
     end
     object NewProjectA: TAction
       Category = 'File'
@@ -16398,7 +16399,7 @@ object MainForm: TMainForm
     Left = 768
     Top = 24
     Bitmap = {
-      494C010108001800480110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010108001800580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

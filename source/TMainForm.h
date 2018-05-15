@@ -42,6 +42,7 @@ class TImageForm;
 using dsl::ApplicationProperties;
 using dsl::IniFileProperties;
 using dsl::TRegistryProperties;
+using dsl::IniSection;
 extern string gApplicationRegistryRoot;
 void brightnessContrast(TImage *imageSelected);
 string createProcessedImageFileName(const string& fname);
@@ -94,14 +95,14 @@ __published:	// IDE-managed Components
 	TPanel *MainPanel;
 	TAction *EditViewNode;
 	TSTDStringEdit *ImageFolderE;
-	TGroupBox *GroupBox1;
+	TGroupBox *ImageFilesGB;
 	TPanel *ClassifierPanel;
 	TSplitter *Splitter1;
 	TActionList *ActionList1;
 	TAction *YesA;
 	TAction *NoA;
 	TAction *MaybeA;
-	TListBox *imagesLB;
+	TListBox *ImageFilesLB;
 	TPropertyCheckBox *ValidationCB;
 	TPopupMenu *listPopup;
 	TAction *sortByValueA;
@@ -127,7 +128,7 @@ __published:	// IDE-managed Components
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall ThemesMenuClick(TObject *Sender);
 	void __fastcall OpenaClone1Click(TObject *Sender);
-	void __fastcall imagesLBClick(TObject *Sender);
+	void __fastcall ImageFilesLBClick(TObject *Sender);
 	void __fastcall CharacterizeAction(TObject *Sender);
 	void __fastcall sortByValueAExecute(TObject *Sender);
 	void __fastcall FileOpen1Accept(TObject *Sender);
@@ -136,6 +137,7 @@ __published:	// IDE-managed Components
 	void __fastcall SaveProjectAExecute(TObject *Sender);
 	void __fastcall sortByFileNameAExecute(TObject *Sender);
 	void __fastcall SaveProjectAsAExecute(TObject *Sender);
+	void __fastcall FileOpen1Cancel(TObject *Sender);
 
 	private:
         void __fastcall                                 logMsg();
@@ -147,11 +149,14 @@ __published:	// IDE-managed Components
         dsl::Property<int>	                            mBottomPanelHeight;
 		dsl::Property<dsl::LogLevel>	                mLogLevel;
 
+
+        TClassifierFrame*                               mCF;
                                                         //This file contains all the data for
                                                         //any particular "project"
-        IniFile                                         mClassifierFile;
+        //IniFile                                         mClassifierFile;
         ClassifierBase                                  mClassifier;
-        TClassifierFrame*                               mCF;
+		bool 											populateImagesLB(IniFile& values);
+
 
         bool                                            setupAndReadIniParameters();
         void                                            setupIniFile();

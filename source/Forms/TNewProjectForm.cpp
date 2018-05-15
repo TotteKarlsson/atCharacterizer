@@ -24,10 +24,9 @@ void __fastcall TNewProjectForm::Button3Click(TObject *Sender)
 	FileOpenDialog1->Execute();
 }
 
-StringList TNewProjectForm::getValues()
+StringList TNewProjectForm::getClasses()
 {
     StringList items(getStrings(ClassesLB));
-
     return items;
 }
 

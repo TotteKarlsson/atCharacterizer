@@ -47,7 +47,7 @@ __published:	// IDE-managed Components
 
     public:
     						__fastcall TNewProjectForm(TComponent* Owner);
-        StringList          getValues();
+        StringList          getClasses();
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TNewProjectForm *NewProjectForm;

@@ -32,10 +32,11 @@ class TClassifierFrame : public TFrame
 
     public:
     							__fastcall 	        TClassifierFrame(ClassifierBase& c, TComponent* Owner);
-        void                    	                populate(const StringList& cats);
-        TArrayBotButton*                 			getButtonWithKey(char ch);
-        void                                        empty();
+    							__fastcall 	        ~TClassifierFrame();
 
+        shared_ptr<TArrayBotButton>        			getButtonWithKey(char ch);
+        void                                        empty();
+        void                    	                populate();
 };
 
 extern PACKAGE TClassifierFrame *ClassifierFrame;

@@ -5,17 +5,32 @@
 #include "dslLogger.h"
 #include "dslRestartApplicationUtils.h"
 #include "TAboutATCharacterizerForm.h"
+#include "TImageForm.h"
 //---------------------------------------------------------------------------
 
 using namespace dsl;
 extern string gAppName;
 extern string gApplicationStyle;
 extern string gRestartMutexName;
+extern string gApplicationRegistryRoot;
+
 
 void __fastcall TMainForm::logMsg()
 {
     infoMemo->Lines->Add(vclstr(mLogFileReader.getData()));
     mLogFileReader.purge();
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::OpenaClone1Click(TObject *Sender)
+{
+	if(!gImageForm)
+    {
+    	gImageForm = new TImageForm(gApplicationRegistryRoot, "", this);
+    }
+
+	gImageForm->Show();
+	ImageFilesLBClick(Sender);
 }
 
 //---------------------------------------------------------------------------

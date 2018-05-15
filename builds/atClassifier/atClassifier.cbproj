@@ -47,7 +47,7 @@
         <ILINK_LibraryPath>..\..\source\;..\..\source\Core\;..\..\source\Forms\;..\..\source\Frames\;..\builds\atClassifier\;Frames\;Core\;forms\;P:\libs\atapi\source\vcl\frames\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <IncludePath>..\..\source\;..\..\source\Core\;..\..\source\Forms\;..\..\source\Frames\;..\builds\atClassifier\;Frames\;Core\;forms\;P:\libs\atapi\source\vcl\frames\;Frames;Core;Forms;$(IncludePath)</IncludePath>
         <ProjectType>CppVCLApplication</ProjectType>
-        <AllPackageLibs>rtl.lib;vcl.lib;bcbie.lib;vclie.lib;vclx.lib;vclactnband.lib;IndySystem.lib;IndyProtocols.lib;IndyCore.lib;vclimg.lib;sbridge250.lib;dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib</AllPackageLibs>
+        <AllPackageLibs>rtl.lib;vcl.lib;bcbie.lib;vclie.lib;vclx.lib;vclactnband.lib;IndySystem.lib;IndyProtocols.lib;IndyCore.lib;vclimg.lib;sbridge250.lib;dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib;atVCLVisualComponents.lib;DbxDevartPostgreSQLDriver250.lib;DbxCommonDriver.lib;dbrtl.lib;dbexpress.lib;dsnap.lib;atVCLDataModules.lib;dbxcds.lib;Tee.lib</AllPackageLibs>
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <_TCHARMapping>wchar_t</_TCHARMapping>
@@ -100,7 +100,7 @@
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\debug\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <BCC_PCHInject>atCharacterizerPCH1.h</BCC_PCHInject>
+        <BCC_PCHInject>..\..\source\pch.h</BCC_PCHInject>
         <VerInfo_Keys>CompanyName=Allen Institute for Brain Science;FileVersion=0.5.1.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=0.5.5;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <Icon_MainIcon>App_Icon.ico</Icon_MainIcon>
@@ -116,8 +116,8 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <Debugger_DebugSourcePath>P:\libs\dsl\VCL\Common\;P:\libs\atapi\source\resources\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BT_BuildType>Debug</BT_BuildType>
-        <LinkPackageStatics>sbridge250.lib;dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib</LinkPackageStatics>
-        <LinkPackageImports>rtl.bpi;vcl.bpi;bcbie.bpi;vclie.bpi;vclx.bpi;vclactnband.bpi;IndySystem.bpi;IndyProtocols.bpi;IndyCore.bpi;vclimg.bpi</LinkPackageImports>
+        <LinkPackageStatics>sbridge250.lib;dslVCLComponents.lib;dslVCLVisualComponents.lib;atVCLComponents.lib;atVCLVisualComponents.lib;DbxDevartPostgreSQLDriver250.lib;atVCLDataModules.lib</LinkPackageStatics>
+        <LinkPackageImports>rtl.bpi;vcl.bpi;bcbie.bpi;vclie.bpi;vclx.bpi;vclactnband.bpi;IndySystem.bpi;IndyProtocols.bpi;IndyCore.bpi;vclimg.bpi;DbxCommonDriver.bpi;dbrtl.bpi;dbexpress.bpi;dsnap.bpi;dbxcds.bpi;Tee.bpi</LinkPackageImports>
         <UWP_CppLogo44>..\..\resources\logo.png</UWP_CppLogo44>
         <UWP_CppLogo150>..\..\resources\logo.png</UWP_CppLogo150>
         <VerInfo_Release>1</VerInfo_Release>

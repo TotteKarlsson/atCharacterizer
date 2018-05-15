@@ -72,29 +72,21 @@ bool TMainForm::isFolderOpen()
     return ClassifierPanel->Enabled;
 }
 
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::OpenaClone1Click(TObject *Sender)
-{
-	if(!gImageForm)
-    {
-    	gImageForm = new TImageForm(gApplicationRegistryRoot, "", this);
-    }
-
-	gImageForm->Show();
-	imagesLBClick(Sender);
-}
-
 bool TMainForm::openProject(const string& fName)
 {
-	mClassifierFile.clear();
+    IniFile& values = mClassifier.getProjectValues();
+    //Start with an empty project, and popualte from file
+	values.clear();
+
+    //Populate "ini file"
     Log(lInfo) << "Loading project from file: " << fName;
-    if(!mClassifierFile.load(fName))
+    if(!values.load(fName))
     {
         Log(lError) << "Failed loading project file: " << fName;
     }
 
     //Get SETTINGS section
-    IniSection* settings = mClassifierFile.getSection("SETTINGS", true); //Autocreate section
+    IniSection* settings = values.getSection("SETTINGS", true); //Autocreate section
     if(!settings)
     {
         Log(lError) << "Failed creating \"SETTINGS\" section";
@@ -124,14 +116,13 @@ bool TMainForm::openProject(const string& fName)
         return false;
     }
 
-
-    if(imageFolder->mValue.size() != 0 )
+    if(imageFolder->mValue.size() != 0)
     {
         //Verify that the currently selecte image folder
         //matches what is written in the file
         if(ImageFolderE->getValue() != imageFolder->mValue)
         {
-            MessageDlg("This file don't belong in this folder!\nMake sure you know what you are doing..", mtError, TMsgDlgButtons() << mbOK, 0);
+            MessageDlg("This file seem to belong to any folder!\nMake sure you know what you are doing..", mtError, TMsgDlgButtons() << mbOK, 0);
         }
     }
     else
@@ -139,11 +130,59 @@ bool TMainForm::openProject(const string& fName)
 		imageFolder->mValue = ImageFolderE->getValue();
     }
 
+    //Setup classes
+    IniSection* classes = values.getSection("CLASSES", true); //Autocreate section
+    if(!classes)
+    {
+        Log(lError) << "Failed creating \"VALUES\" section";
+        return false;
+    }
+
+    if(classes->keyCount() == 0)
+    {
+        //Add from classifier (when new project)
+        StringList s = mClassifier.getClassLabels();
+        for(int i = 0; i < s.count(); i++)
+        {
+            IniKey* k = classes->getKey(s[i], true);
+            if(!k)
+            {
+                Log(lError) << "Problem creating key...";
+            }
+            else
+            {
+                k->mValue = dsl::toString(i + 1);
+            }
+        }
+    }
+    else
+    {
+	    //Populate internal classifier list when reading from file
+    	mClassifier.updateClasses();
+    }
+
+    populateImagesLB(values);
+
+    //Now populate the classifier frame..
+	mCF = new TClassifierFrame(mClassifier, this);
+    mCF->Parent = ClassifierPanel;
+    mCF->Align = alClient;
+    mCF->populate();
+
+
+    enableDisablePanel(ProjFilePathPanel, false);
+    enableDisablePanel(ClassifierPanel, true);
+    values.save();
+    return true;
+}
+
+bool  TMainForm::populateImagesLB(IniFile& values)
+{
     //Check current folder for files and populate list box
 	StringList files = getFilesInDir(ImageFolderE->getValue(), "png", false);
 
     //Create ini file section
-    IniSection* sec = mClassifierFile.getSection("VALUES", true); //Autocreate section
+    IniSection* sec = values.getSection("VALUES", true); //Autocreate section
     if(!sec)
     {
         Log(lError) << "Failed creating \"VALUES\" section";
@@ -153,6 +192,13 @@ bool TMainForm::openProject(const string& fName)
     //Make sure the section has the same number of keys as images in the folder
     if(sec->keyCount() != files.count())
     {
+        if(sec->keyCount() != 0)
+        {
+            Log(lError) << "This file contain different number of records than is present in the folder!";
+			Log(lError) << "Seem file is corrupt for some reason. Stop here and check file by ahnd before continuing!";
+            return false;
+        }
+
         for(int i = 0; i < files.count(); i++)
         {
         	//Populate keys
@@ -169,7 +215,7 @@ bool TMainForm::openProject(const string& fName)
     }
 
     //Populate list box from the keys..
-	imagesLB->Clear();
+	ImageFilesLB->Clear();
     for(size_t i = 0; i < sec->keyCount(); i++)
     {
         IniKey* key = sec->getKey(i);
@@ -177,47 +223,16 @@ bool TMainForm::openProject(const string& fName)
         {
             string item(key->mKey);
             item = item + " " + key->mValue;
-        	imagesLB->Items->AddObject(vclstr(item), (TObject*) key );
+        	ImageFilesLB->Items->AddObject(vclstr(item), (TObject*) key );
         }
     }
-
-    enableDisablePanel(ProjFilePathPanel, false);
-    enableDisablePanel(ClassifierPanel, true);
     return true;
-}
-
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::imagesLBClick(TObject *Sender)
-{
-    //Extract filename and show image
-    int index = imagesLB->ItemIndex;
-
-    if(index < 0)
-    {
-        return;
-    }
-
-    IniKey* key = (IniKey*) imagesLB->Items->Objects[index];
-    if(!key)
-    {
-        Log(lError) << "No Such file: " <<key->mKey;
-        return;
-    }
-    string fName(joinPath(ImageFolderE->getValue(), key->mKey + ".png"));
-
-    Image1->Picture->LoadFromFile(fName.c_str());
-    Log(lInfo) << "Opened file: " << fName.c_str();
-
-    if(gImageForm)
-    {
-        gImageForm->load(fName);
-    }
 }
 
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::CharacterizeAction(TObject *Sender)
 {
-	int idx = imagesLB->ItemIndex;
+	int idx = ImageFilesLB->ItemIndex;
 
     if(idx < 0)
     {
@@ -226,7 +241,7 @@ void __fastcall TMainForm::CharacterizeAction(TObject *Sender)
     }
 
     //Extract key
-    IniKey* key = (IniKey*) imagesLB->Items->Objects[idx];
+    IniKey* key = (IniKey*) ImageFilesLB->Items->Objects[idx];
     if(!key)
     {
         Log(lError) << "Bad key..";
@@ -260,7 +275,7 @@ void __fastcall TMainForm::CharacterizeAction(TObject *Sender)
         }
         key->mValue = "No";
     }
-    else if(a = MaybeA)
+    else if(a == MaybeA)
     {
         Log(lInfo) <<  "Maybe action";
         if(ValidationCB->Checked)
@@ -274,13 +289,13 @@ void __fastcall TMainForm::CharacterizeAction(TObject *Sender)
     }
 
     //Update item in listbox
-	imagesLB->Items->Strings[idx] = string(key->mKey + " " + key->mValue).c_str();
+	ImageFilesLB->Items->Strings[idx] = string(key->mKey + " " + key->mValue).c_str();
 
     //Auto advance..
-    if(idx < imagesLB->Count)
+    if(idx < ImageFilesLB->Count)
     {
-		imagesLB->ItemIndex = imagesLB->ItemIndex + 1;
-        imagesLBClick(NULL);
+		ImageFilesLB->ItemIndex = ImageFilesLB->ItemIndex + 1;
+        ImageFilesLBClick(NULL);
     }
 }
 
@@ -296,7 +311,7 @@ void __fastcall TMainForm::FormKeyDown(TObject *Sender, WORD &Key, TShiftState S
     if(isFolderOpen())
     {
             //Find the button with key == ch
-            TArrayBotButton *btn = mCF->getButtonWithKey(ch);
+            shared_ptr<TArrayBotButton> btn = mCF->getButtonWithKey(ch);
             if(btn)
             {
 				SendMessage(btn->Handle, BM_CLICK, 0, 0);
@@ -335,9 +350,9 @@ void __fastcall TMainForm::sortByValueAExecute(TObject *Sender)
     Log(lInfo) << "Sorting list based on Values";
 
     TStringList* sl = new TStringList();
-    sl->Assign(imagesLB->Items);
+    sl->Assign(ImageFilesLB->Items);
     sl->CustomSort(SortListByValue);
-    imagesLB->Items->Assign(sl);
+    ImageFilesLB->Items->Assign(sl);
 }
 
 //---------------------------------------------------------------------------
@@ -345,9 +360,9 @@ void __fastcall TMainForm::sortByFileNameAExecute(TObject *Sender)
 {
 	Log(lInfo) << "Sorting list based on Keys";
     TStringList* sl = new TStringList();
-    sl->Assign(imagesLB->Items);
+    sl->Assign(ImageFilesLB->Items);
     sl->CustomSort(SortListByKey);
-    imagesLB->Items->Assign(sl);
+    ImageFilesLB->Items->Assign(sl);
 }
 
 //---------------------------------------------------------------------------
@@ -355,34 +370,53 @@ void __fastcall TMainForm::FileOpen1Accept(TObject *Sender)
 {
     //Open project file here
     string fName(stdstr(FileOpen1->Dialog->FileName));
-    Log(lInfo) << "Opening file: "<<fName;
+    Log(lInfo) << "Opening classification file: "<<fName;
     ImageFolderE->setValue(getFilePath(fName));
 
-	if(openProject(fName))
+    //Main entry on opening a project, is openProject
+    bool res = openProject(fName);
+
+    ImageFilesGB->Caption = "Image Files (" + IntToStr(ImageFilesLB->Count) + ")";
+    FileOpen1->Enabled 		= !res;
+    NewProjectA->Enabled 	= !res;
+    CloseProjectA->Enabled 	= res;
+    SaveProjectA->Enabled 	= res;
+    SaveProjectAsA->Enabled = res;
+
+    StatusBar1->SimpleText = (res == true) ? FileOpen1->Dialog->FileName : String("");
+    if(res)
     {
-		FileOpen1->Enabled = false;
-	    CloseProjectA->Enabled = true;
- 		OpenCloseProjectBtn->Action = CloseProjectA;
-	    SaveProjectA->Enabled = true;
-	    SaveProjectAsA->Enabled = true;
-        StatusBar1->SimpleText = FileOpen1->Dialog->FileName;
+    	OpenCloseProjectBtn->Action = CloseProjectA;
+    }
+    else
+    {
+    	OpenCloseProjectBtn->Action = FileOpen1;
     }
 }
 
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::CloseProjectAExecute(TObject *Sender)
 {
-    mClassifierFile.save();
+    IniFile& values = mClassifier.getProjectValues();
+    values.save();
+	delete mCF;
+    mCF = NULL;
+    values.clear();
+
     UserE->Enabled = true;
-    imagesLB->Clear();
+    ImageFilesLB->Clear();
+
     enableDisablePanel(ProjFilePathPanel, true);
     enableDisablePanel(ClassifierPanel, false);
     OpenCloseProjectBtn->Action = FileOpen1;
-    FileOpen1->Enabled = true;
-    CloseProjectA->Enabled = false;
-    SaveProjectA->Enabled = false;
+
+    FileOpen1->Enabled 		= true;
+    NewProjectA->Enabled 	= true;
+    CloseProjectA->Enabled 	= false;
+    SaveProjectA->Enabled 	= false;
     SaveProjectAsA->Enabled = false;
-    StatusBar1->SimpleText = "";
+    StatusBar1->SimpleText 	= "";
+    ImageFilesGB->Caption = "Image Files (0)";
 }
 
 //---------------------------------------------------------------------------
@@ -405,9 +439,6 @@ void __fastcall TMainForm::NewProjectAExecute(TObject *Sender)
         return;
     }
 
-    mCF = new TClassifierFrame(mClassifier, this);
-    mCF->Parent = ClassifierPanel;
-    mCF->Align = alClient;
     //Create and open new project
     //Create fileName
     string fName = f->UserE->getValue() + string("_") + f->ProjectNameE->getValue() + string(".chf");
@@ -428,17 +459,22 @@ void __fastcall TMainForm::NewProjectAExecute(TObject *Sender)
         }
     }
 
-    //Capture the categories
-    StringList cats = f->getValues();
+    //Start fresh
+    mClassifier.clear();
 
-    //Setup classifer panel
-    Log(lInfo) << "Setting up classifier panel with the following classes: " << cats;
-    mCF->populate(cats);
+    //Make sure ini file is created here.. and then re open it in FileOpenAccept
+    mClassifier.setUser(f->UserE->getValue());
+    mClassifier.setImageFolder(f->ImageFolderE->getValue());
 
+    //Setup classes
+    mClassifier.addClasses(f->getClasses());
+
+    mClassifier.save(fName);
     //Open project
     ImageFolderE->setValue(f->ImageFolderE->getValue());
     FileOpen1->Dialog->FileName = vclstr(fName);
     UserE->setValue(f->UserE->getValue());
+
     FileOpen1Accept(Sender);
 }
 
@@ -446,10 +482,11 @@ void __fastcall TMainForm::NewProjectAExecute(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::SaveProjectAExecute(TObject *Sender)
 {
+    IniFile& values = mClassifier.getProjectValues();
     //Save current project
-	if(mClassifierFile.save())
+	if(values.save())
     {
-        Log(lInfo) << "The projectfile: "<<mClassifierFile.getFileName()<< " was saved to folder: "<<getFilePath(mClassifierFile.getFullFileName());
+        Log(lInfo) << "The projectfile: "<<values.getFileName()<< " was saved to folder: "<<getFilePath(values.getFullFileName());
     }
 }
 
@@ -457,13 +494,19 @@ void __fastcall TMainForm::SaveProjectAExecute(TObject *Sender)
 void __fastcall TMainForm::SaveProjectAsAExecute(TObject *Sender)
 {
     //Open FileSaveAs dialog
-    SaveDialog1->FileName = mClassifierFile.getFullFileName().c_str();
-    SaveDialog1->Execute();
+    IniFile& values = mClassifier.getProjectValues();
+    SaveDialog1->FileName = values.getFullFileName().c_str();
+    if(!SaveDialog1->Execute())
+    {
+        Log(lInfo) << "Decided not to save file..";
+        return;
+    }
 
     string newFName(stdstr(SaveDialog1->FileName));
     Log(lInfo) << "Saving to file: " << newFName;
-    mClassifierFile.setFileName(newFName);
-    mClassifierFile.save();
+
+    values.setFileName(newFName);
+    CloseProjectAExecute(Sender);
 
     //Open this new file
     FileOpen1->Dialog->FileName = newFName.c_str();
@@ -474,7 +517,10 @@ void TMainForm::setupClassifierPanel()
 {
 
 }
-
-
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::FileOpen1Cancel(TObject *Sender)
+{
+    ;
+}
 
 
