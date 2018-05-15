@@ -129,7 +129,6 @@ __published:	// IDE-managed Components
 	void __fastcall ThemesMenuClick(TObject *Sender);
 	void __fastcall OpenaClone1Click(TObject *Sender);
 	void __fastcall ImageFilesLBClick(TObject *Sender);
-	void __fastcall CharacterizeAction(TObject *Sender);
 	void __fastcall sortByValueAExecute(TObject *Sender);
 	void __fastcall FileOpen1Accept(TObject *Sender);
 	void __fastcall CloseProjectAExecute(TObject *Sender);
@@ -176,9 +175,7 @@ __published:	// IDE-managed Components
 
         bool                                            openProject(const string& fName);
         void                                            onCloseFolder();
-        bool                                            isFolderOpen();
-        void                                            setupClassifierPanel();
-
+        bool                                            isProjectOpen();
 
 	public:
 		__fastcall 					 					TMainForm(TComponent* Owner);

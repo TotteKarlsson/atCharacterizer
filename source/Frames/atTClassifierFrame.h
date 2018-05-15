@@ -24,14 +24,18 @@ class TClassifierFrame : public TFrame
 	TPopupMenu *PopupMenu1;
 	TMenuItem *AssignButtonKeys1;
 	void __fastcall AssignButtonKeys1Click(TObject *Sender);
+	void __fastcall onBtnClick(TObject *Sender);
 
 
     private:
                                                     //Classifier holds various class values
         ClassifierBase&			        			mClassifier;
+        TListBox&                                   ImageFilesLB;
+		void 										assingClassToCurrentItem(ClassValue* cv);
+
 
     public:
-    							__fastcall 	        TClassifierFrame(ClassifierBase& c, TComponent* Owner);
+    							__fastcall 	        TClassifierFrame(ClassifierBase& c, TListBox& LB, TComponent* Owner);
     							__fastcall 	        ~TClassifierFrame();
 
         shared_ptr<TArrayBotButton>        			getButtonWithKey(char ch);

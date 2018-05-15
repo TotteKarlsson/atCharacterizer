@@ -20,7 +20,6 @@
 #pragma link "dslTSTDStringEdit"
 #pragma link "dslTSTDStringLabeledEdit"
 #pragma link "TArrayBotBtn"
-
 #pragma resource "*.dfm"
 //---------------------------------------------------------------------------
 
@@ -51,10 +50,8 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 
 __fastcall TMainForm::~TMainForm()
 {
-    if(gImageForm)
-    {
-		delete gImageForm;
-    }
+	delete gImageForm;
+    delete mCF;
 }
 
 //---------------------------------------------------------------------------
@@ -67,7 +64,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
 	}
 }
 
-bool TMainForm::isFolderOpen()
+bool TMainForm::isProjectOpen()
 {
     return ClassifierPanel->Enabled;
 }
@@ -164,12 +161,10 @@ bool TMainForm::openProject(const string& fName)
     populateImagesLB(values);
 
     //Now populate the classifier frame..
-	mCF = new TClassifierFrame(mClassifier, this);
+	mCF = new TClassifierFrame(mClassifier, *ImageFilesLB, this);
     mCF->Parent = ClassifierPanel;
     mCF->Align = alClient;
     mCF->populate();
-
-
     enableDisablePanel(ProjFilePathPanel, false);
     enableDisablePanel(ClassifierPanel, true);
     values.save();
@@ -229,75 +224,6 @@ bool  TMainForm::populateImagesLB(IniFile& values)
     return true;
 }
 
-//---------------------------------------------------------------------------
-void __fastcall TMainForm::CharacterizeAction(TObject *Sender)
-{
-	int idx = ImageFilesLB->ItemIndex;
-
-    if(idx < 0)
-    {
-        Log(lWarning) << "No image is selected..";
-        return;
-    }
-
-    //Extract key
-    IniKey* key = (IniKey*) ImageFilesLB->Items->Objects[idx];
-    if(!key)
-    {
-        Log(lError) << "Bad key..";
-    }
-
-    Log(lInfo) << "Updating synaptogram: " << key->mKey;
-
-    TAction* a = dynamic_cast<TAction*>(Sender);
-    if(a == YesA)
-    {
-        Log(lInfo) <<  "Yes action";
-        if(ValidationCB->Checked)
-        {
-            if(MessageDlg("YES ??", mtInformation, TMsgDlgButtons() << mbOK<<mbCancel, 0) == mrCancel)
-            {
-                return;
-            }
-        }
-        //Add.change value
-        key->mValue = "Yes";
-    }
-    else if(a == NoA)
-    {
-        Log(lInfo) <<  "No action";
-        if(ValidationCB->Checked)
-        {
-            if(MessageDlg("NO ??", mtInformation, TMsgDlgButtons() << mbOK<<mbCancel, 0) == mrCancel)
-            {
-                return;
-            }
-        }
-        key->mValue = "No";
-    }
-    else if(a == MaybeA)
-    {
-        Log(lInfo) <<  "Maybe action";
-        if(ValidationCB->Checked)
-        {
-            if(MessageDlg("PASS ??", mtInformation, TMsgDlgButtons() << mbOK<<mbCancel, 0) == mrCancel)
-            {
-                return;
-            }
-        }
-        key->mValue = "Pass";
-    }
-
-    //Update item in listbox
-	ImageFilesLB->Items->Strings[idx] = string(key->mKey + " " + key->mValue).c_str();
-
-    //Auto advance..
-    if(idx < ImageFilesLB->Count)
-    {
-		ImageFilesLB->ItemIndex = ImageFilesLB->ItemIndex + 1;
-        ImageFilesLBClick(NULL);
-    }
-}
 
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
@@ -306,26 +232,24 @@ void __fastcall TMainForm::FormKeyDown(TObject *Sender, WORD &Key, TShiftState S
     {
         Close();
     }
-    char ch = Key;
 
-    if(isFolderOpen())
+
+    string sCh;
+  	sCh = (Shift.Contains(ssShift)) ? stdstr(Char(Key)) : stdstr(LowerCase(Char(Key)));
+    char ch = sCh[0];
+
+    Log(lDebug3) << "Key " << ch <<" was pressed";
+
+    if(!isProjectOpen())
     {
-            //Find the button with key == ch
-            shared_ptr<TArrayBotButton> btn = mCF->getButtonWithKey(ch);
-            if(btn)
-            {
-				SendMessage(btn->Handle, BM_CLICK, 0, 0);
-            }
+        return;
+    }
 
-//            case 's':
-//            case 'S':     		SendMessage(YesBtn->Handle, BM_CLICK, 0, 0);      break;
-//
-//            case 'd':
-//            case 'D':           SendMessage(MaybeBtn->Handle, BM_CLICK, 0, 0);     break;
-//
-//            case 'F':
-//            case 'f':           SendMessage(NoBtn->Handle, BM_CLICK, 0, 0);      break;
-
+    //Find the button with key == ch
+    shared_ptr<TArrayBotButton> btn = mCF->getButtonWithKey(ch);
+    if(btn)
+    {
+        SendMessage(btn->Handle, BM_CLICK, 0, 0);
     }
 }
 
@@ -348,7 +272,6 @@ int __fastcall SortListByKey (TStringList* sl, int item1, int item2)
 void __fastcall TMainForm::sortByValueAExecute(TObject *Sender)
 {
     Log(lInfo) << "Sorting list based on Values";
-
     TStringList* sl = new TStringList();
     sl->Assign(ImageFilesLB->Items);
     sl->CustomSort(SortListByValue);
@@ -513,10 +436,6 @@ void __fastcall TMainForm::SaveProjectAsAExecute(TObject *Sender)
 	FileOpen1Accept(Sender);
 }
 
-void TMainForm::setupClassifierPanel()
-{
-
-}
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::FileOpen1Cancel(TObject *Sender)
 {

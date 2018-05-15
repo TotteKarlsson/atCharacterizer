@@ -58,6 +58,20 @@ int ClassifierBase::classCount()
     return mClasses.size();
 }
 
+ClassValue*	ClassifierBase::getValueFromButton(TArrayBotButton* btn)
+{
+    //Find buttons corresponding class
+    for(int i = 0; i < mClasses.size(); i++)
+    {
+		ClassValue* val = getClass(i);
+        if(val && val->mButton.get() == btn)
+        {
+            return val;
+        }
+    }
+    return NULL;
+}
+
 ClassValue* ClassifierBase::getClass(int i)
 {
     if(i > -1 && i < classCount())

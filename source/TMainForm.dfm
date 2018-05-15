@@ -16399,7 +16399,7 @@ object MainForm: TMainForm
     Left = 768
     Top = 24
     Bitmap = {
-      494C010108001800580110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010108001800600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -16807,15 +16807,12 @@ object MainForm: TMainForm
     Top = 196
     object YesA: TAction
       Caption = 'Yes'
-      OnExecute = CharacterizeAction
     end
     object NoA: TAction
       Caption = 'No'
-      OnExecute = CharacterizeAction
     end
     object MaybeA: TAction
       Caption = 'Pass'
-      OnExecute = CharacterizeAction
     end
     object sortByValueA: TAction
       Category = 'Sorting'

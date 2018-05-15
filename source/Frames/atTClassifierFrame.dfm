@@ -6,7 +6,7 @@ object ClassifierFrame: TClassifierFrame
   PopupMenu = PopupMenu1
   TabOrder = 0
   object PopupMenu1: TPopupMenu
-    Left = 456
+    Left = 280
     Top = 128
     object AssignButtonKeys1: TMenuItem
       Caption = 'Assign Keys'

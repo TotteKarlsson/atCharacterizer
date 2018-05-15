@@ -13,6 +13,7 @@ using dsl::StringList;
 using dsl::shared_ptr;
 using dsl::IniFile;
 using dsl::gEmptyString;
+
 class ClassifierBase
 {
     public:
@@ -21,6 +22,7 @@ class ClassifierBase
         bool                            addClasses(const StringList& cats);
         ClassValue&                     addClass(const string& value, char ch = 's');
         ClassValue*                     getClass(int i);
+		ClassValue*						getValueFromButton(TArrayBotButton* btn);
         void                            clear();
         int                             classCount();
         IniFile&                        getProjectValues();
