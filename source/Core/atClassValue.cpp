@@ -8,11 +8,11 @@ using namespace std;
 ClassValue::ClassValue(const string& cat, char ch )
 :
 mValue(cat),
-mKey(ch),
+mKeyBoardShortCut(ch),
 mButton(shared_ptr<TArrayBotButton>(new TArrayBotButton(NULL)))
 {
     stringstream caption;
-    caption << mValue << " (\'"<<mKey<<"\')";
+    caption << mValue << " \n(\'"<<mKeyBoardShortCut<<"\')";
     mButton->Caption = caption.str().c_str();
 }
 

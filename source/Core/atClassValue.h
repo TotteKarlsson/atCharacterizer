@@ -18,7 +18,7 @@ class ClassValue
         string          	           	mValue;
 
                                         //The keyboard key used to generate this value
-        char            	           	mKey;
+        char            	           	mKeyBoardShortCut;
 
                                         //UI Button
         shared_ptr<TArrayBotButton>    	mButton;

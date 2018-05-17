@@ -130,7 +130,7 @@ shared_ptr<TArrayBotButton> ClassifierBase::getButtonWithKey(char ch)
     for(int i = 0; i < mClasses.size(); i++)
     {
         ClassValue& b = mClasses[i];
-        if(b.mKey == ch)
+        if(b.mKeyBoardShortCut == ch)
         {
             return b.mButton;
         }
@@ -146,6 +146,19 @@ StringList ClassifierBase::getClassLabels()
         lbls.append(mClasses[i].mValue);
     }
     return lbls;
+}
+
+StringList ClassifierBase::getClassShortCuts()
+{
+    StringList v;
+    for(int i = 0; i < mClasses.size(); i++)
+    {
+        string k;
+        k.push_back(mClasses[i].mKeyBoardShortCut);
+	    v.append(k);
+    }
+
+    return v;
 }
 
 bool ClassifierBase::addClasses(const StringList& s)

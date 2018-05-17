@@ -28,6 +28,8 @@ class ClassifierBase
         IniFile&                        getProjectValues();
         bool                            save(const string& fName = gEmptyString);
         StringList                      getClassLabels();
+        StringList                      getClassShortCuts();
+
 		shared_ptr<TArrayBotButton> 	getButtonWithKey(char ch);
         void                            setUser(const string& user);
         void                            setImageFolder(const string& f);

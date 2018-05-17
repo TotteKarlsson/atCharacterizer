@@ -2,6 +2,8 @@
 #pragma hdrstop
 #include "atTClassifierFrame.h"
 #include "dslLogger.h"
+#include "TAssingShortcutsForm.h"
+#include "dslVCLUtils.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "TArrayBotBtn"
@@ -64,7 +66,23 @@ shared_ptr<TArrayBotButton> TClassifierFrame::getButtonWithKey(char ch)
 //---------------------------------------------------------------------------
 void __fastcall TClassifierFrame::AssignButtonKeys1Click(TObject *Sender)
 {
-	MessageDlg("Assign keys", mtWarning, TMsgDlgButtons() << mbOK, 0);
+    auto_ptr<TAssignShortCutsForm> f = auto_ptr<TAssignShortCutsForm>(new TAssignShortCutsForm(mClassifier, this));
+    int res = f->ShowModal();
+
+
+    if(res == mrOk)
+    {
+        //Capture new keys
+        for(int i = 0; i < mClassifier.classCount(); i ++)
+        {
+            string newKey = stdstr(f->Grid->Cells[1][i+1]);
+            ClassValue* c = mClassifier.getClass(i);
+            c->mKeyBoardShortCut = newKey[0];
+            stringstream caption;
+		    caption << c->mValue << " \n(\'"<<c->mKeyBoardShortCut<<"\')";
+		    c->mButton->Caption = caption.str().c_str();
+        }
+    }
 }
 
 void __fastcall TClassifierFrame::onBtnClick(TObject *Sender)

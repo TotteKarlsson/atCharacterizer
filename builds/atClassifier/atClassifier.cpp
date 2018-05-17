@@ -13,11 +13,13 @@
 using namespace dsl;
 
 using std::string;
+USEFORM("..\..\source\Frames\atTClassifierFrame.cpp", ClassifierFrame); /* TFrame: File Type */
 USEFORM("..\..\source\Forms\TNewProjectForm.cpp", NewProjectForm);
 USEFORM("..\..\source\Forms\TImageForm.cpp", ImageForm);
 USEFORM("..\..\source\TMainForm.cpp", MainForm);
+USEFORM("..\..\source\Forms\TAssingShortcutsForm.cpp", AssignShortCutsForm);
 USEFORM("..\..\source\Forms\TAboutATCharacterizerForm.cpp", AboutATCharacterizer);
-USEFORM("..\..\source\Frames\atTClassifierFrame.cpp", ClassifierFrame); /* TFrame: File Type */
+USEFORM("TFloatingButtonsForm.cpp", FloatingButtonsForm);
 //---------------------------------------------------------------------------
 extern string		gAppName					= "atClassifier";
 extern string       gLogFileName                = "atClassifier.log";
@@ -72,6 +74,8 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 		TStyleManager::TrySetStyle("Carbon");
 		Application->CreateForm(__classid(TMainForm), &MainForm);
 		Application->CreateForm(__classid(TNewProjectForm), &NewProjectForm);
+		Application->CreateForm(__classid(TAssignShortCutsForm), &AssignShortCutsForm);
+		Application->CreateForm(__classid(TFloatingButtonsForm), &FloatingButtonsForm);
 		Application->Run();
 		writeStringToRegistry(gApplicationRegistryRoot, "", "Theme",  gApplicationStyle);
 	}
@@ -106,8 +110,8 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 #pragma comment(lib, "atVCLVisualComponents.bpi")
 
 
-#pragma comment(lib, "poco_foundation-static.lib")
-#pragma comment(lib, "tinyxml2-static.lib")
+#pragma comment(lib, "poco_foundation.lib")
+#pragma comment(lib, "tinyxml2.lib")
 
 
 

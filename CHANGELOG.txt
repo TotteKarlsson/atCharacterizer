@@ -1,3 +1,8 @@
+Release 0.5.1 (May 15)
+=======================
+* Added ability to set custom classes
+* Added ability to assign custom keyboard shortcuts
+
 Release 0.5.1 (May 9)
 =======================
 * Added sorting of values

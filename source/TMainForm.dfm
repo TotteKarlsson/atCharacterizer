@@ -3,8 +3,8 @@ object MainForm: TMainForm
   Top = 0
   AlphaBlendValue = 100
   Caption = 'The Characterizer'
-  ClientHeight = 504
-  ClientWidth = 823
+  ClientHeight = 539
+  ClientWidth = 998
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,16 +23,16 @@ object MainForm: TMainForm
   TextHeight = 13
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 485
-    Width = 823
+    Top = 520
+    Width = 998
     Height = 19
     Panels = <>
     SimplePanel = True
   end
   object mShowBottomPanelBtn: TButton
     Left = 0
-    Top = 466
-    Width = 823
+    Top = 501
+    Width = 998
     Height = 19
     Align = alBottom
     Caption = '^'
@@ -43,14 +43,14 @@ object MainForm: TMainForm
   object MainPanel: TPanel
     Left = 0
     Top = 41
-    Width = 823
-    Height = 425
+    Width = 998
+    Height = 460
     Align = alClient
     TabOrder = 2
     object Splitter2: TSplitter
       Left = 1
-      Top = 283
-      Width = 821
+      Top = 318
+      Width = 996
       Height = 5
       Cursor = crVSplit
       Align = alBottom
@@ -60,8 +60,8 @@ object MainForm: TMainForm
     end
     object mBottomPanel: TPanel
       Left = 1
-      Top = 288
-      Width = 821
+      Top = 323
+      Width = 996
       Height = 136
       Align = alBottom
       TabOrder = 0
@@ -75,14 +75,14 @@ object MainForm: TMainForm
       object mLogPanel: TPanel
         Left = 456
         Top = 1
-        Width = 364
+        Width = 539
         Height = 134
         Align = alClient
         TabOrder = 0
         object infoMemo: TMemo
           Left = 1
           Top = 42
-          Width = 362
+          Width = 537
           Height = 91
           Align = alClient
           ScrollBars = ssBoth
@@ -92,12 +92,12 @@ object MainForm: TMainForm
         object Panel2: TPanel
           Left = 1
           Top = 1
-          Width = 362
+          Width = 537
           Height = 41
           Align = alTop
           TabOrder = 1
           DesignSize = (
-            362
+            537
             41)
           object mCLearMemo: TButton
             Left = 9
@@ -109,7 +109,7 @@ object MainForm: TMainForm
             OnClick = mCLearMemoClick
           end
           object mCloseBottomPanelBtn: TButton
-            Left = 323
+            Left = 498
             Top = 5
             Width = 29
             Height = 25
@@ -128,13 +128,14 @@ object MainForm: TMainForm
         Align = alLeft
         Enabled = False
         TabOrder = 1
+        OnResize = ClassifierPanelResize
       end
     end
     object ImageFilesGB: TGroupBox
       Left = 1
       Top = 1
       Width = 128
-      Height = 282
+      Height = 317
       Align = alLeft
       Caption = 'Image Files'
       TabOrder = 1
@@ -142,7 +143,7 @@ object MainForm: TMainForm
         Left = 2
         Top = 15
         Width = 124
-        Height = 265
+        Height = 300
         Align = alClient
         ItemHeight = 13
         PopupMenu = listPopup
@@ -153,15 +154,15 @@ object MainForm: TMainForm
     object Panel1: TPanel
       Left = 129
       Top = 1
-      Width = 693
-      Height = 282
+      Width = 868
+      Height = 317
       Align = alClient
       TabOrder = 2
       object Image1: TImage
         Left = 1
         Top = 1
-        Width = 691
-        Height = 263
+        Width = 866
+        Height = 298
         Align = alClient
         AutoSize = True
         Picture.Data = {
@@ -16177,8 +16178,8 @@ object MainForm: TMainForm
       end
       object HeaderControl1: THeaderControl
         Left = 1
-        Top = 264
-        Width = 691
+        Top = 299
+        Width = 866
         Height = 17
         Align = alBottom
         Sections = <
@@ -16193,7 +16194,7 @@ object MainForm: TMainForm
   object TopBackPanel: TPanel
     Left = 0
     Top = 0
-    Width = 823
+    Width = 998
     Height = 41
     Align = alTop
     TabOrder = 3
@@ -16236,7 +16237,7 @@ object MainForm: TMainForm
     object ProjFilePathPanel: TPanel
       Left = 264
       Top = 1
-      Width = 558
+      Width = 733
       Height = 39
       Align = alClient
       Alignment = taLeftJustify
@@ -16244,7 +16245,7 @@ object MainForm: TMainForm
       object ImageFolderE: TSTDStringEdit
         Left = 12
         Top = 9
-        Width = 493
+        Width = 542
         Height = 21
         ReadOnly = True
         TabOrder = 0
@@ -16258,11 +16259,12 @@ object MainForm: TMainForm
         Height = 17
         Caption = 'Validation Dialog'
         TabOrder = 1
+        Visible = False
       end
       object UserE: TSTDStringEdit
-        Left = 511
+        Left = 560
         Top = 9
-        Width = 121
+        Width = 72
         Height = 21
         TabOrder = 2
         Text = 'UserE'
@@ -16274,13 +16276,13 @@ object MainForm: TMainForm
     Enabled = False
     Interval = 100
     OnTimer = mShutDownTimerTimer
-    Left = 1016
-    Top = 376
+    Left = 952
+    Top = 392
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
-    Left = 864
-    Top = 128
+    Left = 208
+    Top = 65520
     object File1: TMenuItem
       Caption = 'File'
       object New1: TMenuItem
@@ -16320,6 +16322,9 @@ object MainForm: TMainForm
       Caption = 'Options'
       object ThemesMenu: TMenuItem
         Caption = 'Appearance'
+      end
+      object Floatingbuttons1: TMenuItem
+        Action = ToggleButtonFrameDockedA
       end
     end
     object Help1: TMenuItem
@@ -16388,6 +16393,10 @@ object MainForm: TMainForm
       Category = 'TreeView'
       Caption = 'EditViewNode'
     end
+    object ToggleButtonFrameDockedA: TAction
+      Caption = 'Floating buttons'
+      OnExecute = ToggleButtonFrameDockedAExecute
+    end
   end
   object SaveDialog1: TSaveDialog
     DefaultExt = 'vc'
@@ -16396,10 +16405,11 @@ object MainForm: TMainForm
     Top = 440
   end
   object ImageList1: TImageList
-    Left = 768
-    Top = 24
+    DrawingStyle = dsTransparent
+    Left = 744
+    Top = 80
     Bitmap = {
-      494C010108001800600110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101080018007C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

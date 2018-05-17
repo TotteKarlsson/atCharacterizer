@@ -119,7 +119,7 @@ bool TMainForm::openProject(const string& fName)
         //matches what is written in the file
         if(ImageFolderE->getValue() != imageFolder->mValue)
         {
-            MessageDlg("This file seem to belong to any folder!\nMake sure you know what you are doing..", mtError, TMsgDlgButtons() << mbOK, 0);
+            MessageDlg("This file seem to belong to a different folder!\nMake sure you know what you are doing..!", mtError, TMsgDlgButtons() << mbOK, 0);
         }
     }
     else
@@ -165,6 +165,11 @@ bool TMainForm::openProject(const string& fName)
     mCF->Parent = ClassifierPanel;
     mCF->Align = alClient;
     mCF->populate();
+
+    //Add switch to button form action to popup
+    TMenuItem* i = new TMenuItem(mCF->PopupMenu1);
+    i->Action = ToggleButtonFrameDockedA;
+    mCF->PopupMenu1->Items->Add(i);
     enableDisablePanel(ProjFilePathPanel, false);
     enableDisablePanel(ClassifierPanel, true);
     values.save();
@@ -440,6 +445,48 @@ void __fastcall TMainForm::SaveProjectAsAExecute(TObject *Sender)
 void __fastcall TMainForm::FileOpen1Cancel(TObject *Sender)
 {
     ;
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::ToggleButtonFrameDockedAExecute(TObject *Sender)
+{
+    //Check where the button frame is
+    if(ClassifierPanel->Parent == mBottomPanel)
+    {
+        //Transfer frame to floating button form
+        if(!mFloatingButtonsForm.get())
+        {
+            mFloatingButtonsForm = auto_ptr<TFloatingButtonsForm>(new TFloatingButtonsForm(*this, this));
+        }
+        ClassifierPanel->Parent = mFloatingButtonsForm.get();
+        ClassifierPanel->Align = alClient;
+        mFloatingButtonsForm->Show();
+    }
+    else
+    {
+		mFloatingButtonsForm->Close();        //Assign the frame to BottomPanel
+    }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::ClassifierPanelResize(TObject *Sender)
+{
+	int classCount = mClassifier.classCount();
+    if(!classCount)
+    {
+        return;
+    }
+    int buttonWidth = ClassifierPanel->Width / classCount;
+    for(int i = 0; i < classCount; i++)
+    {
+        ClassValue* val = mClassifier.getClass(i);
+        if(val)
+        {
+            val->mButton->Width = buttonWidth;
+            val->mButton->Align = alLeft;
+            val->mButton->Left = i*val->mButton->Width + 10;
+        }
+    }
 }
 
 

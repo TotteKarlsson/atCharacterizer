@@ -36,6 +36,7 @@
 #include <Vcl.ToolWin.hpp>
 #include "TArrayBotBtn.h"
 #include "atTClassifierFrame.h"
+#include "TFloatingButtonsForm.h"
 class TImageForm;
 
 //---------------------------------------------------------------------------
@@ -51,6 +52,7 @@ class VolumeCreatorProject;
 
 class TMainForm : public TRegistryForm
 {
+    friend TFloatingButtonsForm;
 __published:	// IDE-managed Components
 	TImage *Image1;
 	TMemo *infoMemo;
@@ -115,6 +117,8 @@ __published:	// IDE-managed Components
 	TMenuItem *sortByFileNameA1;
 	TSTDStringEdit *UserE;
 	TButton *Button1;
+	TAction *ToggleButtonFrameDockedA;
+	TMenuItem *Floatingbuttons1;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall mShutDownTimerTimer(TObject *Sender);
 	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
@@ -137,6 +141,8 @@ __published:	// IDE-managed Components
 	void __fastcall sortByFileNameAExecute(TObject *Sender);
 	void __fastcall SaveProjectAsAExecute(TObject *Sender);
 	void __fastcall FileOpen1Cancel(TObject *Sender);
+	void __fastcall ToggleButtonFrameDockedAExecute(TObject *Sender);
+	void __fastcall ClassifierPanelResize(TObject *Sender);
 
 	private:
         void __fastcall                                 logMsg();
@@ -176,6 +182,7 @@ __published:	// IDE-managed Components
         bool                                            openProject(const string& fName);
         void                                            onCloseFolder();
         bool                                            isProjectOpen();
+        auto_ptr<TFloatingButtonsForm>                  mFloatingButtonsForm;
 
 	public:
 		__fastcall 					 					TMainForm(TComponent* Owner);
