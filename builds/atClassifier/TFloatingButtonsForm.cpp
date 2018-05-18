@@ -60,3 +60,9 @@ void __fastcall TFloatingButtonsForm::FormResize(TObject *Sender)
 //    }
 }
 
+void __fastcall TFloatingButtonsForm::FormKeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift)
+{
+	mMainForm.FormKeyDown(this, Key, Shift);
+}
+//---------------------------------------------------------------------------

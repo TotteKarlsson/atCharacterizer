@@ -56,6 +56,9 @@ $OUTPUTDIR/atArrayBotCore.dll
 $OUTPUTDIR/atVCLCommon.dll                       
 $OUTPUTDIR/atSSI.dll                             
 
+$OUTPUTDIR/poco_foundation.dll
+$OUTPUTDIR/tinyxml2.dll
+
 $BDSCOMMONDIR/BPL/dslVCLComponents.bpl          
 $BDSCOMMONDIR/BPL/dslVCLVisualComponents.bpl    
 $BDSCOMMONDIR/BPL/atVCLComponents.bpl               
