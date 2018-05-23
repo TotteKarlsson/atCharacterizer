@@ -32,6 +32,11 @@ void __fastcall TMainForm::ImageFilesLBClick(TObject *Sender)
     {
         gImageForm->load(fName);
     }
+
+    if(mMagnifyForm->Visible)
+    {
+		mMagnifyForm->loadImage(fName);
+    }
 }
 
 

@@ -37,7 +37,10 @@
 #include "TArrayBotBtn.h"
 #include "atTClassifierFrame.h"
 #include "TFloatingButtonsForm.h"
+#include "forms/TMagnifyForm.h"
+#include <utility>
 class TImageForm;
+using std::pair;
 
 //---------------------------------------------------------------------------
 using dsl::ApplicationProperties;
@@ -53,6 +56,7 @@ class VolumeCreatorProject;
 class TMainForm : public TRegistryForm
 {
     friend TFloatingButtonsForm;
+    friend TMagnifyForm;
 __published:	// IDE-managed Components
 	TImage *Image1;
 	TMemo *infoMemo;
@@ -105,7 +109,6 @@ __published:	// IDE-managed Components
 	TAction *NoA;
 	TAction *MaybeA;
 	TListBox *ImageFilesLB;
-	TPropertyCheckBox *ValidationCB;
 	TPopupMenu *listPopup;
 	TAction *sortByValueA;
 	TPanel *TopPanel;
@@ -119,6 +122,10 @@ __published:	// IDE-managed Components
 	TButton *Button1;
 	TAction *ToggleButtonFrameDockedA;
 	TMenuItem *Floatingbuttons1;
+	TButton *Button3;
+	TAction *ToggleMagnifyingGlassA;
+	TAction *ToggleStretchingA;
+	TMenuItem *oggleStretchingA1;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall mShutDownTimerTimer(TObject *Sender);
 	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
@@ -143,6 +150,12 @@ __published:	// IDE-managed Components
 	void __fastcall FileOpen1Cancel(TObject *Sender);
 	void __fastcall ToggleButtonFrameDockedAExecute(TObject *Sender);
 	void __fastcall ClassifierPanelResize(TObject *Sender);
+	void __fastcall ToggleMagnifyingGlassAExecute(TObject *Sender);
+	void __fastcall Image1MouseMove(TObject *Sender, TShiftState Shift, int X,
+          int Y);
+	void __fastcall ToggleStretchingAExecute(TObject *Sender);
+	void __fastcall ToggleStretchingAUpdate(TObject *Sender);
+	void __fastcall ToggleMagnifyingGlassAUpdate(TObject *Sender);
 
 	private:
         void __fastcall                                 logMsg();
@@ -183,6 +196,12 @@ __published:	// IDE-managed Components
         void                                            onCloseFolder();
         bool                                            isProjectOpen();
         auto_ptr<TFloatingButtonsForm>                  mFloatingButtonsForm;
+	    auto_ptr<TMagnifyForm> 							mMagnifyForm;
+        TPoint                                          mImageMouseCoord;
+        TPoint                                          getImageMouseCoord();
+        pair<double, double>                            getImageScaling();
+		int 										    getImageWidth();
+		int 											getImageHeight();
 
 	public:
 		__fastcall 					 					TMainForm(TComponent* Owner);

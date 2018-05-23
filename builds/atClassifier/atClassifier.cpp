@@ -9,17 +9,19 @@
 #include "dslVCLUtils.h"
 #include "dslLogger.h"
 #include "dslApplicationProperties.h"
+
 //---------------------------------------------------------------------------
 using namespace dsl;
 
 using std::string;
 USEFORM("..\..\source\Frames\atTClassifierFrame.cpp", ClassifierFrame); /* TFrame: File Type */
 USEFORM("..\..\source\Forms\TNewProjectForm.cpp", NewProjectForm);
+USEFORM("..\..\source\Forms\TMagnifyForm.cpp", MagnifyForm);
 USEFORM("..\..\source\Forms\TImageForm.cpp", ImageForm);
 USEFORM("..\..\source\TMainForm.cpp", MainForm);
 USEFORM("..\..\source\Forms\TAssingShortcutsForm.cpp", AssignShortCutsForm);
-USEFORM("..\..\source\Forms\TAboutATCharacterizerForm.cpp", AboutATCharacterizer);
 USEFORM("TFloatingButtonsForm.cpp", FloatingButtonsForm);
+USEFORM("..\..\source\Forms\TAboutATCharacterizerForm.cpp", AboutATCharacterizer);
 //---------------------------------------------------------------------------
 extern string		gAppName					= "atClassifier";
 extern string       gLogFileName                = "atClassifier.log";
@@ -73,9 +75,6 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
 		TStyleManager::TrySetStyle("Carbon");
 		Application->CreateForm(__classid(TMainForm), &MainForm);
-		Application->CreateForm(__classid(TNewProjectForm), &NewProjectForm);
-		Application->CreateForm(__classid(TAssignShortCutsForm), &AssignShortCutsForm);
-		Application->CreateForm(__classid(TFloatingButtonsForm), &FloatingButtonsForm);
 		Application->Run();
 		writeStringToRegistry(gApplicationRegistryRoot, "", "Theme",  gApplicationStyle);
 	}
@@ -107,6 +106,7 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 
 #pragma comment(lib, "atFoundation.lib")
 #pragma comment(lib, "atResources.lib")
+#pragma comment(lib, "atVCLCommon.lib")
 #pragma comment(lib, "atVCLVisualComponents.bpi")
 
 

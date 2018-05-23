@@ -9,6 +9,7 @@
 #include "TImageForm.h"
 #include "atApplicationSupportFunctions.h"
 #include "forms/TNewProjectForm.h"
+#include "atVCLUtils.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "dslTFloatLabeledEdit"
@@ -46,6 +47,7 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
     setupAndReadIniParameters();
   	TMemoLogger::mMemoIsEnabled = true;
 	CurrImage = Image1;
+   	mMagnifyForm = auto_ptr<TMagnifyForm>(new TMagnifyForm(this));
 }
 
 __fastcall TMainForm::~TMainForm()
@@ -62,6 +64,10 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
         populateStyleMenu(ThemesMenu, ThemesMenuClick);
         mIsStyleMenuPopulated = true;
 	}
+
+// For debugging
+//	FileOpen1->Dialog->FileName = "P:/temp/JohnDoe_MyProject.chf";
+//	FileOpen1Accept(NULL);
 }
 
 bool TMainForm::isProjectOpen()
@@ -238,11 +244,9 @@ void __fastcall TMainForm::FormKeyDown(TObject *Sender, WORD &Key, TShiftState S
         Close();
     }
 
-
     string sCh;
   	sCh = (Shift.Contains(ssShift)) ? stdstr(Char(Key)) : stdstr(LowerCase(Char(Key)));
     char ch = sCh[0];
-
     Log(lDebug3) << "Key " << ch <<" was pressed";
 
     if(!isProjectOpen())
@@ -255,6 +259,11 @@ void __fastcall TMainForm::FormKeyDown(TObject *Sender, WORD &Key, TShiftState S
     if(btn)
     {
         SendMessage(btn->Handle, BM_CLICK, 0, 0);
+    }
+
+    if(ch == '1')
+    {
+        ToggleMagnifyingGlassA->Execute();
     }
 }
 
@@ -487,6 +496,208 @@ void __fastcall TMainForm::ClassifierPanelResize(TObject *Sender)
             val->mButton->Left = i*val->mButton->Width + 10;
         }
     }
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::ToggleMagnifyingGlassAExecute(TObject *Sender)
+{
+    //Check if form is open
+    if(!mMagnifyForm.get())
+    {
+    	mMagnifyForm = auto_ptr<TMagnifyForm>(new TMagnifyForm(this));
+    }
+
+    if(mMagnifyForm->Visible)
+    {
+    	mMagnifyForm->Hide();
+    }
+    else
+    {
+        //Just load current file
+        //Extract filename and show image
+        int index = ImageFilesLB->ItemIndex;
+
+        if(index < 0)
+        {
+            return;
+        }
+
+        IniKey* key = (IniKey*) ImageFilesLB->Items->Objects[index];
+        if(!key)
+        {
+            Log(lError) << "No Such file: " <<key->mKey;
+            return;
+        }
+        string fName(joinPath(ImageFolderE->getValue(), key->mKey + ".png"));
+
+        mMagnifyForm->loadImage(fName);
+        mMagnifyForm->Show();
+    }
+}
+
+
+void __fastcall TMainForm::Image1MouseMove(TObject *Sender, TShiftState Shift,
+          int X, int Y)
+{
+//    Log(lInfo) << "(" << X << "," << Y<< ")";
+    mImageMouseCoord.x = X;
+    mImageMouseCoord.y = Y;
+}
+//---------------------------------------------------------------------------
+TPoint TMainForm::getImageMouseCoord()
+{
+    return mImageMouseCoord;
+}
+
+pair<double, double> TMainForm::getImageScaling()
+{
+	pair<double, double> scaling(1,1);
+    double w 		= Image1->Width;
+    double origW 	= Image1->Picture->Width;
+
+    if(origW)
+    {
+    	scaling.first = w/origW;
+    }
+
+    double h 		= Image1->Height;
+    double origH 	= Image1->Picture->Height;
+
+    if(origH)
+    {
+    	scaling.second = h/origH;
+    }
+
+    return scaling;
+}
+
+int TMainForm::getImageWidth()
+{
+    //First check if image is stretched or not
+    if(Image1->Stretch == false)
+    {
+        return Image1->Picture->Width; //The original width
+    }
+
+    //if it is stretched, check aspect ratios..
+    //Observe, this probably don't work.. need to check landscape or portrait
+    if(getAspectRatio(Image1) == getImageContainerAspectRatio(Image1))
+    {
+        return Image1->Picture->Width;
+    }
+
+    //As the image is being stretched, there are several "cases"
+    if(Image1->Width > Image1->Height)
+    {
+        //Gotta check how the image is stretched, depends on original dimension
+        if(Image1->Picture->Width < Image1->Picture->Height)
+        {
+            //Image Height == container height
+            return getImageWidthFromHeight(Image1);
+        }
+        else if(Image1->Picture->Width > Image1->Picture->Height)
+        {
+            //Image width == container width
+            return Image1->Width;
+        }
+    }
+    else if(Image1->Width < Image1->Height)
+    {
+        if(Image1->Picture->Width < Image1->Picture->Height)
+        {
+            return Image1->Width;
+        }
+        else if(Image1->Picture->Width > Image1->Picture->Height)
+        {
+            return getImageWidthFromHeight(Image1);
+        }
+    }
+    else if (Image1->Width == Image1->Height)
+    {
+        if(Image1->Picture->Width < Image1->Picture->Height)
+        {
+            return getImageWidthFromHeight(Image1);
+        }
+        else if(Image1->Picture->Width > Image1->Picture->Height)
+        {
+            return Image1->Width;
+        }
+    }
+    return -1;
+}
+
+int TMainForm::getImageHeight()
+{
+    //First check if image is stretched or not
+    if(Image1->Stretch == false)
+    {
+        return Image1->Picture->Height; //The original height
+    }
+
+    //if it is stretched, check aspect ratios..
+    //Observe, this probably don't work.. need to check landscape or portrait
+    if(getAspectRatio(Image1) == getImageContainerAspectRatio(Image1))
+    {
+        return Image1->Picture->Height;
+    }
+
+    //As the image is being stretched, there are several "cases"
+    if(Image1->Width > Image1->Height)
+    {
+        //Gotta check how the image is stretched, depends on original dimension
+        if(Image1->Picture->Width < Image1->Picture->Height)
+        {
+            //Image Height == container height
+            return Image1->Height;
+        }
+        else if(Image1->Picture->Width > Image1->Picture->Height)
+        {
+            //Image width == container width
+            return getImageHeightFromWidth(Image1);
+        }
+    }
+    else if(Image1->Width < Image1->Height)
+    {
+        if(Image1->Picture->Width < Image1->Picture->Height)
+        {
+            return getImageHeightFromWidth(Image1);;
+        }
+        else if(Image1->Picture->Width > Image1->Picture->Height)
+        {
+            return Image1->Height;
+        }
+    }
+    else if (Image1->Width == Image1->Height)
+    {
+        if(Image1->Picture->Width < Image1->Picture->Height)
+        {
+            return Image1->Height;
+
+        }
+        else if(Image1->Picture->Width > Image1->Picture->Height)
+        {
+            return getImageHeightFromWidth(Image1);
+        }
+    }
+    return -1;
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::ToggleStretchingAExecute(TObject *Sender)
+{
+    Image1->Stretch = !Image1->Stretch;
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::ToggleStretchingAUpdate(TObject *Sender)
+{
+	ToggleStretchingA->Caption =   Image1->Stretch ? "No Stretching" : "Stretch Image";
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TMainForm::ToggleMagnifyingGlassAUpdate(TObject *Sender)
+{
+	ToggleMagnifyingGlassA->Caption = (mMagnifyForm->Visible) ?  "Close Magnifier" : "Open Magnifier";
 }
 
 

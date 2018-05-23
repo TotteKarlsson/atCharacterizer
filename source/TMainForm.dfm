@@ -3,8 +3,8 @@ object MainForm: TMainForm
   Top = 0
   AlphaBlendValue = 100
   Caption = 'The Characterizer'
-  ClientHeight = 539
-  ClientWidth = 998
+  ClientHeight = 720
+  ClientWidth = 963
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,16 +23,16 @@ object MainForm: TMainForm
   TextHeight = 13
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 520
-    Width = 998
+    Top = 701
+    Width = 963
     Height = 19
     Panels = <>
     SimplePanel = True
   end
   object mShowBottomPanelBtn: TButton
     Left = 0
-    Top = 501
-    Width = 998
+    Top = 682
+    Width = 963
     Height = 19
     Align = alBottom
     Caption = '^'
@@ -43,14 +43,14 @@ object MainForm: TMainForm
   object MainPanel: TPanel
     Left = 0
     Top = 41
-    Width = 998
-    Height = 460
+    Width = 963
+    Height = 641
     Align = alClient
     TabOrder = 2
     object Splitter2: TSplitter
       Left = 1
-      Top = 318
-      Width = 996
+      Top = 499
+      Width = 961
       Height = 5
       Cursor = crVSplit
       Align = alBottom
@@ -60,8 +60,8 @@ object MainForm: TMainForm
     end
     object mBottomPanel: TPanel
       Left = 1
-      Top = 323
-      Width = 996
+      Top = 504
+      Width = 961
       Height = 136
       Align = alBottom
       TabOrder = 0
@@ -75,14 +75,14 @@ object MainForm: TMainForm
       object mLogPanel: TPanel
         Left = 456
         Top = 1
-        Width = 539
+        Width = 504
         Height = 134
         Align = alClient
         TabOrder = 0
         object infoMemo: TMemo
           Left = 1
           Top = 42
-          Width = 537
+          Width = 502
           Height = 91
           Align = alClient
           ScrollBars = ssBoth
@@ -92,12 +92,12 @@ object MainForm: TMainForm
         object Panel2: TPanel
           Left = 1
           Top = 1
-          Width = 537
+          Width = 502
           Height = 41
           Align = alTop
           TabOrder = 1
           DesignSize = (
-            537
+            502
             41)
           object mCLearMemo: TButton
             Left = 9
@@ -109,7 +109,7 @@ object MainForm: TMainForm
             OnClick = mCLearMemoClick
           end
           object mCloseBottomPanelBtn: TButton
-            Left = 498
+            Left = 463
             Top = 5
             Width = 29
             Height = 25
@@ -135,7 +135,7 @@ object MainForm: TMainForm
       Left = 1
       Top = 1
       Width = 128
-      Height = 317
+      Height = 498
       Align = alLeft
       Caption = 'Image Files'
       TabOrder = 1
@@ -143,7 +143,7 @@ object MainForm: TMainForm
         Left = 2
         Top = 15
         Width = 124
-        Height = 300
+        Height = 481
         Align = alClient
         ItemHeight = 13
         PopupMenu = listPopup
@@ -154,15 +154,15 @@ object MainForm: TMainForm
     object Panel1: TPanel
       Left = 129
       Top = 1
-      Width = 868
-      Height = 317
+      Width = 833
+      Height = 498
       Align = alClient
       TabOrder = 2
       object Image1: TImage
         Left = 1
         Top = 1
-        Width = 866
-        Height = 298
+        Width = 831
+        Height = 479
         Align = alClient
         AutoSize = True
         Picture.Data = {
@@ -16171,15 +16171,14 @@ object MainForm: TMainForm
         Proportional = True
         Stretch = True
         Transparent = True
-        ExplicitLeft = 529
-        ExplicitTop = 150
-        ExplicitWidth = 821
-        ExplicitHeight = 544
+        OnMouseMove = Image1MouseMove
+        ExplicitWidth = 715
+        ExplicitHeight = 715
       end
       object HeaderControl1: THeaderControl
         Left = 1
-        Top = 299
-        Width = 866
+        Top = 480
+        Width = 831
         Height = 17
         Align = alBottom
         Sections = <
@@ -16194,14 +16193,16 @@ object MainForm: TMainForm
   object TopBackPanel: TPanel
     Left = 0
     Top = 0
-    Width = 998
+    Width = 963
     Height = 41
     Align = alTop
     TabOrder = 3
+    ExplicitLeft = -24
+    ExplicitTop = 16
     object TopPanel: TPanel
       Left = 1
       Top = 1
-      Width = 263
+      Width = 350
       Height = 39
       Align = alLeft
       AutoSize = True
@@ -16216,11 +16217,11 @@ object MainForm: TMainForm
         TabOrder = 0
       end
       object Button2: TButton
-        Left = 175
+        Left = 262
         Top = 1
         Width = 87
         Height = 37
-        Action = SaveProjectA
+        Action = ToggleMagnifyingGlassA
         Align = alLeft
         TabOrder = 1
       end
@@ -16233,11 +16234,20 @@ object MainForm: TMainForm
         Align = alLeft
         TabOrder = 2
       end
+      object Button3: TButton
+        Left = 175
+        Top = 1
+        Width = 87
+        Height = 37
+        Action = SaveProjectA
+        Align = alLeft
+        TabOrder = 3
+      end
     end
     object ProjFilePathPanel: TPanel
-      Left = 264
+      Left = 351
       Top = 1
-      Width = 733
+      Width = 611
       Height = 39
       Align = alClient
       Alignment = taLeftJustify
@@ -16245,29 +16255,22 @@ object MainForm: TMainForm
       object ImageFolderE: TSTDStringEdit
         Left = 12
         Top = 9
-        Width = 542
+        Width = 101
         Height = 21
         ReadOnly = True
         TabOrder = 0
         Text = 'c:\ImageCache'
+        Visible = False
         Value = 'c:\ImageCache'
       end
-      object ValidationCB: TPropertyCheckBox
-        Left = 638
-        Top = 11
-        Width = 137
-        Height = 17
-        Caption = 'Validation Dialog'
-        TabOrder = 1
-        Visible = False
-      end
       object UserE: TSTDStringEdit
-        Left = 560
+        Left = 128
         Top = 9
         Width = 72
         Height = 21
-        TabOrder = 2
+        TabOrder = 1
         Text = 'UserE'
+        Visible = False
         Value = 'UserE'
       end
     end
@@ -16281,8 +16284,8 @@ object MainForm: TMainForm
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
-    Left = 208
-    Top = 65520
+    Left = 176
+    Top = 64
     object File1: TMenuItem
       Caption = 'File'
       object New1: TMenuItem
@@ -16341,6 +16344,9 @@ object MainForm: TMainForm
     object OpenaClone1: TMenuItem
       Caption = 'Open a Clone'
       OnClick = OpenaClone1Click
+    end
+    object oggleStretchingA1: TMenuItem
+      Action = ToggleStretchingA
     end
   end
   object MenuActions: TActionList
@@ -16409,7 +16415,7 @@ object MainForm: TMainForm
     Left = 744
     Top = 80
     Bitmap = {
-      494C0101080018007C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010108001800AC0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -16833,6 +16839,16 @@ object MainForm: TMainForm
       Category = 'Sorting'
       Caption = 'Sort by File Name'
       OnExecute = sortByFileNameAExecute
+    end
+    object ToggleMagnifyingGlassA: TAction
+      Caption = 'Open Magnifier'
+      OnExecute = ToggleMagnifyingGlassAExecute
+      OnUpdate = ToggleMagnifyingGlassAUpdate
+    end
+    object ToggleStretchingA: TAction
+      Caption = 'ToggleStretchingA'
+      OnExecute = ToggleStretchingAExecute
+      OnUpdate = ToggleStretchingAUpdate
     end
   end
   object listPopup: TPopupMenu
